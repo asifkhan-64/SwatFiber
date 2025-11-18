@@ -1,0 +1,53 @@
+[18-Jun-2025 12:59:29 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'a1installersco_shibli.shop_info' doesn't exist in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(Object(mysqli), 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[18-Jun-2025 12:59:42 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'a1installersco_shibli.shop_info' doesn't exist in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(Object(mysqli), 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[18-Jun-2025 13:00:01 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'a1installersco_shibli.shop_info' doesn't exist in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(Object(mysqli), 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[18-Jun-2025 13:00:27 UTC] PHP Warning:  Undefined variable $connect in /home2/a1installersco/public_html/shibli/index.php on line 31
+[18-Jun-2025 13:00:27 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_query(): Argument #1 ($mysql) must be of type mysqli, null given in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(NULL, 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[18-Jun-2025 13:00:39 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'a1installersco_shibli.shop_info' doesn't exist in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(Object(mysqli), 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[18-Jun-2025 13:01:17 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'a1installersco_shibli.shop_info' doesn't exist in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(Object(mysqli), 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[18-Jun-2025 18:17:11 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'a1installersco_shibli.shop_info' doesn't exist in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(Object(mysqli), 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[18-Jun-2025 18:17:14 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'a1installersco_shibli.shop_info' doesn't exist in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(Object(mysqli), 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[19-Jun-2025 09:38:40 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'a1installersco_shibli.shop_info' doesn't exist in /home2/a1installersco/public_html/shibli/index.php:31
+Stack trace:
+#0 /home2/a1installersco/public_html/shibli/index.php(31): mysqli_query(Object(mysqli), 'SELECT shop_nam...')
+#1 {main}
+  thrown in /home2/a1installersco/public_html/shibli/index.php on line 31
+[20-Jun-2025 20:54:32 UTC] PHP Warning:  Undefined variable $id in /home2/a1installersco/public_html/shibli/index.php on line 22
+[20-Jun-2025 20:59:35 UTC] PHP Warning:  Undefined variable $id in /home2/a1installersco/public_html/shibli/index.php on line 22
+[20-Jun-2025 21:01:40 UTC] PHP Warning:  Undefined variable $id in /home2/a1installersco/public_html/shibli/index.php on line 22
+[20-Jun-2025 21:06:03 UTC] PHP Warning:  Undefined variable $id in /home2/a1installersco/public_html/shibli/index.php on line 22
+[21-Jun-2025 13:43:04 UTC] PHP Warning:  Undefined variable $id in /home2/a1installersco/public_html/shibli/index.php on line 22
+[30-Jul-2025 11:26:18 UTC] PHP Warning:  Undefined variable $id in /home2/a1installersco/public_html/shibli/index.php on line 22
+[02-Aug-2025 16:55:30 UTC] PHP Warning:  Undefined variable $id in /home2/a1installersco/public_html/shibli/index.php on line 22
