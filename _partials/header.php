@@ -49,10 +49,72 @@ $fet = mysqli_fetch_assoc($get);
     <link rel="stylesheet" type="text/css" href="../assets/bootstrap-datetimepicker.css">
     <link rel="stylesheet" type="text/css" href="../assets/bootstrap-datepicker.min.css">
 
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
     <script src='../assets/kit.js' crossorigin='anonymous'></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <style>
+
+    /* 1. Define the Keyframes for the Animation */
+        @keyframes float {
+        0% {
+            transform: translateY(0); /* Start position */
+        }
+        50% {
+            transform: translateY(-10px); /* Move up 5 pixels */
+        }
+        100% {
+            transform: translateY(0); /* Return to start */
+        }
+        }
+
+        /* 2. Apply the Animation to the Cards */
+        .timeline-content {
+        /* ... existing styles like box-shadow ... */
+        animation: float 4s ease-in-out infinite !important; /* Apply the animation */
+        zoon: 0.5 !important;
+        }
+
+        .timeline  {
+            animation-delay: 1s !important; /* Start half a second later */
+        }
+
+        .main-timeline2 .timeline:nth-child(2) .timeline-content {
+        animation-delay: 0.5s !important; /* Start half a second later */
+        }
+
+        .main-timeline2 .timeline:nth-child(3) .timeline-content {
+        animation-delay: 0.5s !important; /* Start one second later */
+        }
+
+        body {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+        }
+
+        .my-element {
+            display: inline-block;
+            margin: 0 0.5rem;
+
+            animation: bounce; /* referring directly to the animation's @keyframe declaration */
+            animation-duration: 2s; /* don't forget to set a duration! */
+        }
+
+            /* This only changes this particular animation duration */
+        .animate__animated.animate__bounce {
+            --animate-duration: 2s;
+        }
+
+            /* This changes all the animations globally */
+        :root {
+            --animate-duration: 800ms;
+            --animate-delay: 0.9s;
+        }
+    </style>
 </head>
 
 <body class="fixed-left">
@@ -74,7 +136,7 @@ $fet = mysqli_fetch_assoc($get);
                     <a class="logo"><img src="../assets/logo.png" width="15%">&nbsp;&nbsp;&nbsp;<?php echo $fet['shop_title']; ?></a>
                 </div>
             </div>
-            <div class="sidebar-inner slimscrollleft">
+            <div class="sidebar-inner  slimscrollleft">
                 <div id="sidebar-menu">
                     <ul>
                         <li class="menu-title">Main</li>
@@ -114,8 +176,8 @@ $fet = mysqli_fetch_assoc($get);
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> System Users</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="worker_add.php">Add User</a></li>
-                                <li><a href="worker_list.php">User List</a></li>
+                                <li><a href="user_new.php">Add User</a></li>
+                                <li><a href="users_list.php">User List</a></li>
                             </ul>
                         </li>
 
@@ -207,7 +269,7 @@ $fet = mysqli_fetch_assoc($get);
                     <div class="topbar-left d-none d-lg-block">
                         <div class="text-center pt-2">
                             <a class="text-white ">
-                                <h5><img src="../assets/logo.png" width="15%">&nbsp;&nbsp;&nbsp;<?php echo $fet['shop_title']; ?></h5>
+                                <h5 class="animate__animated animate__bounce"><img  src="../assets/logo.png" width="15%">&nbsp;&nbsp;&nbsp;<?php echo $fet['shop_title']; ?></h5>
                             </a>
                         </div>
                     </div>

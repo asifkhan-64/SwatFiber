@@ -36,9 +36,7 @@
 
     include('../_partials/header.php');
 ?>
-<style type="text/css">
-<link href="../assets/plugins/sweet-alert2/sweetalert2.min.css"rel="stylesheet"type="text/css">
-</style>
+
 <div class="page-content-wrapper ">
     <div class="container-fluid">
         <div class="row">
@@ -48,13 +46,13 @@
         </div>
         <!-- end row -->
         <div class="row">
-            <div class="col-4">
+            <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
                         <form method="POST">
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-4 col-form-label">Name</label>
-                                <div class="col-sm-8">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
+                                <div class="col-sm-10">
                                     <input class="form-control" placeholder="Area" type="text" value="" id="example-text-input" name="areaName" required="">
                                 </div>
                             </div><hr>
@@ -72,7 +70,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
                         <h4 class="mt-0 header-title">Area Details</h4>

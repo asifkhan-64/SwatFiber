@@ -34,40 +34,8 @@ include('../_partials/header.php');
 
 <link rel="stylesheet" type="text/css" href="./timeline.css">
 
-<style>
 
-    /* 1. Define the Keyframes for the Animation */
-        @keyframes float {
-        0% {
-            transform: translateY(0); /* Start position */
-        }
-        50% {
-            transform: translateY(-10px); /* Move up 5 pixels */
-        }
-        100% {
-            transform: translateY(0); /* Return to start */
-        }
-        }
 
-        /* 2. Apply the Animation to the Cards */
-        .timeline-content {
-        /* ... existing styles like box-shadow ... */
-        animation: float 4s ease-in-out infinite !important; /* Apply the animation */
-        zoon: 0.5 !important;
-        }
-
-    .timeline  {
-        animation-delay: 1s !important; /* Start half a second later */
-    }
-
-    .main-timeline2 .timeline:nth-child(2) .timeline-content {
-    animation-delay: 0.5s !important; /* Start half a second later */
-    }
-
-    .main-timeline2 .timeline:nth-child(3) .timeline-content {
-    animation-delay: 0.5s !important; /* Start one second later */
-    }
-</style>
 
 
 <div class="page-content-wrapper ">
@@ -81,7 +49,7 @@ include('../_partials/header.php');
         <div class="row">
             <div class="col-md-12">
                 <div class="main-timeline2" id="addUserForm">
-                    <div class="timeline" id="timeline">
+                    <div class="timeline animate__animated animate__bounce" id="timeline">
                         <span class="icon fa fa-globe"></span>
                         <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
                             <h3 class="title" align="center"><?php echo $fet['shop_name'] ?></h3>
@@ -91,7 +59,7 @@ include('../_partials/header.php');
                             </p>
                         </a>
                     </div>
-                    <div class="timeline">
+                    <div class="timeline animate__animated animate__bounce">
                         <span class="icon fa fa-calendar"></span>
                         <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
                             <h3 class="title" align="center">Daily Expense</h3>
@@ -109,7 +77,7 @@ include('../_partials/header.php');
                         </a>
                     </div>
 
-                    <div class="timeline">
+                    <div class="timeline animate__animated animate__bounce">
                         <span class="icon fa fa-window-close"></span>
                         <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
                             <h3 class="title" align="center">Workers</h3>
@@ -126,7 +94,7 @@ include('../_partials/header.php');
                         </a>
                     </div>
 
-                    <div class="timeline">
+                    <div class="timeline animate__animated animate__bounce">
                         <span class="icon fa fa-calendar"></span>
                         <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
                             <h3 class="title" align="center">Daily Till-1 Sales</h3>
@@ -144,7 +112,7 @@ include('../_partials/header.php');
                         </a>
                     </div>
 
-                    <div class="timeline">
+                    <div class="timeline animate__animated animate__bounce">
                         <span class="icon fa fa-window-close"></span>
                         <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
                             <h3 class="title" align="center">Daily TIll-2 Sales</h3>
@@ -209,6 +177,18 @@ include('../_partials/header.php');
 
 <!-- App js -->
 <script src="../assets/js/app.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+
+// All animations will take twice the time to accomplish
+document.documentElement.style.setProperty('--animate-duration', '2s');
+
+// All animations will take half the time to accomplish
+document.documentElement.style.setProperty('--animate-duration', '.5s');
+</script>
 
 </body>
 

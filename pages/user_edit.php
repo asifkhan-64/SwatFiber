@@ -15,28 +15,27 @@
 
     if (isset($_POST['updateUser'])) {
         $id = $_POST['id'];
-        $name = $_POST['editName'];
-        $email = $_POST['editEmail'];
-        $role = $_POST['editRole'];
-        $password = $_POST['editPassword'];
-        $userStatus = $_POST['userStatus'];
-        $contact = $_POST['edit_contact'];
-        $emailMsg = $_POST['emailMsg'];
-
+        $name = $_POST['addUser_Name'];
+        $userName = 'Default';
+        $password = $_POST['addUser_password'];
+        $role = $_POST['addUser_role'];
+        $contact = $_POST['addUser_contact'];
+        $area = $_POST['area'];
+        $address = $_POST['addUser_address'];
         
+        $userStatus = $_POST['userStatus'];
+        
+        $getUser = $_SESSION["user"];
+        $getUserQuery = mysqli_query($connect, "SELECT * FROM login_user WHERE email = '$getUser'");
+        $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
+        $updatedBy = $fetch_getUserQuery['id'];
 
-            $editUserQuery = mysqli_query($connect, "UPDATE login_user SET name = '$name', password = '$password', user_role = '$role', status = '$userStatus' WHERE id = '$id'");
-            if (!$editUserQuery) {
-                $userNotUpdated = "Failed to update. Try Again!";
-            }else {
-                $description = "Dear ".$name.". Your Credentails. Email:".$emailMsg." and Password: ".$password.". Thank You!";
-                
-                $insertMsg = mysqli_query($connect, "INSERT INTO message_tbl
-                    (from_device, to_device, message_body, status)
-                    VALUES
-                    ('1', '$contact', '$description', '1')");
-                header("LOCATION:users_list.php");
-            }
+        $editUserQuery = mysqli_query($connect, "UPDATE login_user SET name = '$name', username = '$userName', password = '$password', user_role = '$role', contact = '$contact', area_id = '$area', address = '$address', status = '$userStatus', updated_by = '$updatedBy' WHERE id = '$id'");
+        if (!$editUserQuery) {
+            $userNotUpdated = "Failed to update. Try Again!";
+        }else {
+            header("LOCATION: users_list.php");
+        }
         }
     // }
 
@@ -63,178 +62,84 @@
                                             <!-- <h4 class="mt-0 header-title">Heading</h4> -->
                                             <!-- <p class="text-muted m-b-30 font-14">Example Text</p> -->
             								<form method="POST">
+                                            <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                           
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" name="editName" type="text" value="<?php echo $fetch_selectUser['name'] ?>" id="example-text-input">
+                                                <div class="col-sm-4">
+                                                    <input class="form-control" type="text" value="<?php echo $fetch_selectUser['name']; ?>" placeholder="Name" name="addUser_Name" id="example-text-input">
                                                 </div>
-                                            </div>
-                                            <input type="hidden" name="id" value="<?php echo $id; ?>">
-
                                             
-
-                                            <div class="form-group row">
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" name="editUserName" value="<?php echo $fetch_selectUser['username'] ?>" type="hidden" id="example-text-input">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label">Contact</label>
+                                                <div class="col-sm-4">
+                                                    <input type="tel" id="phone-mask" class="form-control" name="addUser_contact" value="<?php echo $fetch_selectUser['contact']; ?>"  placeholder="923*********"  required>
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
-                                                <label for="example-email-input" class="col-sm-2 col-form-label">Contact</label>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" type="number" value="<?php echo $fetch_selectUser['contact'] ?>" name="edit_contact" placeholder="Contact" id="example-email-input">
+                                                <label class="col-sm-2 col-form-label">Area</label>
+                                                <div class="col-sm-4">
+                                                    <?php
+                                                        $selectExpenseCat = mysqli_query($connect, "SELECT * FROM area");
+                                                        $optionsCategory = '<select class="form-control area" name="area" required="" style="width:100%">';
+                                                        while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
+                                                            if ($fetch_selectUser['area_id'] == $rowCat['id']) {
+                                                                $optionsCategory.= '<option value='.$rowCat['id'].' selected>'.$rowCat['area_name'].'</option>';
+                                                            }else {
+                                                                $optionsCategory.= '<option value='.$rowCat['id'].'>'.$rowCat['area_name'].'</option>';
+                                                            }
+                                                            
+                                                        }
+                                                        $optionsCategory.= "</select>";
+                                                    echo $optionsCategory;
+                                                    ?>
+                                                </div>
+
+
+                                                <label for="example-email-input" class="col-sm-2 col-form-label">Address</label>
+                                                <div class="col-sm-4">
+                                                    <input class="form-control" type="text" name="addUser_address" value="<?php echo $fetch_selectUser['address']; ?>" placeholder="Address" id="example-email-input" required>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label">Email</label>
-                                                <div class="col-sm-10">
-                                                    <input class="form-control" name="editEmail" value="<?php echo $fetch_selectUser['email'] ?>" type="email" placeholder="Name@example.com" id="example-email-input" disabled>
+                                                <div class="col-sm-4">
+                                                    <input class="form-control" type="email" name="addUser_email" readonly value="<?php echo $fetch_selectUser['email']; ?>" placeholder="Name@example.com" id="example-email-input" required>
+                                                </div>
+                                            
+                                                <label class="col-sm-2 col-form-label">Password</label>
+                                                <div class="col-sm-4">
+                                                    <input type="password" id="pass2" name="addUser_password" value="<?php echo $fetch_selectUser['password']; ?>" class="form-control" required placeholder="Password" required />
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="emailMsg" value="<?php echo $fetch_selectUser['email'] ?>">
 
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label" >Role</label>
-                                                <div class="col-sm-10">
-                                                    <select class="form-control select2" name="editRole">
+                                                <label class="col-sm-2 col-form-label">Role</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control select2" name="addUser_role" required>
                                                         <?php
-                                                        if ($fetch_selectUser['user_role'] == '1') {
-                                                        echo '
-                                                        <option value="1" selected>Administrator</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3">Counter Screen</option>
-                                                        <option value="4">Laboratory</option>
-                                                        <option value="5">Pharmacy</option>
-                                                        <option value="6">Ground Floor Counter</option>
-                                                        <option value="7">Ground Floor Second Counter</option>
-                                                        <option value="10">Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12">Lab Receiptionist</option>
-                                                        ';
-                                                        }elseif ($fetch_selectUser['user_role'] == '2') {
-                                                        echo '
-                                                        <option value="1">Administrator</option>
-                                                        <option value="2" selected>Manager</option>
-                                                        <option value="3">Counter Screen</option>
-                                                        <option value="4">Laboratory</option>
-                                                        <option value="5">Pharmacy</option>
-                                                        <option value="6">Ground Floor Counter</option>
-                                                        <option value="7">Ground Floor Second Counter</option>
-                                                        <option value="10">Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12">Lab Receiptionist</option>';
-                                                        }elseif ($fetch_selectUser['user_role'] == '3') {
-                                                        echo '
-                                                        <option value="1">Administrator</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3" selected>Counter Screen</option>
-                                                        <option value="4">Laboratory</option>
-                                                        <option value="5">Pharmacy</option>
-                                                        <option value="6">Ground Floor Counter</option>
-                                                        <option value="7">Ground Floor Second Counter</option>
-                                                        <option value="10">Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12">Lab Receiptionist</option>';
-                                                        }elseif ($fetch_selectUser['user_role'] == '4') {
-                                                        echo '
-                                                        <option value="1">Administrator</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3">Counter Screen</option>
-                                                        <option value="4" selected>Laboratory</option>
-                                                        <option value="5">Pharmacy</option>
-                                                        <option value="6">Ground Floor Counter</option>
-                                                        <option value="7">Ground Floor Second Counter</option>
-                                                        <option value="10">Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12">Lab Receiptionist</option>';
-                                                        }elseif ($fetch_selectUser['user_role'] == '5') {
-                                                        echo '
-                                                        <option value="1">Administrator</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3">Counter Screen</option>
-                                                        <option value="4">Laboratory</option>
-                                                        <option value="5" selected>Pharmacy</option>
-                                                        <option value="6">Ground Floor Counter</option>
-                                                        <option value="7">Ground Floor Second Counter</option>
-                                                        <option value="10">Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12">Lab Receiptionist</option>';
-                                                        }elseif ($fetch_selectUser['user_role'] == '6') {
-                                                        echo '
-                                                        <option value="1">Administrator</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3">Counter Screen</option>
-                                                        <option value="4">Laboratory</option>
-                                                        <option value="5">Pharmacy</option>
-                                                        <option value="6" selected>Ground Floor Counter</option>
-                                                        <option value="7">Ground Floor Second Counter</option>
-                                                        <option value="10">Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12">Lab Receiptionist</option>';
-                                                        }elseif ($fetch_selectUser['user_role'] == '7') {
-                                                        echo '
-                                                        <option value="1">Administrator</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3">Counter Screen</option>
-                                                        <option value="4">Laboratory</option>
-                                                        <option value="5">Pharmacy</option>
-                                                        <option value="6">Ground Floor Counter</option>
-                                                        <option value="7" selected>Ground Floor Second Counter</option>
-                                                        <option value="10">Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12">Lab Receiptionist</option>';
-                                                        }elseif ($fetch_selectUser['user_role'] == '10') {
-                                                        echo '
-                                                        <option value="1">Administrator</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3">Counter Screen</option>
-                                                        <option value="4">Laboratory</option>
-                                                        <option value="5">Pharmacy</option>
-                                                        <option value="6">Ground Floor Counter</option>
-                                                        <option value="7">Ground Floor Second Counter</option>
-                                                        <option value="10" selected>Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12">Lab Receiptionist</option>';
-                                                        }elseif ($fetch_selectUser['user_role'] == '11') {
-                                                            echo '
-                                                            <option value="1">Administrator</option>
-                                                            <option value="2">Manager</option>
-                                                            <option value="3">Counter Screen</option>
-                                                            <option value="4">Laboratory</option>
-                                                            <option value="5">Pharmacy</option>
-                                                            <option value="6">Ground Floor Counter</option>
-                                                            <option value="7">Ground Floor Second Counter</option>
-                                                            <option value="10" >Medical Officer</option>
-                                                            <option value="11" selected>Lab Result</option>
-                                                            <option value="12">Lab Receiptionist</option>';
-                                                        }elseif ($fetch_selectUser['user_role'] == '12') {
-                                                        echo '
-                                                        <option value="1">Administrator</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3">Counter Screen</option>
-                                                        <option value="4">Laboratory</option>
-                                                        <option value="5">Pharmacy</option>
-                                                        <option value="6">Ground Floor Counter</option>
-                                                        <option value="7">Ground Floor Second Counter</option>
-                                                        <option value="10" >Medical Officer</option>
-                                                        <option value="11">Lab Result</option>
-                                                        <option value="12" selected>Lab Receiptionist</option>';
-                                                        }
-
-                                                        ?>
+                                                            if ($fetch_selectUser['user_role'] == 1) {
+                                                                echo '
+                                                                <option value="1" selected>Admin</option>
+                                                                <option value="2">Technician</option>
+                                                                <option value="3">Accounts</option>';
+                                                            }elseif ($fetch_selectUser['user_role'] == 2) {
+                                                                echo '
+                                                                    <option value="1" >Admin</option>
+                                                                    <option value="2" selected>Technician</option>
+                                                                    <option value="3">Accounts</option>';
+                                                            }elseif ($fetch_selectUser['user_role'] == 3) {
+                                                                echo '
+                                                                    <option value="1" >Admin</option>
+                                                                    <option value="2">Technician</option>
+                                                                    <option value="3" selected>Accounts</option>';
+                                                            }
+                                                            ?>
+                                                        
                                                     </select>
                                                 </div>
-                                            </div>
 
-                                            <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Password</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" name="editPassword" value="<?php echo $fetch_selectUser['password'] ?>" id="pass2" class="form-control" required placeholder="Password"/>
-                                                </div>
-                                            </div>
-                                                
-
-                                            <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">User Status</label>
                                                 <div class="col-sm-4">
                                                             <?php
@@ -323,6 +228,12 @@
 <script type="text/javascript">
 
 $('.select2').select2({
+    placeholder: 'Select Option',
+    allowClear: true
+
+});
+
+$('.area').select2({
     placeholder: 'Select Option',
     allowClear: true
 

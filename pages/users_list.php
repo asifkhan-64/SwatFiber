@@ -32,8 +32,8 @@
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Password</th>
-                                    <th class="text-center"> <i class="fa fa-edit"></i>
-                                    </th>
+                                    <th class="text-center"> Edit <i class="fa fa-edit"></i></th>
+                                    <th class="text-center"> Images <i class="fa fa-image"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,15 +42,9 @@
 
                                 $iterationUser = 1;
                                 $admin = 'Admininistration';
-                                $manager = 'Manager';
-                                $CounterScreen = 'Counter Screen';
-                                $Laboratory = 'Laboratory';
-                                $Pharmacy = 'Pharmacy';
-                                $GroundFloorCounter = 'Ground Floor Counter';
-                                $GroundFloorSecondCounter = 'Ground Floor Second Counter';
-                                $MO = 'Medical Officer';
-                                $LA = 'Lab Result';
-                                $LR = 'Lab Receiptionist';
+                                $Technician = 'Technician';
+                                $Accounts = 'Accounts';
+                                
 
                                 $active = 'Active';
                                 $inActive = 'In-Active';
@@ -65,23 +59,9 @@
                                             if ($userRow['user_role'] == '1') {
                                                 echo '<td>'.$admin.'</td>';
                                             }elseif ($userRow['user_role'] == '2') {
-                                                echo '<td>'.$manager.'</td>';   
+                                                echo '<td>'.$Technician.'</td>';   
                                             }elseif ($userRow['user_role'] == '3') {
-                                                echo '<td>'.$CounterScreen.'</td>';   
-                                            }elseif ($userRow['user_role'] == '4') {
-                                                echo '<td>'.$Laboratory.'</td>';   
-                                            }elseif ($userRow['user_role'] == '5') {
-                                                echo '<td>'.$Pharmacy.'</td>';   
-                                            }elseif ($userRow['user_role'] == '6') {
-                                                echo '<td>'.$GroundFloorCounter.'</td>';   
-                                            }elseif ($userRow['user_role'] == '7') {
-                                                echo '<td>'.$GroundFloorSecondCounter.'</td>';   
-                                            }elseif ($userRow['user_role'] == '10') {
-                                                echo '<td>'.$MO.'</td>';   
-                                            }elseif ($userRow['user_role'] == '11') {
-                                                echo '<td>'.$LA.'</td>';   
-                                            }elseif ($userRow['user_role'] == '12') {
-                                                echo '<td>'.$LR.'</td>';   
+                                                echo '<td>'.$Accounts.'</td>';   
                                             }
     
     
@@ -96,6 +76,10 @@
                                             
                                             <td>
                                                 <a href="./user_edit.php?id='.$userRow['id'].'" type="button" class="btn text-white btn-success waves-effect waves-light">Edit</a>
+                                            </td>      
+
+                                            <td>
+                                                <a href="./user_view.php?id='.$userRow['id'].'" type="button" class="btn text-white btn-primary waves-effect waves-light">View</a>
                                             </td>                                        
                                         </tr>';
                                     }

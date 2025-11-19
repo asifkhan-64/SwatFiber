@@ -7,6 +7,10 @@
     $userAlreadyinDatabase = '';
     $userNotAdded = '';
     $userAdded = '';
+
+    $id = $_GET['id'];
+    $getUserData = mysqli_query($connect, "SELECT * FROM login_user WHERE id = '$id'");
+    $fetUserData = mysqli_fetch_assoc($getUserData);
     
     if (isset($_POST["addUser"])) {
         $name = $_POST['addUser_Name'];
@@ -108,104 +112,116 @@
         <div class="row">
             <div class="col-sm-12">
                 
-                <h5 class="page-title">Add New User</h5>
+                <h5 class="page-title">User Images</h5>
             </div>
         </div>
         <!-- end row -->
         <div class="row">
             <div class="col-12">
+                <form method="POST" enctype="multipart/form-data">
+
+                <div class="form-group row">
+                    <div class="col-sm-12 text-right">
+                        <button type="button" class="btn btn-secondary waves-effect">Cancel</button>
+                        <button type="submit" name="addUser" class="btn btn-primary waves-effect waves-light">Update User</button>
+                    </div>
+                </div>
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <h4 class="mt-0 header-title">Users Details</h4>
+                        <h4 class="mt-0 header-title">Profile Image</h4>
                         
-                        <form method="POST" enctype="multipart/form-data">
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="text" placeholder="Name" name="addUser_Name" id="example-text-input">
-                                </div>
-                            
-                                <label for="example-email-input" class="col-sm-2 col-form-label">Contact</label>
-                                <div class="col-sm-4">
-                                    <input type="tel" id="phone-mask" class="form-control" name="addUser_contact" placeholder="923*********"  required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Area</label>
-                                <div class="col-sm-4">
-                                    <?php
-                                        $selectExpenseCat = mysqli_query($connect, "SELECT * FROM area");
-                                        $optionsCategory = '<select class="form-control area" name="area" required="" style="width:100%">';
-                                        // echo '<option></option>';
-                                        while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
-                                            $optionsCategory.= '<option value='.$rowCat['id'].'>'.$rowCat['area_name'].'</option>';
-                                        }
-                                        $optionsCategory.= "</select>";
-                                    echo $optionsCategory;
-                                    ?>
-                                </div>
-
-
-                                <label for="example-email-input" class="col-sm-2 col-form-label">Address</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="text" name="addUser_address" placeholder="Address" id="example-email-input" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="example-email-input" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="email" name="addUser_email" placeholder="Name@example.com" id="example-email-input" required>
-                                </div>
-                            
-                                <label class="col-sm-2 col-form-label">Password</label>
-                                <div class="col-sm-4">
-                                    <input type="password" id="pass2" name="addUser_password" class="form-control" required placeholder="Password" required />
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Role</label>
-                                <div class="col-sm-4">
-                                    <select class="form-control select2" name="addUser_role" required>
-                                        <option></option>
-                                        <option value="1">Admin</option>
-                                        <option value="2">Technician</option>
-                                        <option value="3">Accounts</option>
-                                    </select>
-                                </div>
 
                                 <label class="col-sm-2 col-form-label">Profile Image</label>
                                 <div class="col-sm-4">
                                     <input type="file" name="fileUpload" required="" class="btn-default">
                                 </div>
+                                <?php
+                                $profile =  $fetUserData['profile_image'];
+                                if (empty($profile)) {
+                                    echo '
+                                    <div class="col-sm-6">
+                                        <img src="../assets/sample.png" width="200px" height="200px" style="border-radius: 200px;">
+                                    </div>
+                                    ';
+                                }else {
+                                    echo '
+                                    <div class="col-sm-6">
+                                        <img src="../__images/'.$fetUserData['profile_image'].'" width="200px" height="200px" style="border-radius: 200px;">
+                                    </div>
+                                    ';
+                                }
+                                ?>
+                                
                             </div>
+                    </div>
+                </div>
 
+
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">CNIC Front Image</h4>
+                        
                             <div class="form-group row">
+
                                 <label class="col-sm-2 col-form-label">CNIC Front</label>
                                 <div class="col-sm-4">
                                     <input type="file" name="fileUploadCnicFront" required="" class="btn-default">
                                 </div>
+                                <?php
+                                $profile =  $fetUserData['cnic_front'];
+                                if (empty($profile)) {
+                                    echo '
+                                    <div class="col-sm-6">
+                                        <img src="../assets/sample.png"  width="200px" height="200px" >
+                                    </div>
+                                    ';
+                                }else {
+                                    echo '
+                                    <div class="col-sm-6">
+                                        <img src="../__images/'.$fetUserData['cnic_front'].'" width="200px" height="200px" >
+                                    </div>
+                                    ';
+                                }
+                                ?>
+                                
+                            </div>
+                    </div>
+                </div>
+
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">CNIC Back Image</h4>
+                        
+                            <div class="form-group row">
 
                                 <label class="col-sm-2 col-form-label">CNIC Back</label>
                                 <div class="col-sm-4">
                                     <input type="file" name="fileUploadCnicBack" required="" class="btn-default">
                                 </div>
+                                <?php
+                                $profile =  $fetUserData['cnic_back'];
+                                if (empty($profile)) {
+                                    echo '
+                                    <div class="col-sm-6">
+                                        <img src="../assets/sample.png"  width="200px" height="200px" >
+                                    </div>
+                                    ';
+                                }else {
+                                    echo '
+                                    <div class="col-sm-6">
+                                        <img src="../__images/'.$fetUserData['cnic_back'].'" width="200px" height="200px" >
+                                    </div>
+                                    ';
+                                }
+                                ?>
+                                
                             </div>
-
-                            <hr>
-
-                            <div class="form-group row">
-                                <label for="example-password-input" class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-10">
-                                    <!-- <button type="button" class="btn btn-secondary waves-effect">Cancel</button> -->
-                                    <button type="submit" name="addUser" class="btn btn-primary waves-effect waves-light">Create User</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
-                </div>
+                </div>                           
+                        
+                </form>
+                
                 <h3 align="center">
                     <?php echo $userAlreadyinDatabase; ?>
                 </h3>

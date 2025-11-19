@@ -40,9 +40,7 @@
 
     include('../_partials/header.php');
 ?>
-<style type="text/css">
-<link href="../assets/plugins/sweet-alert2/sweetalert2.min.css"rel="stylesheet"type="text/css">
-</style>
+
 <div class="page-content-wrapper ">
     <div class="container-fluid">
         <div class="row">
@@ -59,7 +57,7 @@
                             <input type="hidden" name="id" value="<?php echo $id ?>">
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-10">
                                     <input class="form-control" value="<?php echo $areaName ?>" placeholder="Area" type="text" value="" id="example-text-input"  name="nameArea"  required="">
                                 </div>
                             </div>

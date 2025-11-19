@@ -1,3 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>Swat Fiber</title>
+        <meta content="Swat Fiber" name="description" />
+        <meta content="ThemeDesign" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <link rel="shortcut icon" href="assets/logo.png">
+
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/style1.css" rel="stylesheet" type="text/css">
+
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+        <style>
+
+        /* 1. Define the Keyframes for the Animation */
+            @keyframes float {
+            0% {
+                transform: translateY(0); /* Start position */
+            }
+            50% {
+                transform: translateY(-10px); /* Move up 5 pixels */
+            }
+            100% {
+                transform: translateY(0); /* Return to start */
+            }
+            }
+
+            /* 2. Apply the Animation to the Cards */
+            .timeline-content {
+            /* ... existing styles like box-shadow ... */
+            animation: float 4s ease-in-out infinite !important; /* Apply the animation */
+            zoon: 0.5 !important;
+            }
+
+            .timeline  {
+                animation-delay: 1s !important; /* Start half a second later */
+            }
+
+            .main-timeline2 .timeline:nth-child(2) .timeline-content {
+            animation-delay: 0.5s !important; /* Start half a second later */
+            }
+
+            .main-timeline2 .timeline:nth-child(3) .timeline-content {
+            animation-delay: 0.5s !important; /* Start one second later */
+            }
+
+            body {
+                font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+            }
+
+            .my-element {
+                display: inline-block;
+                margin: 0 0.5rem;
+
+                animation: bounce; /* referring directly to the animation's @keyframe declaration */
+                animation-duration: 2s; /* don't forget to set a duration! */
+            }
+
+                /* This only changes this particular animation duration */
+            .animate__animated.animate__bounce {
+                --animate-duration: 2s;
+            }
+
+                /* This changes all the animations globally */
+            :root {
+                --animate-duration: 800ms;
+                --animate-delay: 0.9s;
+            }
+        </style>
+
+    </head>
+
 <?php
   include("_stream/config.php");
   
@@ -48,31 +131,14 @@
                 header("LOCATION:__lab/dashboard.php");
             }
         } else {
-            $valid_login = ' <div class="alert alert-danger" style="background:#D52520; color:white" role="alert">
-            Access Denied. You have been restricted.</div>';
+            $valid_login = ' <div class="alert alert-danger animate__animated animate__bounce" style="background:#D52520; color:white" role="alert">
+            <h4 class="animate__animated animate__bounce">Access Denied. You have been restricted. </h4></div>';
         }
     }
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title>Swat Fiber</title>
-        <meta content="Swat Fiber" name="description" />
-        <meta content="ThemeDesign" name="author" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-        <link rel="shortcut icon" href="assets/logo.png">
-
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/style1.css" rel="stylesheet" type="text/css">
-
-    </head>
 
 
     <body class="fixed-left">
@@ -88,9 +154,9 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-5 col-md-8">
-                                <div class="card" style="box-shadow: 3px 3px 15px 3px #E7EAED; opacity: 0.95 !important;">
+                                <div class="card " style="box-shadow: 3px 3px 15px 3px #E7EAED; opacity: 0.95 !important;">
                                     <div class="card-body">
-                                        <h3 class="text-center mt-0 m-b-15">
+                                        <h3 class="text-center mt-0 m-b-15 animate__animated animate__bounce">
                                             <a  class="logo logo-admin"><img src="assets/logo.png" width="18%" height="20%"> <h3 style="font-family: Lucida Handwriting">Swat Fiber</h3></a>
                                         </h3>
                 
@@ -101,18 +167,18 @@
                                             <form class="form-horizontal m-t-20" method="POST">
                                                 <div class="form-group row">
                                                     <div class="col-12">
-                                                        <input class="form-control" name="user_email" type="text" required="" placeholder="E-Mail">
+                                                        <input class="form-control animate__animated animate__bounce" name="user_email" type="text" required="" placeholder="E-Mail">
                                                     </div>
                                                 </div>
                 
                                                 <div class="form-group row">
                                                     <div class="col-12">
-                                                        <input class="form-control" name="user_password" type="password" required="" placeholder="Password">
+                                                        <input class="form-control animate__animated animate__bounce" name="user_password" type="password" required="" placeholder="Password">
                                                     </div>
                                                 </div>                
                                                 <div class="form-group text-center row m-t-20 mt-5">
                                                     <div class="col-12">
-                                                        <button class="btn btn-primary btn-block waves-effect waves-light" type="submit" name="log_in_session">Log In</button>
+                                                        <button class="btn btn-primary btn-block waves-effect waves-light animate__animated animate__bounce" type="submit" name="log_in_session">Log In</button>
                                                     </div>
                                                 </div>
                 
@@ -150,8 +216,15 @@
 
         <!-- App js -->
         <script src="assets/js/app.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+        <script>
+            // All animations will take twice the time to accomplish
+            document.documentElement.style.setProperty('--animate-duration', '2s');
 
+            // All animations will take half the time to accomplish
+            document.documentElement.style.setProperty('--animate-duration', '.5s');
+        </script>
         
 
     </body>
