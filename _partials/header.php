@@ -100,7 +100,7 @@ $fet = mysqli_fetch_assoc($get);
             display: inline-block;
             margin: 0 0.5rem;
 
-            animation: bounce; /* referring directly to the animation's @keyframe declaration */
+            animation: Fade; /* referring directly to the animation's @keyframe declaration */
             animation-duration: 2s; /* don't forget to set a duration! */
         }
 
@@ -112,7 +112,25 @@ $fet = mysqli_fetch_assoc($get);
             /* This changes all the animations globally */
         :root {
             --animate-duration: 800ms;
-            --animate-delay: 0.9s;
+            --animate-delay: 1s;
+        }
+
+
+
+
+        /* For image */
+
+
+        img {
+            transition: transform 0.5s ease; /* Adjust duration and timing as needed */
+            
+        }
+
+        img:hover {
+            transform: scale(1.2); /* Grows by 20% */
+            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background for visibility */
+            backdrop-filter: blur(100px); /* Apply a blur of 10 pixels */
+            -webkit-backdrop-filter: blur(10px); /* For Webkit-based browsers */
         }
     </style>
 </head>
@@ -159,7 +177,7 @@ $fet = mysqli_fetch_assoc($get);
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Area</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="areas_list.php">Area List</a></li>
+                                1<li><a href="areas_list.php">Area List</a></li>
                             </ul>
                         </li>
 
