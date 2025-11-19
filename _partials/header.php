@@ -177,7 +177,7 @@ $fet = mysqli_fetch_assoc($get);
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Area</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                1<li><a href="areas_list.php">Area List</a></li>
+                                <li><a href="areas_list.php">Area List</a></li>
                             </ul>
                         </li>
 
@@ -210,23 +210,24 @@ $fet = mysqli_fetch_assoc($get);
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Inventory</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="worker_add.php">Add Inventory</a></li>
-                                <li><a href="worker_list.php">Inventory List</a></li>
+                                <li><a href="inventory_add.php">Add Inventory</a></li>
+                                <li><a href="inventory_list.php">Inventory List</a></li>
                             </ul>
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Store Item</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Store/Line Item</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="area_list.php">Add Items List</a></li>
+                                <li><a href="storeline_items_list.php">Add Items List</a></li>
                             </ul>
                         </li>
 
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Purchase Stock</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="worker_add.php">Add Stock</a></li>
-                                <li><a href="worker_list.php">Stock List</a></li>
+                                <li><a href="select_option.php">Add Stock</a></li>
+                                <li><a href="line_stock_list.php">Line Stock List</a></li>
+                                <li><a href="store_stock_list.php">Store Stock List</a></li>
                             </ul>
                         </li>
 
