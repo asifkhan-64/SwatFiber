@@ -108,7 +108,7 @@
         <div class="row">
             <div class="col-sm-12">
                 
-                <h5 class="page-title">Add New User</h5>
+                <h5 class="page-title">Add Client</h5>
             </div>
         </div>
         <!-- end row -->
@@ -124,10 +124,10 @@
                                 <div class="col-sm-4">
                                     <input class="form-control" type="text" placeholder="Name" name="addUser_Name" id="example-text-input">
                                 </div>
-                            
-                                <label for="example-email-input" class="col-sm-2 col-form-label">Contact</label>
+
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Father Name</label>
                                 <div class="col-sm-4">
-                                    <input type="tel" id="phone-mask" class="form-control" name="addUser_contact" placeholder="923*********"  required>
+                                    <input class="form-control" type="text" placeholder="Name" name="addUser_Name" id="example-text-input">
                                 </div>
                             </div>
 
@@ -154,31 +154,54 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="example-email-input" class="col-sm-2 col-form-label">Email</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">User ID</label>
                                 <div class="col-sm-4">
-                                    <input class="form-control" type="email" name="addUser_email" placeholder="Name@example.com" id="example-email-input" required>
+                                    <input class="form-control" type="text" placeholder="User ID" name="addUser_UserID" id="example-text-input">
                                 </div>
-                            
-                                <label class="col-sm-2 col-form-label">Password</label>
+
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Package</label>
                                 <div class="col-sm-4">
-                                    <input type="password" id="pass2" name="addUser_password" class="form-control" required placeholder="Password" required />
+                                    <?php
+                                        $selectExpenseCat = mysqli_query($connect, "SELECT * FROM package_list");
+                                        $optionsCategory = '<select class="form-control package" name="package_id" required="" style="width:100%">';
+                                        while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
+                                            $optionsCategory.= '<option value='.$rowCat['p_id'].'>'.$rowCat['package_name'].' - Price: '.$rowCat['package_price'].'</option>';
+                                        }
+                                        $optionsCategory.= "</select>";
+                                    echo $optionsCategory;
+                                    ?>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Role</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Wire Length</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control select2" name="addUser_role" required>
-                                        <option></option>
-                                        <option value="1">Admin</option>
-                                        <option value="2">Technician</option>
-                                        <option value="3">Accounts</option>
-                                    </select>
+                                    <input class="form-control" type="number" placeholder="Wire Length" name="addUser_WireLength" id="example-text-input">
                                 </div>
 
-                                <label class="col-sm-2 col-form-label">Profile Image</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Installation Type</label>
                                 <div class="col-sm-4">
-                                    <input type="file" name="fileUpload" required="" class="btn-default">
+                                    <?php
+                                        $selectExpenseCat = mysqli_query($connect, "SELECT * FROM installation_type");
+                                        $optionsCategory = '<select class="form-control ins" name="ins_id" required="" style="width:100%">';
+                                        while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
+                                            $optionsCategory.= '<option value='.$rowCat['ins_id'].'>'.$rowCat['ins_type'].' - Price: '.$rowCat['ins_price'].'</option>';
+                                        }
+                                        $optionsCategory.= "</select>";
+                                    echo $optionsCategory;
+                                    ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label">Contact</label>
+                                <div class="col-sm-4">
+                                    <input type="text" maxlength = "12" class="form-control contact" data-inputmask="'mask': '0399-99999999'" placeholder="03XX-XXXXXXX" name="addUser_contact"  required>
+                                </div>
+                            
+                                <label for="example-email-input" class="col-sm-2 col-form-label">CNIC</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control cnic" data-inputmask="'mask': '99999-9999999-9'" name="addUser_cnic"  placeholder="XXXXX-XXXXXXX-X"  required>
                                 </div>
                             </div>
 
@@ -191,6 +214,13 @@
                                 <label class="col-sm-2 col-form-label">CNIC Back</label>
                                 <div class="col-sm-4">
                                     <input type="file" name="fileUploadCnicBack" required="" class="btn-default">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Modem (Lat/Lan)</label>
+                                <div class="col-sm-4">
+                                    <input type="file" name="fileUpload" required="" class="btn-default">
                                 </div>
                             </div>
 
@@ -241,27 +271,32 @@ $(document).ready(function() {
 <script type="text/javascript" src="../assets/js/select2.min.js"></script>
 <script type="text/javascript">
 
-$('.select2').select2({
-    placeholder: 'Select Option',
-    allowClear: true
-
-});
-
 $('.area').select2({
     placeholder: 'Select Option',
     allowClear: true
 
 });
+
+$('.package').select2({
+    placeholder: 'Select Option',
+    allowClear: true
+
+});
+
+$('.ins').select2({
+    placeholder: 'Select Option',
+    allowClear: true
+
+});
 </script>
 
-<script src="https://unpkg.com/imask"></script>
+<script src="../assets/inputmask.js"></script>
+
 <script>
-    const phoneInput = document.getElementById('phone-mask');
-    const maskOptions = {
-        mask: '{92}0000000000'
-    };
-    const mask = IMask(phoneInput, maskOptions);
+    $(".contact").inputmask();
+    $(".cnic").inputmask();
 </script>
+
 </body>
 
 </html>

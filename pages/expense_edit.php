@@ -95,10 +95,10 @@
                                     <option></option>';
                                     if ($fetch_retQuery['payment_by'] == 'Cash') {
                                         echo '<option value="Cash" selected>Cash</option>';
-                                    echo '<option value="Card">Card</option>';
+                                    echo '<option value="Online">Online</option>';
                                     }else {
                                         echo '<option value="Cash">Cash</option>';
-                                        echo '<option value="Card" selected>Card</option>';
+                                        echo '<option value="Online" selected>Online</option>';
                                     }
                                     
 

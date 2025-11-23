@@ -56,7 +56,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
-                <h5 class="page-title">Edit Purchase Stock (Qty Based)</h5>
+                <h5 class="page-title">Edit Purchased Stock (Qty Based)</h5>
             </div>
         </div>
         <!-- end row -->

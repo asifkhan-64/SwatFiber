@@ -78,7 +78,7 @@ include '../_partials/header.php'
                                     echo '<select class="form-control payment" name="paymentBy" required>
                                     <option></option>';
                                     echo '<option value="Cash">Cash</option>';
-                                    echo '<option value="Card">Card</option>';
+                                    echo '<option value="Online">Online</option>';
 
                                     echo '</select>';
                                     ?>

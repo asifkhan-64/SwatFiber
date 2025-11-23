@@ -128,7 +128,8 @@ $fet = mysqli_fetch_assoc($get);
 
         img:hover {
             transform: scale(1.2); /* Grows by 20% */
-            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background for visibility */
+            /* background-color: rgba(255, 255, 255, 0.5); */
+            rotate: -10deg;
             backdrop-filter: blur(100px); /* Apply a blur of 10 pixels */
             -webkit-backdrop-filter: blur(10px); /* For Webkit-based browsers */
         }
@@ -184,9 +185,9 @@ $fet = mysqli_fetch_assoc($get);
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-hand-holding-usd"></i> <span> Clients</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="till_one_add.php">Add Client</a></li>
-                                <li><a href="till_one_list.php">Client List</a></li>
-                                <li><a href="till_one_list.php">Search Client</a></li>
+                                <li><a href="client_add.php">Add Client</a></li>
+                                <li><a href="client_list.php">Client List</a></li>
+                                <li><a href="client_search.php">Search Client</a></li>
                             </ul>
                         </li>
 
@@ -223,11 +224,18 @@ $fet = mysqli_fetch_assoc($get);
                         </li>
 
                         <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Installation Type</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="installation_type_list.php">Installation Type</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Purchase Stock</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="select_option.php">Add Stock</a></li>
-                                <li><a href="line_stock_list.php">Line Stock List</a></li>
                                 <li><a href="store_stock_list.php">Store Stock List</a></li>
+                                <li><a href="line_stock_list.php">Line Stock List</a></li>
                             </ul>
                         </li>
 

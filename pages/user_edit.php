@@ -175,9 +175,8 @@
                                             <div class="form-group row">
                                                 <label for="example-password-input" class="col-sm-2 col-form-label"></label>
                                                 <div class="col-sm-10">
-                                                   <!-- <button type="button" class="btn btn-secondary waves-effect">Cancel</button> -->
-                                            <?php include '../_partials/cancel.php'; ?>
-                                             <button type="submit" name="updateUser" class="btn btn-primary waves-effect waves-light">Update User</button>
+                                                    <?php include '../_partials/cancel.php'; ?>
+                                                    <button type="submit" name="updateUser" class="btn btn-primary waves-effect waves-light">Update User</button>
                                                 </div>
                                             </div>
 

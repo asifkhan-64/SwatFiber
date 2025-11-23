@@ -14,21 +14,23 @@
         $date_of_purchase = $_POST['date_of_purchase'];
         $price = $_POST['price'];
         $description = $_POST['description'];
-        $item_condition = $_POST['item_condition'];
+        $item_length = $_POST['item_length'];
 
         $getUser = $_SESSION["user"];
         $getUserQuery = mysqli_query($connect, "SELECT * FROM login_user WHERE email = '$getUser'");
         $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
         $addedBy = $fetch_getUserQuery['id'];
 
-        $insertStock = mysqli_query($connect, "INSERT INTO store_stock(item_id, item_qty, date_of_purchase, price, item_description, item_condition, added_by)VALUES('$item_id', '$item_qty', '$date_of_purchase', '$price', '$description', '$item_condition', '$addedBy')");  
+        $length = $item_qty * $item_length;
+
+        $insertStock = mysqli_query($connect, "INSERT INTO line_stock(item_id, item_qty, date_of_purchase, price, item_description, item_length, added_by)VALUES('$item_id', '$item_qty', '$date_of_purchase', '$price', '$description', '$item_length', '$addedBy')");  
         if ($insertStock) {
-            $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$item_qty' WHERE sl_id = '$item_id'");
-            header("LOCATION:store_stock_list.php");
+            $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$length' WHERE sl_id = '$item_id'");
+            header("LOCATION:line_stock_list.php");
         } else {
             $userNotAdded = '
             <div class="alert alert-danger alert-dismissible fade show" role="alert"></div>
-            <strong>Stock Not Added. Something Went Wrong!</strong>';
+            <strong>Line Stock Not Added. Something Went Wrong!</strong>';
         }
     }
 
@@ -40,7 +42,7 @@
         <div class="row">
             <div class="col-sm-12">
                 
-                <h5 class="page-title">Purchase Stock (Qty Based)</h5>
+                <h5 class="page-title">Purchase Stock (Line Based)</h5>
             </div>
         </div>
         <!-- end row -->
@@ -54,7 +56,7 @@
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Item Name</label>
                                 <div class="col-sm-4">
                                 <?php
-                                $selectExpenseCat = mysqli_query($connect, "SELECT * FROM sl_items WHERE item_type = '2'");
+                                $selectExpenseCat = mysqli_query($connect, "SELECT * FROM sl_items WHERE item_type = '1'");
                                     $optionsCategory = '<select class="form-control item" name="item_id" required="" style="width:100%">';
                                       while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
                                         $optionsCategory.= '<option value='.$rowCat['sl_id'].'>'.$rowCat['item_name'].'</option>';
@@ -64,33 +66,32 @@
                                 ?>
                                 </div>
 
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Item Qty</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="number" placeholder="Item Qty" required name="item_qty" id="example-text-input">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Price</label>
                                 <div class="col-sm-4">
                                     <input class="form-control" type="number" placeholder="Price" name="price" required id="example-text-input">
                                 </div>
+                            </div>
+
+                            <div class="form-group row">
+                                
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Item Qty</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" placeholder="Item Qty" required name="item_qty" id="example-text-input">
+                                </div>
+
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Length Per Pack</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" placeholder="Length" name="item_length" required id="example-text-input">
+                                </div>
+
+                                
+                            </div>
+
+                            <div class="form-group row">
 
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Date of Purchase</label>
                                 <div class="col-sm-4">
                                     <input class="form-control" type="date" placeholder="Date of Purchase" name="date_of_purchase" required id="example-text-input">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Condition</label>
-                                <div class="col-sm-4">
-                                <select class="form-control condition" name="item_condition" required>
-                                        <option></option>
-                                        <option value="Default">Default</option>
-                                        <option value="New">    New</option>
-                                        <option value="Old">    Old</option>
-                                    </select>
                                 </div>
                             </div>
 
@@ -109,7 +110,6 @@
                                 <label for="example-password-input" class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
                                     <?php include('../_partials/cancel.php') ?>
-                                    <!-- <button type="button" class="btn btn-secondary waves-effect">Cancel</button> -->
                                     <button type="submit" name="addStock" class="btn btn-primary waves-effect waves-light">Add Stock</button>
                                 </div>
                             </div>

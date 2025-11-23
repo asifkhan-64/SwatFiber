@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
-                <h5 class="page-title">Expenses</h5>
+                <h5 class="page-title">Line Stock</h5>
             </div>
         </div>
         <!-- end row -->
@@ -22,44 +22,43 @@
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <h4 class="mt-0 header-title">Expenses List</h4>
+                        <h4 class="mt-0 header-title">Line Stock List</h4>
                         <table id="datatable" class="table  dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Amount</th>
-                                    <th>Date-Time</th>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Length</th>
+                                    <th>Price</th>
+                                    <th>Date of Purchase</th>
                                     <th>Description</th>
-                                    <th>Payment By</th>
-                                    <!-- <th>Expense Status</th> -->
-                                    <!-- <th class="text-center"><i class="mdi mdi-eye"></i></th> -->
                                     <th class="text-center"> <i class="fa fa-edit"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $selectExpense = mysqli_query($connect, "SELECT expense.*, expense_category.expense_name FROM expense
-                                    INNER JOIN expense_category ON expense_category.id = expense.cat_id ORDER BY expense.id DESC");
+                                $retStoreItems = mysqli_query($connect, "SELECT line_stock.*, sl_items.* FROM `line_stock`
+                                                 INNER JOIN sl_items ON sl_items.sl_id = line_stock.item_id
+                                                 ORDER BY line_stock.date_of_purchase DESC");
                                 $iteration = 1;
 
-                                while ($rowExpense = mysqli_fetch_assoc($selectExpense)) {
+                                while ($rowStock = mysqli_fetch_assoc($retStoreItems)) {
                                     echo '
                                         <tr>
                                             <td>'.$iteration++.'</td>
-                                            <td>'.$rowExpense['expense_name'].'</td>
-                                            <td> <span class="badge badge-info" style="font-size: 16px">'.$rowExpense['expense_amount'].'</span></td>
-                                            <td>'.substr($rowExpense['expense_date'], 0, 10) .'</td>
-                                            <td>'.$rowExpense['expense_description'].'</td>';
+                                            <td>'.$rowStock['item_name'].'</td>
+                                            <td> <span class="badge badge-info" style="font-size: 16px">'.$rowStock['item_qty'].'</span></td>
+                                            <td>'.$rowStock['item_length'] .' m</td>
+                                            <td>'.$rowStock['price'] .'</td>
+                                            <td>'.$rowStock['date_of_purchase'] .'</td>
+                                            <td>'.$rowStock['item_description'] .'</td>
+                                            ';
 
-                                            if ($rowExpense['payment_by'] == 'Cash') {
-                                                echo '<td><span class="badge badge-success" style="font-size: 16px">' . $rowExpense['payment_by'] . '</span></td>';
-                                            } else {
-                                                echo '<td><span class="badge badge-primary" style="font-size: 16px">' . $rowExpense['payment_by'] . '</span></td>';
-                                            }
+                                           
                                             echo '
                                             <td class="text-center">
-                                                <a href="expense_edit.php?id='.$rowExpense['id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light btn-sm">Edit</a>
+                                                <a href="line_stock_edit.php?id='.$rowStock['line_st_id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light btn-sm">Edit</a>
                                             </td>
                                             ';
                                             
