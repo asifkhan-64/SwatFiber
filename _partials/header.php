@@ -129,7 +129,7 @@ $fet = mysqli_fetch_assoc($get);
         img:hover {
             transform: scale(1.2); /* Grows by 20% */
             /* background-color: rgba(255, 255, 255, 0.5); */
-            rotate: -10deg;
+            /* rotate: -10deg; */
             backdrop-filter: blur(100px); /* Apply a blur of 10 pixels */
             -webkit-backdrop-filter: blur(10px); /* For Webkit-based browsers */
         }
