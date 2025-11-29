@@ -29,6 +29,7 @@
                                     <th>#</th>
                                     <th>Item</th>
                                     <th>Qty</th>
+                                    <th>Condition</th>
                                     <th>Price</th>
                                     <th>Date of Purchase</th>
                                     <th>Description</th>
@@ -48,6 +49,7 @@
                                             <td>'.$iteration++.'</td>
                                             <td>'.$rowStock['item_name'].'</td>
                                             <td> <span class="badge badge-info" style="font-size: 16px">'.$rowStock['item_qty'].'</span></td>
+                                            <td>'.$rowStock['item_condition'] .'</td>
                                             <td>'.$rowStock['price'] .'</td>
                                             <td>'.$rowStock['date_of_purchase'] .'</td>
                                             <td>'.$rowStock['item_description'] .'</td>

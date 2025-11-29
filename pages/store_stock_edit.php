@@ -32,10 +32,21 @@
         if ($findDifferenceQty < 0) {
             $remQty = $fetch_checkQuantitySLItems['rem_qty'] - abs($findDifferenceQty);
             $DifferenceQty = abs($findDifferenceQty);
-            $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty - '$DifferenceQty' WHERE sl_id = '$item_id'");
+            if ($item_condition === 'New') {
+                $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$item_qty' WHERE sl_id = '$item_id'");
+            }elseif ($item_condition === 'Old') {
+                $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET old_qty = old_qty + '$item_qty' WHERE sl_id = '$item_id'");
+            }
+
+            // $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty - '$DifferenceQty' WHERE sl_id = '$item_id'");
         } else {
             $remQty = $fetch_checkQuantitySLItems['rem_qty'] + abs($findDifferenceQty);
-            $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$findDifferenceQty' WHERE sl_id = '$item_id'");
+            if ($item_condition === 'New') {
+                $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$item_qty' WHERE sl_id = '$item_id'");
+            }elseif ($item_condition === 'Old') {
+                $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET old_qty = old_qty + '$item_qty' WHERE sl_id = '$item_id'");
+            }
+            // $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$findDifferenceQty' WHERE sl_id = '$item_id'");
         }
         
 
@@ -103,11 +114,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Price</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Condition</label>
                                 <div class="col-sm-4">
                                 <select class="form-control condition" name="item_condition" required>
                                         <option></option>
-                                        <option value="Default" <?php if ($fetch_getStock['item_condition'] === 'Default') echo 'selected'; ?>>Default</option>
                                         <option value="New" <?php if ($fetch_getStock['item_condition'] === 'New') echo 'selected'; ?>>    New</option>
                                         <option value="Old" <?php if ($fetch_getStock['item_condition'] === 'Old') echo 'selected'; ?>>    Old</option>
                                     </select>

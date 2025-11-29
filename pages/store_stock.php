@@ -23,7 +23,11 @@
 
         $insertStock = mysqli_query($connect, "INSERT INTO store_stock(item_id, item_qty, date_of_purchase, price, item_description, item_condition, added_by)VALUES('$item_id', '$item_qty', '$date_of_purchase', '$price', '$description', '$item_condition', '$addedBy')");  
         if ($insertStock) {
-            $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$item_qty' WHERE sl_id = '$item_id'");
+            if ($item_condition === 'New') {
+                $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$item_qty' WHERE sl_id = '$item_id'");
+            }elseif ($item_condition === 'Old') {
+                $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET old_qty = old_qty + '$item_qty' WHERE sl_id = '$item_id'");
+            }
             header("LOCATION:store_stock_list.php");
         } else {
             $userNotAdded = '
@@ -87,7 +91,6 @@
                                 <div class="col-sm-4">
                                 <select class="form-control condition" name="item_condition" required>
                                         <option></option>
-                                        <option value="Default">Default</option>
                                         <option value="New">    New</option>
                                         <option value="Old">    Old</option>
                                     </select>

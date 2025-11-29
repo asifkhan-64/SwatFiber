@@ -24,12 +24,54 @@
         $ins_id = $_POST['ins_id'];
         $addUser_contact = $_POST['addUser_contact'];
         $addUser_cnic = $_POST['addUser_cnic'];
+        $line_st_id = $_POST['line_st_id'];
         
 
         $getUser = $_SESSION["user"];
         $getUserQuery = mysqli_query($connect, "SELECT * FROM login_user WHERE email = '$getUser'");
         $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
         $addedBy = $fetch_getUserQuery['id'];
+
+
+        $selectLine = mysqli_query($connect, "SELECT * FROM `line_stock` WHERE line_st_id = '$line_st_id'");
+        $rowItems = mysqli_fetch_assoc($selectLine);
+        $itemId = $rowItems['item_id'];
+
+        $checkPreviousWireLength = mysqli_query($connect, "SELECT * FROM `client_tbl` WHERE client_id = '$id'");
+        $fetch_checkPreviousWireLength = mysqli_fetch_assoc($checkPreviousWireLength);
+        $previousWireLength = $fetch_checkPreviousWireLength['wire_length'];
+
+        $findDifferenceQty = $previousWireLength - $addUser_WireLength;
+        if ($findDifferenceQty < 0) {
+            $remQty = $fetch_checkPreviousWireLength['rem_qty'] - abs($findDifferenceQty);
+            $DifferenceQty = abs($findDifferenceQty);
+            $updateLineStock = mysqli_query($connect, "UPDATE `sl_items` SET `rem_qty` = rem_qty - '$DifferenceQty' WHERE sl_id = '$itemId' ");
+        } else {
+            $remQty = $fetch_checkPreviousWireLength['rem_qty'] + abs($findDifferenceQty);
+            $updatesl_itemsQty = mysqli_query($connect, "UPDATE sl_items SET rem_qty = rem_qty + '$findDifferenceQty' WHERE sl_id = '$itemId'");
+        }
+
+        $getClientData = mysqli_query($connect, "SELECT client_tbl.*, installation_type.* FROM `client_tbl`
+        INNER JOIN installation_type ON installation_type.ins_id = client_tbl.ins_id
+        WHERE client_tbl.client_id = '$id';");
+        $fetch_getClientData = mysqli_fetch_assoc($getClientData);
+        $insType = $fetch_getClientData['ins_type'];
+        $insID = $fetch_getClientData['ins_id'];
+
+        $selectsl_items = mysqli_query($connect, "SELECT * FROM `sl_items` WHERE item_name LIKE '%Router%' OR item_name LIKE '%Modem%'");
+        $fetch_sl_items = mysqli_fetch_assoc($selectsl_items);
+        $itemName = $fetch_sl_items['item_name'];
+        $itemSLId = $fetch_sl_items['sl_id'];
+
+        if ($insID === $ins_id) {
+        }else {
+            if (str_contains($insType, "New")) {
+                $updateStock = mysqli_query($connect, "UPDATE `sl_items` SET `old_qty` = old_qty - '1', `rem_qty` = rem_qty + '1' WHERE sl_id =  '$itemSLId'");
+            }else {
+                $updateStock = mysqli_query($connect, "UPDATE `sl_items` SET `rem_qty` = rem_qty - '1', `old_qty` = old_qty + '1' WHERE sl_id =  '$itemSLId'");
+            }
+        }
+
 
         $updateClient = mysqli_query($connect, "UPDATE `client_tbl` SET `name` = '$name', `father_name` = '$fatherName', `user_id` = '$userName', `area_id` = '$area', `address` = '$addUser_address', `package_id` = '$package_id', `wire_length` = '$addUser_WireLength', `ins_id` = '$ins_id', `contact` = '$addUser_contact', `cnic_no` = '$addUser_cnic', `added_by` = '$addedBy' WHERE client_id = '$id'");
 
@@ -117,23 +159,27 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Wire Length</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="number" placeholder="Wire Length"  name="addUser_WireLength" id="example-text-input" value="<?php echo $fetch_getClientData['wire_length']; ?>">
-                                </div>
-
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Installation Type</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Wire</label>
                                 <div class="col-sm-4">
                                     <?php
-                                        $selectExpenseCat = mysqli_query($connect, "SELECT * FROM installation_type");
-                                        $optionsCategory = '<select class="form-control ins" name="ins_id" required="" style="width:100%">';
-                                        while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
-                                            $selected = ($rowCat['ins_id'] == $fetch_getClientData['ins_id']) ? 'selected' : '';
-                                            $optionsCategory.= '<option value='.$rowCat['ins_id'].' '.$selected.'>'.$rowCat['ins_type'].' - Price: '.$rowCat['ins_price'].'</option>';
+                                        $selectLine = mysqli_query($connect, "SELECT line_stock.*, sl_items.item_name FROM `line_stock`
+                                        INNER JOIN sl_items ON sl_items.sl_id = line_stock.item_id");
+                                        $optionsCategory = '<select class="form-control ins" name="line_st_id" required="" style="width:100%">';
+                                        while ($rowItems = mysqli_fetch_assoc($selectLine)) {
+                                            if ($rowItems['line_st_id'] == $fetch_getClientData['line_st_id']) {
+                                                $optionsCategory.= '<option value='.$rowItems['line_st_id'].' selected>'.$rowItems['item_name'].'</option>';
+                                            }else{
+                                            $optionsCategory.= '<option value='.$rowItems['line_st_id'].'>'.$rowItems['item_name'].'</option>';
+                                            }
                                         }
                                         $optionsCategory.= "</select>";
                                     echo $optionsCategory;
                                     ?>
+                                </div>
+
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Wire Length</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" placeholder="Wire Length"  name="addUser_WireLength" id="example-text-input" value="<?php echo $fetch_getClientData['wire_length']; ?>">
                                 </div>
                             </div>
 
@@ -146,6 +192,22 @@
                                 <label for="example-email-input" class="col-sm-2 col-form-label">CNIC</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control cnic" data-inputmask="'mask': '99999-9999999-9'" name="addUser_cnic" value="<?php echo $fetch_getClientData['cnic_no']; ?>" placeholder="XXXXX-XXXXXXX-X"  required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Installation Type</label>
+                                <div class="col-sm-4">
+                                    <?php
+                                        $selectExpenseCat = mysqli_query($connect, "SELECT * FROM installation_type");
+                                        $optionsCategory = '<select class="form-control ins" name="ins_id" required="" style="width:100%">';
+                                        while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
+                                            $selected = ($rowCat['ins_id'] == $fetch_getClientData['ins_id']) ? 'selected' : '';
+                                            $optionsCategory.= '<option value='.$rowCat['ins_id'].' '.$selected.'>'.$rowCat['ins_type'].' - Price: '.$rowCat['ins_price'].'</option>';
+                                        }
+                                        $optionsCategory.= "</select>";
+                                    echo $optionsCategory;
+                                    ?>
                                 </div>
                             </div>
 

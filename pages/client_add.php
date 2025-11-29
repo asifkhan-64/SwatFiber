@@ -20,6 +20,7 @@
         $ins_id = $_POST['ins_id'];
         $addUser_contact = $_POST['addUser_contact'];
         $addUser_cnic = $_POST['addUser_cnic'];
+        $line_st_id = $_POST['line_st_id'];
         
 
         $getUser = $_SESSION["user"];
@@ -27,6 +28,10 @@
         $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
         $addedBy = $fetch_getUserQuery['id'];
 
+        $selectsl_items = mysqli_query($connect, "SELECT * FROM `sl_items` WHERE item_name LIKE '%Router%' OR item_name LIKE '%Modem%'");
+        $fetch_sl_items = mysqli_fetch_assoc($selectsl_items);
+        $itemName = $fetch_sl_items['item_name'];
+        $itemSLId = $fetch_sl_items['sl_id'];
         
 
         
@@ -49,7 +54,6 @@
             $saveProfileImage = "../__images/".$profileNewName;
 
             if (move_uploaded_file($profileTemp, $saveProfileImage)) {
-                // echo "Done";
             }else{
                 echo "Error Profile Image Uploading";
             }
@@ -68,7 +72,6 @@
             $saveCNICFront = "../__images/".$CNICFrontNewName;
 
             if (move_uploaded_file($CNICFrontTemp, $saveCNICFront)) {
-                // echo "Done";
             }else{
                 echo "Error CNIC Front Image Uploading";
             }
@@ -85,20 +88,40 @@
 
             $saveCNICBack = "../__images/".$CNICBackNewName;
             if (move_uploaded_file($CNICBackTemp, $saveCNICBack)) {
-                // echo "Done";
             }else{
                 echo "Error CNIC Back Image Uploading";
             }
             
 
 
-            $creatClient = mysqli_query($connect, "INSERT INTO `client_tbl`(`name`, `father_name`, `user_id`, `area_id`, `address`, `package_id`, `wire_length`, `ins_id`, `contact`, `cnic_no`, `cnic_front`, `cnic_back`, `modem_image`, `added_by`) VALUES ('$name', '$fatherName', '$userName', '$area', '$addUser_address', '$package_id', '$addUser_WireLength', '$ins_id', '$addUser_contact', '$addUser_cnic', '$CNICFrontNewName', '$CNICBackNewName', '$profileNewName', '$addedBy')");
+            $creatClient = mysqli_query($connect, "INSERT INTO `client_tbl`(`name`, `father_name`, `user_id`, `area_id`, `address`, `package_id`, `wire_length`, `ins_id`, `contact`, `cnic_no`, `cnic_front`, `cnic_back`, `modem_image`, `added_by`, `line_st_id`) VALUES ('$name', '$fatherName', '$userName', '$area', '$addUser_address', '$package_id', '$addUser_WireLength', '$ins_id', '$addUser_contact', '$addUser_cnic', '$CNICFrontNewName', '$CNICBackNewName', '$profileNewName', '$addedBy', '$line_st_id')");
 
-            if (!$creatClient) {
-                $userNotAdded = "Client not added! Try Again.";
-            }else{
-                header("LOCATION: client_list.php");
-            }
+
+            if ($creatClient) {
+                $selectLine = mysqli_query($connect, "SELECT * FROM `line_stock` WHERE line_st_id = '$line_st_id'");
+                $rowItems = mysqli_fetch_assoc($selectLine);
+                $itemId = $rowItems['item_id'];
+
+
+                $updateLineStock = mysqli_query($connect, "UPDATE `sl_items` SET `rem_qty` = rem_qty - '$addUser_WireLength' WHERE sl_id = '$itemId' ");
+
+                $selectExpenseCat = mysqli_query($connect, "SELECT * FROM installation_type WHERE ins_id = '$ins_id'");
+                $rowCat = mysqli_fetch_assoc($selectExpenseCat);
+                $insType = $rowCat['ins_type'];
+                    
+                if (str_contains($insType, "New")) {
+                    $updateStock = mysqli_query($connect, "UPDATE `sl_items` SET `rem_qty` = rem_qty - '1' WHERE sl_id =  '$itemSLId'");
+                }else {
+                    $updateStock = mysqli_query($connect, "UPDATE `sl_items` SET `old_qty` = old_qty - '1' WHERE sl_id =  '$itemSLId'");
+                }
+
+                
+                if (!$creatClient) {
+                    $userNotAdded = "Client not added! Try Again.";
+                }else{
+                    header("LOCATION: client_list.php");
+                }
+            } 
         }else {
             $userAlreadyinDatabase = "<div class=\"alert alert-dark\" role=\"alert\">Client Already Exist</div>";
         }
@@ -178,22 +201,23 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Wire Length</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" type="number" placeholder="Wire Length" name="addUser_WireLength" id="example-text-input">
-                                </div>
-
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Installation Type</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Wire</label>
                                 <div class="col-sm-4">
                                     <?php
-                                        $selectExpenseCat = mysqli_query($connect, "SELECT * FROM installation_type");
-                                        $optionsCategory = '<select class="form-control ins" name="ins_id" required="" style="width:100%">';
-                                        while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
-                                            $optionsCategory.= '<option value='.$rowCat['ins_id'].'>'.$rowCat['ins_type'].' - Price: '.$rowCat['ins_price'].'</option>';
+                                        $selectLine = mysqli_query($connect, "SELECT line_stock.*, sl_items.item_name FROM `line_stock`
+                                        INNER JOIN sl_items ON sl_items.sl_id = line_stock.item_id");
+                                        $optionsCategory = '<select class="form-control ins" name="line_st_id" required="" style="width:100%">';
+                                        while ($rowItems = mysqli_fetch_assoc($selectLine)) {
+                                            $optionsCategory.= '<option value='.$rowItems['line_st_id'].'>'.$rowItems['item_name'].'</option>';
                                         }
                                         $optionsCategory.= "</select>";
                                     echo $optionsCategory;
                                     ?>
+                                </div>
+
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Wire Length</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" placeholder="Wire Length" name="addUser_WireLength" id="example-text-input">
                                 </div>
                             </div>
 
@@ -225,6 +249,19 @@
                                 <label class="col-sm-2 col-form-label">Modem (Lat/Lan)</label>
                                 <div class="col-sm-4">
                                     <input type="file" name="fileUpload" required="" class="btn-default">
+                                </div>
+
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Installation Type</label>
+                                <div class="col-sm-4">
+                                    <?php
+                                        $selectExpenseCat = mysqli_query($connect, "SELECT * FROM installation_type");
+                                        $optionsCategory = '<select class="form-control ins" name="ins_id" required="" style="width:100%">';
+                                        while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
+                                            $optionsCategory.= '<option value='.$rowCat['ins_id'].'>'.$rowCat['ins_type'].' - Price: '.$rowCat['ins_price'].'</option>';
+                                        }
+                                        $optionsCategory.= "</select>";
+                                    echo $optionsCategory;
+                                    ?>
                                 </div>
                             </div>
 
