@@ -304,7 +304,7 @@ $fet = mysqli_fetch_assoc($get);
                         <ul class="list-inline float-right mb-0">
                             <li class="list-inline-item dropdown notification-list">
                                 <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                    <img src="../assets/images/user.png" alt="user" class="rounded-circle" style="border:1px solid #54CC96; box-shadow: 1px 1px 3px 1px #ccc">
+                                    <img src="../assets/images/user.png" alt="user" class="rounded-circle animate__animated animate__bounce" style="border:1px solid #54CC96; box-shadow: 1px 1px 3px 1px #ccc">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
                                     <a class="dropdown-item" href="signout.php"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>

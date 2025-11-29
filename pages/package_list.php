@@ -85,7 +85,7 @@ include('../_partials/header.php');
             </div>
             <div class="col-12">
                 <div class="card m-b-30">
-                    <div class="card-body">
+                    <div class="card-body"> 
                         <h4 class="mt-0 header-title">Package List</h4>
 
                         <table id="datatable" class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -93,7 +93,7 @@ include('../_partials/header.php');
                                 <tr>
                                     <th>#</th>
                                     <th>Package Name</th>
-                                    <th>Package Pice</th>
+                                    <th>Package Price</th>
                                     <th class="text-center"> <i class="fa fa-edit"></i>
                                     </th>
                                 </tr>
@@ -106,7 +106,7 @@ include('../_partials/header.php');
                                 while ($rowSuppliers = mysqli_fetch_assoc($uppliers)) {
                                     echo '
                                     <tr>
-                                         <td>' . $iteration++ . '</td>
+                                         <td>' . $iteration++ . '.</td>
                                          <td>' . $rowSuppliers['package_name'] . '</td>
                                          <td>' . $rowSuppliers['package_price'] . '</td>
                                          <td class="text-center"><a href="package_edit.php?id=' . $rowSuppliers['p_id'] . '" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>
