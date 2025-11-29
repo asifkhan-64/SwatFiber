@@ -203,8 +203,8 @@ $fet = mysqli_fetch_assoc($get);
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
-                                <li><a href="worker_add.php">Add Payment</a></li>
-                                <li><a href="worker_list.php">Payment List</a></li>
+                                <li><a href="client_select.php">Add Payment</a></li>
+                                <li><a href="client_payment_list.php">Payment List</a></li>
                             </ul>
                         </li>
 
