@@ -209,6 +209,15 @@ $fet = mysqli_fetch_assoc($get);
                         </li>
 
                         <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Bill Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="bill_payment.php">Add Bill Payment</a></li>
+                                <li><a href="bill_payment_list.php">Bill Payment List</a></li>
+                                <li><a href="bill_dues_list.php">Bill Dues List</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Inventory</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="inventory_add.php">Add Inventory</a></li>

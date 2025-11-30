@@ -13,39 +13,39 @@
     WHERE client_tbl.client_id = '$client_id'");
     $rowClientData = mysqli_fetch_assoc($getClientData);
 
+    $getClientPaymentDetails = mysqli_query($connect, "SELECT * FROM client_payments WHERE client_id = '$client_id'");
+    $rowClientPaymentDetails = mysqli_fetch_assoc($getClientPaymentDetails);
+
+
     if ($rowClientData['updated_bill_payment'] === '0') {
         $package_price = $rowClientData['package_price'];
     } else {
         $package_price = $rowClientData['updated_bill_payment'];
     }
 
-    if (isset($_POST['addPayment'])) {
+    if (isset($_POST['editPayment'])) {
         $package = $_POST['package'];
         $installation = $_POST['installation'];
         $cable = $_POST['cable'];
         $other_charges = $_POST['other_charges'];
         $discount_charges = $_POST['discount_charges'];
         $total_charges = $_POST['total_charges'];
-
+        
         $getUser = $_SESSION["user"];
         $getUserQuery = mysqli_query($connect, "SELECT * FROM login_user WHERE email = '$getUser'");
         $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
         $addedBy = $fetch_getUserQuery['id'];
 
-        $addPaymentQuery = mysqli_query($connect, "INSERT INTO `client_payments`(`client_id`, `package_amount`, `installation_amount`, `cable_amount`, `other_charges`, `discount_charges`, `total_charges`, `added_by`) VALUES 
-        ('$client_id', '$package', '$installation', '$cable', '$other_charges', '$discount_charges', '$total_charges', '$addedBy')");
+        $addPaymentQuery = mysqli_query($connect, "UPDATE `client_payments` SET `package_amount` = '$package', `installation_amount` = '$installation', `cable_amount` = '$cable', `other_charges` = '$other_charges', `discount_charges` = '$discount_charges', `total_charges` = '$total_charges', `added_by` = '$addedBy' WHERE `client_id` = '$client_id'");
 
         if ($addPaymentQuery) {
             $updateClientPaymentStatus = mysqli_query($connect, "UPDATE client_tbl SET payment_status = '1', updated_bill_payment = '$package' WHERE client_id = '$client_id'");
 
-            echo '<script>
-                alert("Payment Added Successfully.");
-                window.location.href="client_payment_list.php";
-            </script>';
+            header("LOCATION:client_payment_list.php");
         } else {
             echo '<script>
-                alert("Payment Addition Failed.");
-                window.location.href="add_payment.php?client_id='.$client_id.'";
+                alert("Payment Update Failed.");
+                window.location.href="client_payment_edit.php?client_id='.$client_id.'";
             </script>';
         }
     }
@@ -58,7 +58,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
-                <h5 class="page-title">Client Payment</h5>
+                <h5 class="page-title">Edit Client Payment</h5>
             </div>
         </div>
         <!-- end row -->
@@ -123,27 +123,27 @@
                             <thead>
                                 <tr>
                                     <th>Package</th>
-                                    <th><input type="text" name="package" id="package_amount" class="form-control" placeholder="Enter package amount" value="<?php echo $package_price ?>"></th>
+                                    <th><input type="text" name="package" id="package_amount" class="form-control" placeholder="Enter package amount" value="<?php echo $rowClientPaymentDetails['package_amount'] ?>"></th>
                                 </tr>
                                 <tr>
                                     <th>Installation</th>
-                                    <th><input type="text" name="installation" id="installation_amount" class="form-control" placeholder="Enter installation amount" value="<?php echo $rowClientData['ins_price'] ?>"></th>
+                                    <th><input type="text" name="installation" id="installation_amount" class="form-control" placeholder="Enter installation amount" value="<?php echo $rowClientPaymentDetails['installation_amount'] ?>"></th>
                                 </tr>
                                 <tr>
                                     <th>Cable</th>
-                                    <th><input type="text" name="cable" id="cable_amount" class="form-control" placeholder="Enter cable amount" value="0" required></th>
+                                    <th><input type="text" name="cable" id="cable_amount" class="form-control" placeholder="Enter cable amount" value="<?php echo $rowClientPaymentDetails['cable_amount'] ?>" required></th>
                                 </tr>
                                 <tr>
                                     <th>Other Charges</th>
-                                    <th><input type="text" name="other_charges" id="other_charges_amount" class="form-control" placeholder="Enter other charges amount" value="0" required></th>
+                                    <th><input type="text" name="other_charges" id="other_charges_amount" class="form-control" placeholder="Enter other charges amount" value="<?php echo $rowClientPaymentDetails['other_charges'] ?>" required></th>
                                 </tr>
                                 <tr>
                                     <th>Discount</th>
-                                    <th><input type="text" name="discount_charges" id="discount_amount" class="form-control" placeholder="Enter discount charges amount" value="0" required></th>
+                                    <th><input type="text" name="discount_charges" id="discount_amount" class="form-control" placeholder="Enter discount charges amount" value="<?php echo $rowClientPaymentDetails['discount_charges'] ?>" required></th>
                                 </tr>
                                 <tr>
                                     <th>Total Charges</th>
-                                    <th><input type="text" name="total_charges" id="total_charges_output" class="form-control" placeholder="Enter total charges amount" value="0" required readonly></th>
+                                    <th><input type="text" name="total_charges" id="total_charges_output" class="form-control" placeholder="Enter total charges amount" value="<?php echo $rowClientPaymentDetails['total_charges'] ?>" required readonly></th>
                                 </tr>
                             </thead>
                         </table>
@@ -151,7 +151,7 @@
                         <div class="form-group row text-right">
                             <div class="col-sm-12 text-right">
                                 <?php include '../_partials/cancel.php'?>
-                                <button type="submit" name="addPayment" class="btn btn-primary waves-effect waves-light">Add Payment</button>
+                                <button type="submit" name="editPayment" class="btn btn-primary waves-effect waves-light">Edit Payment</button>
                             </div>
                         </div>
                     </div>

@@ -19,8 +19,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
-                
-                <h5 class="page-title">Clients Payment</h5>
+                <h5 class="page-title animate__animated animate__bounce">Clients Payment</h5>
             </div>
         </div>
         <!-- end row -->
@@ -35,19 +34,22 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Contact</th>
-                                    <th>Package Amount</th>
                                     <th>Package</th>
-                                    <th>Contact</th>
-                                    <th>Date</th>
+                                    <th>Installation</th>
+                                    <th>Cable</th>
+                                    <th>Other</th>
+                                    <th>Discount</th>
+                                    <th>Total</th>
+                                    <th>DOP</th>
                                     <th class="text-center"> Edit <i class="fa fa-edit"></i></th>
-                                    <th class="text-center"> Images <i class="fa fa-image"></i></th>
+                                    <th class="text-center"> View <i class="fa fa-eye"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $retrieveUsers = mysqli_query($connect, "SELECT client_payments.*, client_tbl.name, client_tbl.contact, client_tbl.added_by FROM `client_payments`
                                 INNER JOIN client_tbl ON client_tbl.client_id = client_payments.client_id
-                                WHERE client_tbl.added_by = '$addedBy' ORDER BY client_tbl.dop DESC");
+                                WHERE client_tbl.added_by = '$addedBy' ORDER BY client_tbl.client_id DESC");
 
                                 $iterationUser = 1;
                                 $admin = 'Admininistration';
@@ -65,18 +67,21 @@
                                         <tr>
                                             <td>'.$iterationUser++.'.'.'</td>
                                             <td><strong>'.$userRow['name'].'</strong></td>
-                                            <td>'.$userRow['name'].'</td>
-                                            <td>'.$userRow['father_name'].'</td>
-                                            <td>'.$userRow['package_name'].'- Rs. '.$userRow['package_price'].'</td>
-                                            <td><a href="tel:'.$allContact[0].$allContact[1].'" style="decoration: none !important; color: black" class="Blondie"><strong>'.$userRow['contact'].'</strong></a></td>
-                                            <td>'.$userRow['doc'].'</td>
+                                            <td>'.$userRow['contact'].'</td>
+                                            <td>Pkr. '.$userRow['package_amount'].'</td>
+                                            <td>Pkr. '.$userRow['installation_amount'].'</td>
+                                            <td>Pkr. '.$userRow['cable_amount'].'</td>
+                                            <td>Pkr. '.$userRow['other_charges'].'</td>
+                                            <td>Pkr. '.$userRow['discount_charges'].'</td>
+                                            <td>Pkr. '.$userRow['total_charges'].'</td>
+                                            <td>'.$userRow['dop'].'</td>
                                             
                                             <td>
-                                                <a href="./client_edit.php?id='.$userRow['client_id'].'" type="button" class="btn text-white btn-success waves-effect waves-light">Edit</a>
+                                                <a href="./client_payment_edit.php?client_id='.$userRow['client_id'].'" type="button" class="btn text-white btn-success waves-effect waves-light">Edit</a>
                                             </td>      
 
                                             <td>
-                                                <a href="./client_view.php?id='.$userRow['client_id'].'" type="button" class="btn text-white btn-primary waves-effect waves-light">View</a>
+                                                <a href="./client_payment_view.php?client_id='.$userRow['client_id'].'" type="button" class="btn text-white btn-primary waves-effect waves-light">View</a>
                                             </td>                                        
                                         </tr>';
                                     

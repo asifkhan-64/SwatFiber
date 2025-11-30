@@ -13,39 +13,39 @@
     WHERE client_tbl.client_id = '$client_id'");
     $rowClientData = mysqli_fetch_assoc($getClientData);
 
+    $getClientPaymentDetails = mysqli_query($connect, "SELECT * FROM client_payments WHERE client_id = '$client_id'");
+    $rowClientPaymentDetails = mysqli_fetch_assoc($getClientPaymentDetails);
+
+
     if ($rowClientData['updated_bill_payment'] === '0') {
         $package_price = $rowClientData['package_price'];
     } else {
         $package_price = $rowClientData['updated_bill_payment'];
     }
 
-    if (isset($_POST['addPayment'])) {
+    if (isset($_POST['editPayment'])) {
         $package = $_POST['package'];
         $installation = $_POST['installation'];
         $cable = $_POST['cable'];
         $other_charges = $_POST['other_charges'];
         $discount_charges = $_POST['discount_charges'];
         $total_charges = $_POST['total_charges'];
-
+        
         $getUser = $_SESSION["user"];
         $getUserQuery = mysqli_query($connect, "SELECT * FROM login_user WHERE email = '$getUser'");
         $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
         $addedBy = $fetch_getUserQuery['id'];
 
-        $addPaymentQuery = mysqli_query($connect, "INSERT INTO `client_payments`(`client_id`, `package_amount`, `installation_amount`, `cable_amount`, `other_charges`, `discount_charges`, `total_charges`, `added_by`) VALUES 
-        ('$client_id', '$package', '$installation', '$cable', '$other_charges', '$discount_charges', '$total_charges', '$addedBy')");
+        $addPaymentQuery = mysqli_query($connect, "UPDATE `client_payments` SET `package_amount` = '$package', `installation_amount` = '$installation', `cable_amount` = '$cable', `other_charges` = '$other_charges', `discount_charges` = '$discount_charges', `total_charges` = '$total_charges', `added_by` = '$addedBy' WHERE `client_id` = '$client_id'");
 
         if ($addPaymentQuery) {
             $updateClientPaymentStatus = mysqli_query($connect, "UPDATE client_tbl SET payment_status = '1', updated_bill_payment = '$package' WHERE client_id = '$client_id'");
 
-            echo '<script>
-                alert("Payment Added Successfully.");
-                window.location.href="client_payment_list.php";
-            </script>';
+            header("LOCATION:client_payment_list.php");
         } else {
             echo '<script>
-                alert("Payment Addition Failed.");
-                window.location.href="add_payment.php?client_id='.$client_id.'";
+                alert("Payment Update Failed.");
+                window.location.href="client_payment_edit.php?client_id='.$client_id.'";
             </script>';
         }
     }
@@ -56,13 +56,82 @@
 
 <div class="page-content-wrapper ">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <h5 class="page-title">Client Payment</h5>
-            </div>
-        </div>
+        
         <!-- end row -->
         <form method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="page-title">View Client Payment</h5>
+                </div>
+
+                <div class="col-md-2"></div>
+
+                <div class="col-md-4 py-3 text-right">
+                    <?php include '../_partials/cancel.php'; ?>
+                    
+                    <?php
+                    $getCompanyDEtails = mysqli_query($connect, "SELECT * FROM `shop_info`");
+                    $rowCompanyDetails = mysqli_fetch_assoc($getCompanyDEtails);
+                    // 1. Get the recipient's phone number
+                    // Assuming $rowClientData['contact'] contains something like "92-XXXXXXXXXX"
+                    $explodeContact = explode("-", $rowClientData['contact']);
+                    $phone_number = $explodeContact[0] . $explodeContact[1]; // Concatenate country code and rest of the number
+
+
+                    // 2. Construct the payment details message string
+                    $message = "Hello " . $rowClientData['name'] . ",%0A%0AYour payment details are as follows:";
+                    
+                    // Package Details
+                    $message .= "%0APackage: " . $rowClientData['package_name'];
+
+                    // Payment Date
+                    $message .= "%0APayment Date: " . $rowClientPaymentDetails['dop'];
+                    
+                    // Add Package Amount
+                    $message .= "%0A%0APackage Amount: PKR " . number_format($rowClientPaymentDetails['package_amount']);
+
+                    // Add Installation Amount
+                    $message .= "%0AInstallation Amount: PKR " . number_format($rowClientPaymentDetails['installation_amount']);
+
+                    // Add Cable Amount
+                    $message .= "%0ACable Amount: PKR " . number_format($rowClientPaymentDetails['cable_amount']);
+
+                    // Add Other Charges
+                    $message .= "%0AOther Charges: PKR " . number_format($rowClientPaymentDetails['other_charges']);
+
+                    // Add Discount
+                    $message .= "%0ADiscount: PKR " . number_format($rowClientPaymentDetails['discount_charges']);
+
+                    // Add Total Charges
+                    $message .= "%0ATotal Charges: PKR " . number_format($rowClientPaymentDetails['total_charges']);
+
+                    // Add Closing Message
+                    $message .= "%0A%0AThank you for your business!";
+
+                    // Company Info
+                    $message .= "%0A%0ARegards,%0A" . $rowCompanyDetails['shop_title']. ", ".$rowCompanyDetails['shop_name'];
+                    $message .= "%0AAddress: " . $rowCompanyDetails['shop_address'];
+                    $message .= "%0AContact: 0" . $rowCompanyDetails['shop_contact'];
+                    
+                    // NOTE: The message is already URL-encoded enough using %0A for new lines. 
+                    // You could wrap the whole $message in urlencode() for maximum safety.
+                    // $encoded_message = urlencode($message);
+
+                    // 3. Construct the full WhatsApp URL
+                    $whatsapp_url = "https://wa.me/92{$phone_number}?text={$message}";
+                    ?>
+
+                    <a href="<?php echo $whatsapp_url; ?>" 
+                    class="btn btn-success" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style="background-color: #25D366; border-color: #25D366;">
+                        
+                        <i class="fab fa-whatsapp"></i> Send on WhatsApp
+                    </a>
+                </div>
+
+            </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="card m-b-30">
@@ -123,37 +192,30 @@
                             <thead>
                                 <tr>
                                     <th>Package</th>
-                                    <th><input type="text" name="package" id="package_amount" class="form-control" placeholder="Enter package amount" value="<?php echo $package_price ?>"></th>
+                                    <th>Pkr. <?php echo number_format($rowClientPaymentDetails['package_amount']) ?><input type="hidden" name="package" id="package_amount" class="form-control" placeholder="Enter package amount" value="<?php echo $rowClientPaymentDetails['package_amount'] ?>"></th>
                                 </tr>
                                 <tr>
                                     <th>Installation</th>
-                                    <th><input type="text" name="installation" id="installation_amount" class="form-control" placeholder="Enter installation amount" value="<?php echo $rowClientData['ins_price'] ?>"></th>
+                                    <th>Pkr. <?php echo number_format($rowClientPaymentDetails['installation_amount']) ?><input type="hidden" name="installation" id="installation_amount" class="form-control" placeholder="Enter installation amount" value="<?php echo $rowClientPaymentDetails['installation_amount'] ?>"></th>
                                 </tr>
                                 <tr>
                                     <th>Cable</th>
-                                    <th><input type="text" name="cable" id="cable_amount" class="form-control" placeholder="Enter cable amount" value="0" required></th>
+                                    <th>Pkr. <?php echo number_format($rowClientPaymentDetails['cable_amount']) ?><input type="hidden" name="cable" id="cable_amount" class="form-control" placeholder="Enter cable amount" value="<?php echo $rowClientPaymentDetails['cable_amount'] ?>" required></th>
                                 </tr>
                                 <tr>
                                     <th>Other Charges</th>
-                                    <th><input type="text" name="other_charges" id="other_charges_amount" class="form-control" placeholder="Enter other charges amount" value="0" required></th>
+                                    <th>Pkr. <?php echo number_format($rowClientPaymentDetails['other_charges']) ?><input type="hidden" name="other_charges" id="other_charges_amount" class="form-control" placeholder="Enter other charges amount" value="<?php echo $rowClientPaymentDetails['other_charges'] ?>" required></th>
                                 </tr>
                                 <tr>
                                     <th>Discount</th>
-                                    <th><input type="text" name="discount_charges" id="discount_amount" class="form-control" placeholder="Enter discount charges amount" value="0" required></th>
+                                    <th>Pkr. <?php echo number_format($rowClientPaymentDetails['discount_charges']) ?><input type="hidden" name="discount_charges" id="discount_amount" class="form-control" placeholder="Enter discount charges amount" value="<?php echo $rowClientPaymentDetails['discount_charges'] ?>" required></th>
                                 </tr>
                                 <tr>
                                     <th>Total Charges</th>
-                                    <th><input type="text" name="total_charges" id="total_charges_output" class="form-control" placeholder="Enter total charges amount" value="0" required readonly></th>
+                                    <th>Pkr. <?php echo number_format($rowClientPaymentDetails['total_charges']) ?><input type="hidden" name="total_charges" id="total_charges_output" class="form-control" placeholder="Enter total charges amount" value="<?php echo $rowClientPaymentDetails['total_charges'] ?>" required readonly></th>
                                 </tr>
                             </thead>
                         </table>
-
-                        <div class="form-group row text-right">
-                            <div class="col-sm-12 text-right">
-                                <?php include '../_partials/cancel.php'?>
-                                <button type="submit" name="addPayment" class="btn btn-primary waves-effect waves-light">Add Payment</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div> <!-- end col -->
@@ -161,6 +223,7 @@
     </form>
     </div><!-- container fluid -->
 </div> <!-- Page content Wrapper -->
+
 </div> <!-- content -->
 <?php include('../_partials/footer.php') ?>
 

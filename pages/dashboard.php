@@ -52,6 +52,7 @@ include('../_partials/header.php');
                     <div class="timeline animate__animated animate__bounce" id="timeline">
                         <span class="icon fa fa-globe"></span>
                         <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
+                            <h3 class="title" align="center"><?php echo $fet['shop_title'] ?></h3>
                             <h3 class="title" align="center"><?php echo $fet['shop_name'] ?></h3>
                             <hr>
                             <p class="description" align="center">
