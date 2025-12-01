@@ -7,18 +7,23 @@ if (empty($_SESSION["user"])) {
 $mysqlUserName      = "root";
 $mysqlPassword      = "";
 $mysqlHostName      = "localhost";
-$DbName             = "hkb";
-$backup_name        = "MyBackUp.sql";
+$DbName             = "ubaid_project";
+$backup_name        = "SwatFiberBackUp.sql";
 $tables             = array(
+    "area", 
+    "client_payments", 
+    "client_tbl", 
     "expense", 
     "expense_category", 
-    "grocessory", 
-    "login_user", 
-    "shop_info", 
-    "supplier", 
-    "till_one_reports", 
-    "till_two_reports", 
-    "workers");
+    "installation_type", 
+    "inventory_details", 
+    "line_stock", 
+    "login_user",
+    "package_list",
+    "pay_done",
+    "shop_info",
+    "sl_items",
+    "store_stock");
 
 
 Export_Database($mysqlHostName, $mysqlUserName, $mysqlPassword, $DbName, $tables = false, $backup_name = false);

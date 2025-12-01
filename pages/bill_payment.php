@@ -27,19 +27,38 @@ if (isset($_POST["addExpense"])) {
 
     $oldRem = $fetchgetclient_tbl['old_remaining'];
 
-    if ($oldRem === $dues) {
-        // Then Updated on remaining amount not date
-        echo "Rem ";
+    $newRem = $oldRem - $paidAmount;
+
+    if ($newRem <= 0) {
+        $rem = 0;
     }else {
-        // Update Rem amount and date as well
-        echo "Rem and Date";
+        $rem = $newRem;
     }
 
 
-	if (!$createUser) {
-		$expenseNotAdded = "Expense not added! Try Again.";
+    $getUser = $_SESSION["user"];
+    $getUserQuery = mysqli_query($connect, "SELECT * FROM login_user WHERE email = '$getUser'");
+    $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
+    $addedBy = $fetch_getUserQuery['id'];
+
+    date_default_timezone_set('Asia/Karachi');
+    $currentDate = date('Y-m-d');
+
+    if ($oldRem === $dues) {
+        $updateClientTableRemAmount = mysqli_query($connect, "UPDATE client_tbl SET old_remaining = '$rem' WHERE client_id = '$client_id'");
+    }else {
+        $updateClientTableRemAmount = mysqli_query($connect, "UPDATE client_tbl SET old_remaining = '$rem', last_paid_date = '$currentDate' WHERE client_id = '$client_id'");
+    }
+
+
+
+    $createPayment = mysqli_query($connect, "INSERT INTO pay_done(client_id, amount, added_by, rem_amount, dues, date_pay, bill_desc)VALUES('$client_id', '$paidAmount', '$addedBy', '$rem', '$dues', '$billdate', '$billDescription')");
+
+
+	if (!$createPayment) {
+		$expenseNotAdded = "Payment not added! Try Again.";
 	} else {
-		header("LOCATION:expense_list.php");
+		header("LOCATION:bill_payment_list.php");
 	}
 }
 

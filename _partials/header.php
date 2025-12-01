@@ -134,6 +134,8 @@ $fet = mysqli_fetch_assoc($get);
             -webkit-backdrop-filter: blur(10px); /* For Webkit-based browsers */
         }
     </style>
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 </head>
 
 <body class="fixed-left">
@@ -169,21 +171,21 @@ $fet = mysqli_fetch_assoc($get);
 
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Packages</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-shopping-basket"></i> <span> Packages</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="package_list.php">Package List</a></li>
                             </ul>
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Area</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-area-chart"></i> <span> Area</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="areas_list.php">Area List</a></li>
                             </ul>
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-hand-holding-usd"></i> <span> Clients</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fas fa-address-book"></i> <span> Clients</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="client_add.php">Add Client</a></li>
                                 <li><a href="client_list.php">Client List</a></li>
@@ -193,7 +195,7 @@ $fet = mysqli_fetch_assoc($get);
 
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> System Users</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> System Users</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="user_new.php">Add User</a></li>
                                 <li><a href="users_list.php">User List</a></li>
@@ -201,7 +203,7 @@ $fet = mysqli_fetch_assoc($get);
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-credit-card"></i> <span> Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="client_select.php">Add Payment</a></li>
                                 <li><a href="client_payment_list.php">Payment List</a></li>
@@ -209,16 +211,17 @@ $fet = mysqli_fetch_assoc($get);
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Bill Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fas fa-file-invoice"></i> <span> Bill Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="bill_payment.php">Add Bill Payment</a></li>
                                 <li><a href="bill_payment_list.php">Bill Payment List</a></li>
-                                <li><a href="bill_dues_list.php">Bill Dues List</a></li>
+                                <!-- <li><a href="bill_dues_list.php">Bill Dues List</a></li> -->
+                                <li><a href="generate_bill.php">Generate Bill</a></li>
                             </ul>
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Inventory</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-download"></i> <span> Inventory</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="inventory_add.php">Add Inventory</a></li>
                                 <li><a href="inventory_list.php">Inventory List</a></li>
@@ -226,21 +229,21 @@ $fet = mysqli_fetch_assoc($get);
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Store/Line Item</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list-alt"></i> <span> Store/Line Item</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="storeline_items_list.php">Add Items List</a></li>
                             </ul>
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-list"></i> <span> Installation Type</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-info-circle"></i> <span> Installation Type</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="installation_type_list.php">Installation Type</a></li>
                             </ul>
                         </li>
 
                         <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-coins"></i> <span> Purchase Stock</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-desktop"></i> <span> Purchase Stock</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="select_option.php">Add Stock</a></li>
                                 <li><a href="store_stock_list.php">Store Stock List</a></li>
@@ -261,7 +264,7 @@ $fet = mysqli_fetch_assoc($get);
                             </ul>
                         </li>
 
-                        <li class="has_sub">
+                        <!-- <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-book"></i> <span> Reports</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="wages_report.php">Wages Report</a></li>
@@ -273,8 +276,14 @@ $fet = mysqli_fetch_assoc($get);
                                 <li><a href="grocery_report.php">Grocery Report</a></li>
                                 <li><a href="report_daily_expense.php">Daily Expense Report</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                         
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="fas fa-synagogue"></i> <span> Company Details </span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="shop_info.php">Company Info</a></li>
+                            </ul>
+                        </li>
 
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user"></i> <span> Admin</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
