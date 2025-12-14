@@ -88,7 +88,7 @@ include '../_partials/header.php'
                                     $optionsCategory .= '<option>Select Option</option>';
                                       while ($rowCat = mysqli_fetch_assoc($selectExpenseCat)) {
                                         $explodeContact = explode("-", $rowCat['contact']);
-                                        $optionsCategory.= '<option value='.$rowCat['client_id'].'>'.$rowCat['name'].' - Contact: '.$explodeContact[0].''.$explodeContact[1].'</option>';
+                                        $optionsCategory.= '<option value='.$rowCat['client_id'].'>'.$rowCat['user_id'].' - '.$rowCat['name'].'</option>';
                                       }
                                     $optionsCategory.= "</select>";
                                 echo $optionsCategory;
