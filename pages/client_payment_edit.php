@@ -30,13 +30,14 @@
         $other_charges = $_POST['other_charges'];
         $discount_charges = $_POST['discount_charges'];
         $total_charges = $_POST['total_charges'];
+        $paymentBy = $_POST['paymentBy'];
         
         $getUser = $_SESSION["user"];
         $getUserQuery = mysqli_query($connect, "SELECT * FROM login_user WHERE email = '$getUser'");
         $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
         $addedBy = $fetch_getUserQuery['id'];
 
-        $addPaymentQuery = mysqli_query($connect, "UPDATE `client_payments` SET `package_amount` = '$package', `installation_amount` = '$installation', `cable_amount` = '$cable', `other_charges` = '$other_charges', `discount_charges` = '$discount_charges', `total_charges` = '$total_charges', `added_by` = '$addedBy' WHERE `client_id` = '$client_id'");
+        $addPaymentQuery = mysqli_query($connect, "UPDATE `client_payments` SET `package_amount` = '$package', `installation_amount` = '$installation', `cable_amount` = '$cable', `other_charges` = '$other_charges', `discount_charges` = '$discount_charges', `total_charges` = '$total_charges', `payment_method` = '$paymentBy', `added_by` = '$addedBy' WHERE `client_id` = '$client_id'");
 
         if ($addPaymentQuery) {
             $updateClientPaymentStatus = mysqli_query($connect, "UPDATE client_tbl SET payment_status = '1', updated_bill_payment = '$package' WHERE client_id = '$client_id'");
@@ -121,6 +122,43 @@
                         <h4 class="mt-0 header-title">Payment Details</h4>
                         <table class="table datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
+                                <tr>
+                                    <th>Payment By</th>
+                                    <th>
+                                            <?php
+                                            echo '<select class="form-control payment" style="width: 100%" name="paymentBy" required>';
+                                            if ($rowClientPaymentDetails['payment_method'] === 'EasyPaisa') {
+                                                echo '<option value="EasyPaisa" selected>EasyPaisa</option>';
+                                                echo '<option value="Cash">Cash</option>';
+                                                echo '<option value="JazzCash">JazzCash</option>';
+                                                echo '<option value="Bank">Bank</option>';
+                                            } elseif ($rowClientPaymentDetails['payment_method'] === 'Cash') {
+                                                echo '<option value="EasyPaisa">EasyPaisa</option>';
+                                                echo '<option value="Cash" selected>Cash</option>';
+                                                echo '<option value="JazzCash">JazzCash</option>';
+                                                echo '<option value="Bank">Bank</option>';
+                                            } elseif ($rowClientPaymentDetails['payment_method'] === 'JazzCash') {
+                                                echo '<option value="EasyPaisa">EasyPaisa</option>';
+                                                echo '<option value="Cash">Cash</option>';
+                                                echo '<option value="JazzCash" selected>JazzCash</option>';
+                                                echo '<option value="Bank">Bank</option>';
+                                            } elseif ($rowClientPaymentDetails['payment_method'] === 'Bank') {
+                                                echo '<option value="EasyPaisa">EasyPaisa</option>';
+                                                echo '<option value="Cash">Cash</option>';
+                                                echo '<option value="JazzCash">JazzCash</option>';
+                                                echo '<option value="Bank" selected>Bank</option>';
+                                            }else {
+                                                echo '<option value="EasyPaisa">EasyPaisa</option>';
+                                                echo '<option value="Cash">Cash</option>';
+                                                echo '<option value="JazzCash">JazzCash</option>';
+                                                echo '<option value="Bank">Bank</option>';
+                                            }
+                                            
+
+                                            echo '</select>';
+                                            ?>
+                                    </th>
+                                </tr>
                                 <tr>
                                     <th>Package</th>
                                     <th><input type="text" name="package" id="package_amount" class="form-control" placeholder="Enter package amount" value="<?php echo $rowClientPaymentDetails['package_amount'] ?>"></th>
@@ -239,6 +277,27 @@
     // Run the calculation once on page load to set the initial total
     window.onload = calculateTotal;
 
+</script>
+
+<script type="text/javascript" src="../assets/js/select2.min.js"></script>
+<script type="text/javascript">
+$('.designation').select2({
+    placeholder: 'Select an option',
+    allowClear: true
+
+});
+
+$('.attendant').select2({
+    placeholder: 'Select an option',
+    allowClear: true
+
+});
+
+$('.payment').select2({
+        placeholder: 'Select an option',
+        allowClear: true
+
+    });
 </script>
 </body>
 

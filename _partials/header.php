@@ -187,7 +187,9 @@ $fet = mysqli_fetch_assoc($get);
                             <ul class="list-unstyled">
                                 <li><a href="client_add.php">Add Client</a></li>
                                 <li><a href="client_list.php">Client List</a></li>
-                                <li><a href="client_search.php">Search Client</a></li>
+                                <!-- <li><a href="client_search.php">Search Client</a></li> -->
+                                <li><a href="client_payment_list.php">Payment List</a></li>
+
                             </ul>
                         </li>
 
@@ -200,13 +202,13 @@ $fet = mysqli_fetch_assoc($get);
                             </ul>
                         </li>
 
-                        <li class="has_sub">
+                        <!-- <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-shopping-bag"></i> <span> Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="client_select.php">Add Payment</a></li>
                                 <li><a href="client_payment_list.php">Payment List</a></li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-document"></i> <span> Bill Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
@@ -259,6 +261,15 @@ $fet = mysqli_fetch_assoc($get);
                                 <li><a href="expense_new.php">Add Expense</a></li>
                                 <li><a href="expense_list.php">Expenses List</a></li>
                                 
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-alarm"></i>
+                                <span> Complaints</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="complaint_new.php">Add Complaint</a></li>
+                                <li><a href="complaint_list.php">Complaint List</a></li>
                             </ul>
                         </li>
 

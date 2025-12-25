@@ -21,6 +21,7 @@ if (isset($_POST["addExpense"])) {
     $remainingAmount = $_POST['remainingAmount'];
     $billdate = $_POST['billdate'];
     $billDescription = $_POST['billDescription'];
+    $paymentBy = $_POST['paymentBy'];
 
     $getclient_tbl = mysqli_query($connect, "SELECT * FROM `client_tbl` WHERE client_id = '$client_id'");
     $fetchgetclient_tbl = mysqli_fetch_assoc($getclient_tbl);
@@ -52,7 +53,7 @@ if (isset($_POST["addExpense"])) {
 
 
 
-    $createPayment = mysqli_query($connect, "INSERT INTO pay_done(client_id, amount, added_by, rem_amount, dues, date_pay, bill_desc)VALUES('$client_id', '$paidAmount', '$addedBy', '$rem', '$dues', '$billdate', '$billDescription')");
+    $createPayment = mysqli_query($connect, "INSERT INTO pay_done(client_id, amount, added_by, rem_amount, dues, date_pay, bill_desc, payment_method)VALUES('$client_id', '$paidAmount', '$addedBy', '$rem', '$dues', '$billdate', '$billDescription', '$paymentBy')");
 
 
 	if (!$createPayment) {
@@ -94,7 +95,7 @@ include '../_partials/header.php'
                                 echo $optionsCategory;
                                 ?>
                                 </div>
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Dues </label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Total Dues </label>
                                 <div class="col-sm-4">
                                     <input class="form-control" type="number" readonly  name="dues" id="rem_dues" required="">
                                 </div>
@@ -105,7 +106,7 @@ include '../_partials/header.php'
                                     <input class="form-control" type="number"  name="paidAmount" id="paid_amount" required="">
                                 </div>
 
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Remaining Amount </label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Remaining Dues </label>
                                 <div class="col-sm-4">
                                     <input class="form-control" type="number" readonly  name="remainingAmount" id="remaining_amount" required="">
                                 </div>
@@ -121,10 +122,29 @@ include '../_partials/header.php'
                                     </div>
                                 </div>
 
-                                <label class="col-sm-2 col-form-label">Description</label>
+                                <label class="col-sm-2 col-form-label">Payment Method</label>
                                 <div class="col-sm-4">
-                                    <textarea id="textarea" class="form-control" maxlength="225" rows="3" name="billDescription" placeholder="Bill Description" required=""></textarea>
+                                    <?php
+                                        echo '<select class="form-control payment" style="width: 100%" name="paymentBy" required>
+                                            <option></option>';
+                                        echo '<option value="EasyPaisa">EasyPaisa</option>';
+                                        echo '<option value="Cash">Cash</option>';
+                                        echo '<option value="JazzCash">JazzCash</option>';
+                                        echo '<option value="Bank">Bank</option>';
+
+                                        echo '</select>';
+                                    ?>
                                 </div>
+
+                                
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Description</label>
+                                <div class="col-sm-10">
+                                    <textarea id="textarea" class="form-control" maxlength="225" rows="2" name="billDescription" placeholder="Bill Description" required=""></textarea>
+                                </div>
+                                
                             </div>
 
 
@@ -132,7 +152,7 @@ include '../_partials/header.php'
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
                                     <?php include '../_partials/cancel.php'?>
-                                    <button type="submit" name="addExpense" class="btn btn-primary waves-effect waves-light">Add Expense</button>
+                                    <button type="submit" name="addExpense" class="btn btn-primary waves-effect waves-light">Add Payment</button>
                                 </div>
                             </div>
                         </form>

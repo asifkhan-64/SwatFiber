@@ -119,6 +119,10 @@
                 if (!$creatClient) {
                     $userNotAdded = "Client not added! Try Again.";
                 }else{
+                    // $getId = mysqli_query($connect, "SELECT MAX(client_id) AS client_id FROM client_tbl");
+                    // $fetch_getId = mysqli_fetch_assoc($getId);
+                    // $cID = $fetch_getId['client_id'];
+                    // header("LOCATION:add_payment.php?client_id=$cID");
                     header("LOCATION: client_list.php");
                 }
             } 

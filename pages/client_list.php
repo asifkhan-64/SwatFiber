@@ -39,8 +39,9 @@
                                     <th>Package</th>
                                     <th>Contact</th>
                                     <th>Date</th>
-                                    <th class="text-center"> Edit <i class="fa fa-edit"></i></th>
-                                    <th class="text-center"> Images <i class="fa fa-image"></i></th>
+                                    <th class="text-center"> Edit </th>
+                                    <th class="text-center"> Images </th>
+                                    <th class="text-center"> Payments </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,7 +81,20 @@
 
                                             <td>
                                                 <a href="./client_view.php?id='.$userRow['client_id'].'" type="button" class="btn text-white btn-primary waves-effect waves-light">View</a>
-                                            </td>                                        
+                                            </td>';
+
+                                            if ($userRow['payment_status'] === '0') {
+                                                echo '
+                                                <td>
+                                                    <a href="./add_payment.php?client_id='.$userRow['client_id'].'" type="button" class="btn text-white btn-secondary waves-effect waves-light">Pay</a>
+                                                </td>';
+                                            }else {
+                                                echo '<td>Pay <i class="fa fa-check"></i></td>';
+                                            }
+
+                                            echo '
+                                            
+                                            
                                         </tr>';
                                     
                                 }

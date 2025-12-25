@@ -26,25 +26,24 @@
         $other_charges = $_POST['other_charges'];
         $discount_charges = $_POST['discount_charges'];
         $total_charges = $_POST['total_charges'];
+        $paymentBy = $_POST['paymentBy'];
 
         $getUser = $_SESSION["user"];
         $getUserQuery = mysqli_query($connect, "SELECT * FROM login_user WHERE email = '$getUser'");
         $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
         $addedBy = $fetch_getUserQuery['id'];
 
-        $addPaymentQuery = mysqli_query($connect, "INSERT INTO `client_payments`(`client_id`, `package_amount`, `installation_amount`, `cable_amount`, `other_charges`, `discount_charges`, `total_charges`, `added_by`) VALUES 
-        ('$client_id', '$package', '$installation', '$cable', '$other_charges', '$discount_charges', '$total_charges', '$addedBy')");
+        $addPaymentQuery = mysqli_query($connect, "INSERT INTO `client_payments`(`client_id`, `package_amount`, `installation_amount`, `cable_amount`, `other_charges`, `discount_charges`, `total_charges`, `added_by`, `payment_method`) VALUES 
+        ('$client_id', '$package', '$installation', '$cable', '$other_charges', '$discount_charges', '$total_charges', '$addedBy', '$paymentBy')");
 
         if ($addPaymentQuery) {
             $updateClientPaymentStatus = mysqli_query($connect, "UPDATE client_tbl SET payment_status = '1', updated_bill_payment = '$package' WHERE client_id = '$client_id'");
 
             echo '<script>
-                alert("Payment Added Successfully.");
                 window.location.href="client_payment_list.php";
             </script>';
         } else {
             echo '<script>
-                alert("Payment Addition Failed.");
                 window.location.href="add_payment.php?client_id='.$client_id.'";
             </script>';
         }
@@ -121,6 +120,21 @@
                         <h4 class="mt-0 header-title">Payment Details</h4>
                         <table class="table datatable dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
+                                <tr>
+                                    <th>Payment By</th>
+                                    <th>
+                                            <?php
+                                            echo '<select class="form-control payment" style="width: 100%" name="paymentBy" required>
+                                            <option></option>';
+                                            echo '<option value="EasyPaisa">EasyPaisa</option>';
+                                            echo '<option value="Cash">Cash</option>';
+                                            echo '<option value="JazzCash">JazzCash</option>';
+                                            echo '<option value="Bank">Bank</option>';
+
+                                            echo '</select>';
+                                            ?>
+                                    </th>
+                                </tr>
                                 <tr>
                                     <th>Package</th>
                                     <th><input type="text" name="package" id="package_amount" class="form-control" placeholder="Enter package amount" value="<?php echo $package_price ?>"></th>
@@ -239,6 +253,27 @@
     // Run the calculation once on page load to set the initial total
     window.onload = calculateTotal;
 
+</script>
+
+<script type="text/javascript" src="../assets/js/select2.min.js"></script>
+<script type="text/javascript">
+$('.designation').select2({
+    placeholder: 'Select an option',
+    allowClear: true
+
+});
+
+$('.attendant').select2({
+    placeholder: 'Select an option',
+    allowClear: true
+
+});
+
+$('.payment').select2({
+        placeholder: 'Select an option',
+        allowClear: true
+
+    });
 </script>
 </body>
 
