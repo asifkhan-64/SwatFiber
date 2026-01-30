@@ -10,6 +10,11 @@ if (empty($_SESSION["user"])) {
 // $fetchExpenseToday = mysqli_fetch_assoc($getCountofExpenseOfToday);
 // $today = $fetchExpenseToday['totalExpenseToday'];
 
+
+$getComplaints = mysqli_query($connect, "SELECT COUNT(*) AS countedComplaints FROM `complaint` WHERE complaint_status = '1';");
+$fetchComplaints = mysqli_fetch_assoc($getComplaints);
+$complaints = $fetchComplaints['countedComplaints'];
+
 // $getTotalOfGrocesotyTOday = mysqli_query($connect, "SELECT SUM(item_price) AS totalGrocesotyToday FROM grocessory WHERE DATE(item_date) = CURDATE()");
 // $fetchGrocesotyToday = mysqli_fetch_assoc($getTotalOfGrocesotyTOday);
 // $todayGrocesoty = $fetchGrocesotyToday['totalGrocesotyToday'];
@@ -109,6 +114,23 @@ include('../_partials/header.php');
                                     echo number_format($tillOneSale);
                                 }
                                 ?>
+                            </p>
+                        </a>
+                    </div>
+
+                    <div class="timeline animate__animated animate__bounce">
+                        <span class="icon fa fa-window-close"></span>
+                        <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
+                            <h3 class="title" align="center">Complaints</h3>
+                            <hr>
+                            <p class="description" align="center">
+                                 <?php
+                                    if (empty($workers)) {
+                                        echo "0";
+                                    } else {
+                                        echo number_format($complaints);
+                                    }
+                                    ?>
                             </p>
                         </a>
                     </div>

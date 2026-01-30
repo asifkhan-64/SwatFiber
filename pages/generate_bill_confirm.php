@@ -190,7 +190,7 @@ date_default_timezone_set('Asia/Karachi');
     <meta content="ThemeDesign" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- <link rel="shortcut icon" href="../assets/LogoFinal.png"> -->
-    <link rel="shortcut icon" href="../assets/logo.svg">
+    <link rel="shortcut icon" href="../assets/logo.png">
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="../assets/plugins/morris/morris.css">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">

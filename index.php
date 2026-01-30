@@ -157,7 +157,7 @@
                                 <div class="card " style="box-shadow: 3px 3px 15px 3px #E7EAED; opacity: 0.95 !important;">
                                     <div class="card-body">
                                         <h3 class="text-center mt-0 m-b-15 animate__animated animate__bounce">
-                                            <a  class="logo logo-admin"><img src="assets/logo.png" width="18%" height="20%"> <h3 style="font-family: Lucida Handwriting">Swat Fiber</h3></a>
+                                            <a  class="logo logo-admin"><img src="assets/logo.png" width="40%" height="40%"> </a>
                                         </h3>
                 
                                         <!-- <h4 class="text-muted text-center font-18"><b>Sign In</b></h4> -->

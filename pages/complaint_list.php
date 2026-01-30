@@ -71,6 +71,7 @@
                                     <th>#</th>
                                     <th>User ID</th>
                                     <th>Client</th>
+                                    <th>Contact</th>
                                     <th>Technician</th>
                                     <th>Description</th>
                                     <th>Address</th>
@@ -92,6 +93,7 @@
                                             <td>'.$iteration++.'</td>
                                             <td>'.$rowClient['user_id'].'</td>
                                             <td>'.$rowClient['clientName'].'</td>
+                                            <td><a href="tel:+'.$rowClient['contact'].'" class="Blondie">+'.$rowClient['contact'].'<a/></td>
                                             <td>'.$rowClient['name'].'</td>
                                             <td>'.$rowClient['complaint_desc'].'</td>
                                             <td>'.$rowClient['address'].'</td>';
