@@ -28,6 +28,8 @@ if (isset($_POST["addExpense"])) {
 
     $oldRem = $fetchgetclient_tbl['old_remaining'];
 
+    
+
     $newRem = $oldRem - $paidAmount;
 
     if ($newRem <= 0) {
@@ -35,6 +37,8 @@ if (isset($_POST["addExpense"])) {
     }else {
         $rem = $newRem;
     }
+
+    $getNewDate = $fetchgetclient_tbl['new_billing_date'];
 
 
     $getUser = $_SESSION["user"];
@@ -45,15 +49,59 @@ if (isset($_POST["addExpense"])) {
     date_default_timezone_set('Asia/Karachi');
     $currentDate = date('Y-m-d');
 
+    $newBillingDate = $fetchgetclient_tbl['new_billing_date'];
+    $lastPaymentDate = $fetchgetclient_tbl['last_paid_date'];
+    $interval = date_create($currentDate)->diff(date_create($newBillingDate));
+    $daysDifference = $interval->days;
+    $billingMonths = round($daysDifference / 30, 2);
+
+    if ($billingMonths >= 1) {
+
+        if (is_float($billingMonths)) {
+            $billingMonths = number_format($billingMonths, 2, '.', '');
+            $explode = explode('.', $billingMonths);
+            $monthsExploded = $explode[1];
+        }else {
+            $explode = explode('.', $billingMonths);
+            $monthsExploded = $explode[1];
+        }
+
+        $explode = explode('.', $billingMonths);
+        $monthsExploded = $explode[1];
+
+        $getDOC = $fetchgetclient_tbl['doc'];
+
+        if ($monthsExploded < 80) {
+            $dateObject = new DateTime($getDOC);
+
+            $dateObject->modify('+1 month');
+
+            $newDateForNewBill = $dateObject->format('Y-m-d');
+
+            $updateNewBillingDate = mysqli_query($connect, "UPDATE client_tbl SET new_billing_date = '$newDateForNewBill' WHERE client_id = '$client_id'");
+        }else {        
+            $dateObject = new DateTime($getDOC);
+
+            $dateObject->modify('+2 month');
+
+            $newDateForNewBill = $dateObject->format('Y-m-d');
+
+            $updateNewBillingDate = mysqli_query($connect, "UPDATE client_tbl SET new_billing_date = '$newDateForNewBill' WHERE client_id = '$client_id'");
+
+        }
+    }
+
     if ($oldRem === $dues) {
-        $updateClientTableRemAmount = mysqli_query($connect, "UPDATE client_tbl SET old_remaining = '$rem' WHERE client_id = '$client_id'");
+        // $updateClientTableRemAmount = mysqli_query($connect, "UPDATE client_tbl SET old_remaining = '$rem' WHERE client_id = '$client_id'");
+        $updateClientTableRemAmount = mysqli_query($connect, "UPDATE client_tbl SET old_remaining = '$remainingAmount' WHERE client_id = '$client_id'");
     }else {
-        $updateClientTableRemAmount = mysqli_query($connect, "UPDATE client_tbl SET old_remaining = '$rem', last_paid_date = '$currentDate' WHERE client_id = '$client_id'");
+        // $updateClientTableRemAmount = mysqli_query($connect, "UPDATE client_tbl SET old_remaining = '$rem', last_paid_date = '$currentDate' WHERE client_id = '$client_id'");
+        $updateClientTableRemAmount = mysqli_query($connect, "UPDATE client_tbl SET old_remaining = '$remainingAmount', last_paid_date = '$currentDate' WHERE client_id = '$client_id'");
     }
 
 
 
-    $createPayment = mysqli_query($connect, "INSERT INTO pay_done(client_id, amount, added_by, rem_amount, dues, date_pay, bill_desc, payment_method)VALUES('$client_id', '$paidAmount', '$addedBy', '$rem', '$dues', '$billdate', '$billDescription', '$paymentBy')");
+    $createPayment = mysqli_query($connect, "INSERT INTO pay_done(client_id, amount, added_by, rem_amount, dues, date_pay, bill_desc, payment_method)VALUES('$client_id', '$paidAmount', '$addedBy', '$remainingAmount', '$dues', '$billdate', '$billDescription', '$paymentBy')");
 
 
 	if (!$createPayment) {

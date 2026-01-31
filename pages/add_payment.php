@@ -33,11 +33,14 @@
         $fetch_getUserQuery = mysqli_fetch_assoc($getUserQuery);
         $addedBy = $fetch_getUserQuery['id'];
 
+        date_default_timezone_set('Asia/Karachi');
+        $currentDate = date('Y-m-d');
+
         $addPaymentQuery = mysqli_query($connect, "INSERT INTO `client_payments`(`client_id`, `package_amount`, `installation_amount`, `cable_amount`, `other_charges`, `discount_charges`, `total_charges`, `added_by`, `payment_method`) VALUES 
         ('$client_id', '$package', '$installation', '$cable', '$other_charges', '$discount_charges', '$total_charges', '$addedBy', '$paymentBy')");
 
         if ($addPaymentQuery) {
-            $updateClientPaymentStatus = mysqli_query($connect, "UPDATE client_tbl SET payment_status = '1', updated_bill_payment = '$package' WHERE client_id = '$client_id'");
+            $updateClientPaymentStatus = mysqli_query($connect, "UPDATE client_tbl SET payment_status = '1', updated_bill_payment = '$package', new_billing_date = '$currentDate'  WHERE client_id = '$client_id'");
 
             echo '<script>
                 window.location.href="client_payment_list.php";
@@ -99,6 +102,14 @@
                                     <th><?php echo $rowClientData['package_name'] ?></th>
                                 </tr>
 
+                                <?php if ($rowClientData['wire_length'] > 60) { ?>
+
+                                <tr>
+                                    <th>Extra Cable</th>
+                                    <th><?php echo $rowClientData['wire_length'] - 60 . "m (Pkr. 25 for each Meter)"; $extraWire = $rowClientData['wire_length'] - 60; ?></th>
+                                </tr>
+                                <?php } ?>
+
                                 <tr>
                                     <th>Monthly</th>
                                     <th><?php echo "PKR: ".$package_price ?></th>
@@ -135,18 +146,35 @@
                                             ?>
                                     </th>
                                 </tr>
+
                                 <tr>
                                     <th>Package</th>
                                     <th><input type="text" name="package" id="package_amount" class="form-control" placeholder="Enter package amount" value="<?php echo $package_price ?>"></th>
                                 </tr>
+                                
                                 <tr>
                                     <th>Installation</th>
                                     <th><input type="text" name="installation" id="installation_amount" class="form-control" placeholder="Enter installation amount" value="<?php echo $rowClientData['ins_price'] ?>"></th>
                                 </tr>
+
+                                <?php
+                                if ($extraWire > 0) {
+                                ?>
+
+                                <tr>
+                                    <th>Cable</th>
+                                    <th><input type="text" name="cable" id="cable_amount" class="form-control" placeholder="Enter cable amount" value="<?php echo $extraWire * 25 ?>" required></th>
+                                </tr>
+
+                                <?php }else { ?>
+                                
                                 <tr>
                                     <th>Cable</th>
                                     <th><input type="text" name="cable" id="cable_amount" class="form-control" placeholder="Enter cable amount" value="0" required></th>
                                 </tr>
+
+                                <?php } ?>
+                                
                                 <tr>
                                     <th>Other Charges</th>
                                     <th><input type="text" name="other_charges" id="other_charges_amount" class="form-control" placeholder="Enter other charges amount" value="0" required></th>

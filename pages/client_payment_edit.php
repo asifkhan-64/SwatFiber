@@ -101,6 +101,14 @@
                                     <th><?php echo $rowClientData['package_name'] ?></th>
                                 </tr>
 
+                                <?php if ($rowClientData['wire_length'] > 60) { ?>
+
+                                <tr>
+                                    <th>Extra Cable</th>
+                                    <th><?php echo $rowClientData['wire_length'] - 60 . "m (Pkr. 25 for each Meter)"; $extraWire = $rowClientData['wire_length'] - 60; ?></th>
+                                </tr>
+                                <?php } ?>
+
                                 <tr>
                                     <th>Monthly</th>
                                     <th><?php echo "PKR: ".$package_price ?></th>
