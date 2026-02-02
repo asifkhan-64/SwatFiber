@@ -71,6 +71,20 @@ if (isset($_POST["addExpense"])) {
 
         $getDOC = $fetchgetclient_tbl['doc'];
 
+        $currentDate;
+
+        $explodegetDOC = explode('-', $getDOC);
+        $DOCyear = $explodegetDOC[0];
+        $DOCmonth = $explodegetDOC[1];
+        $DOCDate = $explodegetDOC[2];
+
+        $explodeCurrentDate = explode('-', $currentDate);
+        $currentYearNew = $explodeCurrentDate[0];
+        $currentMonthNew = $explodeCurrentDate[1];
+        $currentDateNew = $explodeCurrentDate[2];
+
+        $newFormatDate = $currentYearNew . '-' . $currentMonthNew . '-' . $DOCDate;
+
         if ($monthsExploded < 80) {
             $dateObject = new DateTime($getDOC);
 
@@ -78,7 +92,7 @@ if (isset($_POST["addExpense"])) {
 
             $newDateForNewBill = $dateObject->format('Y-m-d');
 
-            $updateNewBillingDate = mysqli_query($connect, "UPDATE client_tbl SET new_billing_date = '$newDateForNewBill' WHERE client_id = '$client_id'");
+            $updateNewBillingDate = mysqli_query($connect, "UPDATE client_tbl SET new_billing_date = '$newFormatDate' WHERE client_id = '$client_id'");
         }else {        
             $dateObject = new DateTime($getDOC);
 
@@ -86,7 +100,7 @@ if (isset($_POST["addExpense"])) {
 
             $newDateForNewBill = $dateObject->format('Y-m-d');
 
-            $updateNewBillingDate = mysqli_query($connect, "UPDATE client_tbl SET new_billing_date = '$newDateForNewBill' WHERE client_id = '$client_id'");
+            $updateNewBillingDate = mysqli_query($connect, "UPDATE client_tbl SET new_billing_date = '$newFormatDate' WHERE client_id = '$client_id'");
 
         }
     }

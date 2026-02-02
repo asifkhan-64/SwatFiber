@@ -27,155 +27,94 @@ $getClientData = mysqli_query($connect, "SELECT client_tbl.*, area.*, package_li
 // $datefrom = $_GET['datefrom'];
 // $dateto = $_GET['dateto'];
 
-
-
-//     $getTillReport = mysqli_query($connect, "SELECT * FROM `till_one_reports` WHERE report_date BETWEEN '$datefrom' AND '$dateto'");
-
-//     $fetch_getTillReport = mysqli_fetch_assoc($getTillReport);
-
+// From HERE
 date_default_timezone_set('Asia/Karachi');
-    $today = new DateTime();
-    
-    // --- Input and Database Fetch (IMPROVED SECURITY) ---
-    $output = '';
-    
-    // Sanitize and cast input to integer. Use null-coalescing to handle missing POST data safely.
-    // $client_id = isset($newClient) ? (int)$newClient : 0; 
+$currentDate = date('Y-m-d');
 
-    // ** FIX 1 (Security): Use placeholder '?' in the query string. **
-    $stmt = mysqli_prepare($connect, "SELECT * FROM client_tbl WHERE client_id = ?");
-    
-    if ($stmt) {
-        // Bind the client ID parameter as an integer ('i')
-        mysqli_stmt_bind_param($stmt, "i", $client_id);
-        
-        // Execute the statement
-        mysqli_stmt_execute($stmt);
-        
-        // Get the result set
-        $query_result = mysqli_stmt_get_result($stmt);
-        
-        // Fetch the single user data array
-        $userData = mysqli_fetch_assoc($query_result);
-        
-        // Close the statement
-        mysqli_stmt_close($stmt);
+// $client_id = $_POST["customer"];
+$getClientData= mysqli_query($connect, "SELECT * FROM client_tbl WHERE client_id = '$client_id'");
+$fetch = mysqli_fetch_assoc($getClientData);
+$newBillingDate = $fetch['new_billing_date'];
+$lastPaymentDate = $fetch['last_paid_date'];
 
-    } else {
-        $output = "Database preparation error.";
-        echo $output;
-        exit();
+    $old_dues = $fetch['old_remaining'];
+
+    $interval = date_create($currentDate)->diff(date_create($newBillingDate));
+    $daysDifference = $interval->days;
+    
+    
+   $billingMonths = round($daysDifference / 30, 2);
+
+   if ($billingMonths >= 1) {
+       if (is_float($billingMonths)) {
+        $billingMonths = number_format($billingMonths, 2, '.', '');
+        $explode = explode('.', $billingMonths);
+        $monthsExploded = $explode[1];
+    }else {
+        $explode = explode('.', $billingMonths);
+        $monthsExploded = $explode[1];
     }
     
-    // --- Billing Calculation Function ---
 
-    /**
-     * Calculates the billing details based on a 30-day cycle from the last paid date.
-     * @param array $user User data array. Expects keys: 'last_paid_date', 'updated_bill_payment', 'unpaid_balance', 'old_remaining'.
-     * @param DateTime $today The current date.
-     * @return array Calculation details.
-     */
-    function calculateBill(array $user, DateTime $today): array {
-        
-        // --- Data Extraction and Casting ---
-        $monthlyPrice = (float) ($user['updated_bill_payment'] ?? 0);
-        $unpaidBalance = (float) ($user['unpaid_balance'] ?? 0);
-        $oldRem = (float) ($user['old_remaining'] ?? 0);
-        $daysInCycle = 30; // Fixed billing cycle length
+        $getDOC = $fetch['doc'];
 
-        // Handle potential NULL or invalid dates
-        try {
-            // The 'last_paid_date' is the anchor for the billing cycle
-            if (empty($user['last_paid_date'])) {
-                return ['total_bill' => 0, 'error' => 'Last paid date is missing.'];
-            }
-            $connectionDate = new DateTime($user['last_paid_date']);
-        } catch (Exception $e) {
-            // Handle case where date field is null or invalid
-            return ['total_bill' => 0, 'error' => 'Invalid last_paid_date format.'];
-        }
+        $currentDate;
 
-        // 1. Find the start of the current cycle and the next expiry date
-        $cycleStart = clone $connectionDate;
-        $nextExpiry = clone $connectionDate;
-        $nextExpiry->modify("+$daysInCycle days");
+        $explodegetDOC = explode('-', $getDOC);
+        $DOCyear = $explodegetDOC[0];
+        $DOCmonth = $explodegetDOC[1];
+        $DOCDate = $explodegetDOC[2];
 
-        // Loop forward by 30 days until $nextExpiry is AFTER $today.
-        while ($nextExpiry <= $today) {
-            $cycleStart->modify("+$daysInCycle days");
-            $nextExpiry->modify("+$daysInCycle days");
-        }
-        
-        // 2. Determine Status and Days Remaining
-        $isExpired = $today >= $nextExpiry;
-        $daysUntilExpiry = 0;
+        $explodeCurrentDate = explode('-', $currentDate);
+        $currentYearNew = $explodeCurrentDate[0];
+        $currentMonthNew = $explodeCurrentDate[1];
+        $currentDateNew = $explodeCurrentDate[2];
 
-        if ($isExpired) {
-             $status = 'Expired';
+        if ($currentMonthNew == 12) {
+            $newMonth = 01;
+            $newYear = $currentYearNew + 1;
+            $newFormatDate = $newYear . '-' . $newMonth . '-' . $DOCDate;
         } else {
-             $status = 'Active';
-             // The difference in days from $today to the expiry date
-             $daysUntilExpiry = $today->diff($nextExpiry)->days;
+            $newMonth = $currentMonthNew + 1;
+            $newYear = $currentYearNew;
+            $newFormatDate = $newYear . '-0' . $newMonth . '-' . $DOCDate;
         }
-        
-        // 3. Total Due
-        if ($daysUntilExpiry < 10 || $isExpired) {
-                $totalPreviousDues = $unpaidBalance + $oldRem;
-                $totalBill = $monthlyPrice + $totalPreviousDues;
-            } else {
-                // Otherwise, show 0, formatted.
-                $totalBill = $oldRem;
-            }
-        
 
-        return [
-            'total_bill' => $totalBill,
-            'status' => $status,
-            'days_until_expiry' => $daysUntilExpiry
-        ];
+
+    if ($monthsExploded < 80) {
+        $months = floor($billingMonths);
+        // $dateObject = new DateTime($getDOC);
+
+        // $dateObject->modify('+1 month');
+
+        // $dateObject->format('Y-m-d');
+    }else {
+        $months = ceil($billingMonths);
+        
+        // $dateObject = new DateTime($getDOC);
+
+        // $dateObject->modify('+2 month');
+
+        // $dateObject->format('Y-m-d');
+
     }
     
-    // --- Final Output Generation ---
-    if ($userData) {
-        $billing_details = calculateBill($userData, $today);
-        
-        // Check for date error
-        if (isset($billing_details['error'])) {
-            $output = "Calculation Error: " . $billing_details['error'];
-        } else {
-            // FIX 2 (Logic): Extract variables for the conditional check
-            $totalBillAmount = $billing_details['total_bill'];
-            $daysUntilExpiry = $billing_details['days_until_expiry'];
-            $isExpired = $billing_details['status'] === 'Expired';
-            
-            // Conditional Logic: Show amount if less than 10 days until expiry OR if the service is already expired.
-            if ($daysUntilExpiry < 10 || $isExpired) {
-                // Output the full total bill amount, formatted.
-                $output = $totalBillAmount;
-            } else {
-                // Otherwise, show 0, formatted.
-                $output = $totalBillAmount;
-            }
-        }
-    }
-
-    $daysAhead = $daysUntilExpiry; 
+        $getPackageDataClient = mysqli_query($connect, "SELECT * FROM client_payments WHERE client_id = '$client_id'");
+        $packageData = mysqli_fetch_assoc($getPackageDataClient);
 
 
-    // --- Method 1: Using the modern and preferred DateTime object ---
-    // 1. Create a DateTime object for today.
-    $dateToday = new DateTime();
 
-    // 2. Use the modify method, inserting the variable dynamically.
-    $dateToday->modify("+{$daysAhead} days");
+        $amount = $packageData['package_amount'] * $months;
+        $totalAmount = $amount + $old_dues;
+    }else {
+       $totalAmount = $old_dues;
+   }
 
-    // --- Method 2: Using the simpler, older strtotime() function ---
-    // This is concise but less flexible for complex operations.
-    $dateXDays = strtotime("+{$daysAhead} days");
 
-    $expireBillDate = date('Y-m-d', $dateXDays);
+    $get = mysqli_query($connect, "SELECT * FROM `shop_info`");
+    $fet = mysqli_fetch_assoc($get);
 
-    include '../_partials/header.php';
+    include '../_partials/header.php'
 ?>
 <style type="text/css">
     body {
@@ -243,12 +182,12 @@ date_default_timezone_set('Asia/Karachi');
 
                                 <tr style="border: none !important">
                                     <th style="border: none !important">Date</th>
-                                    <th style="border: none !important"><?php echo $currentDateNew ?></th>
+                                    <th style="border: none !important"><?php echo $currentDate ?></th>
                                 </tr>
 
                                 <tr style="border: none !important">
                                     <th style="border: none !important">Date Due</th>
-                                    <th style="border: none !important"><?php echo $expireBillDate ?></th>
+                                    <th style="border: none !important"><?php echo $newFormatDate ?></th>
                                 </tr>
 
                                 <tr style="border: none !important">
@@ -256,19 +195,15 @@ date_default_timezone_set('Asia/Karachi');
                                     <th style="border: none !important"><?php echo $rowClientData['package_name'] ?></th>
                                 </tr>
 
-                                <tr style="border: none !important">
-                                    <th style="border: none !important">Date</th>
-                                    <th style="border: none !important"><?php echo $currentDateNewNoDay ?></th>
-                                </tr>
 
                                 <tr style="border: none !important">
                                     <th style="border: none !important">Total Amount</th>
-                                    <th style="border: none !important"><?php echo $output ?></th>
+                                    <th style="border: none !important"><?php echo $totalAmount ?></th>
                                 </tr>
 
                                 <tr style="border: none !important">
                                     <th style="border: none !important; color: red">Payable amount after due Date: </th>
-                                    <th style="border: none !important"><?php echo $output ?></th>
+                                    <th style="border: none !important"><?php echo $totalAmount ?></th>
                                 </tr>
                             </thead>
                         </table>

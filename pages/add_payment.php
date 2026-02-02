@@ -36,6 +36,10 @@
         date_default_timezone_set('Asia/Karachi');
         $currentDate = date('Y-m-d');
 
+        // $date = new DateTime($currentDate);
+        // $date->modify('+1 month');
+        // $nextMonthDate = $date->format('Y-m-d');
+
         $addPaymentQuery = mysqli_query($connect, "INSERT INTO `client_payments`(`client_id`, `package_amount`, `installation_amount`, `cable_amount`, `other_charges`, `discount_charges`, `total_charges`, `added_by`, `payment_method`) VALUES 
         ('$client_id', '$package', '$installation', '$cable', '$other_charges', '$discount_charges', '$total_charges', '$addedBy', '$paymentBy')");
 
@@ -157,8 +161,9 @@
                                     <th><input type="text" name="installation" id="installation_amount" class="form-control" placeholder="Enter installation amount" value="<?php echo $rowClientData['ins_price'] ?>"></th>
                                 </tr>
 
-                                <?php
-                                if ($extraWire > 0) {
+                                <?php 
+                                if ($rowClientData['wire_length'] > 60) {
+                                    $extraWire = $rowClientData['wire_length'] - 60;    
                                 ?>
 
                                 <tr>
