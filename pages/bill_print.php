@@ -42,18 +42,17 @@ $lastPaymentDate = $fetch['last_paid_date'];
     $interval = date_create($currentDate)->diff(date_create($newBillingDate));
     $daysDifference = $interval->days;
     
+    $billingMonths = round($daysDifference / 30, 2);
     
-   $billingMonths = round($daysDifference / 30, 2);
-
-   if ($billingMonths >= 1) {
-       if (is_float($billingMonths)) {
-        $billingMonths = number_format($billingMonths, 2, '.', '');
-        $explode = explode('.', $billingMonths);
-        $monthsExploded = $explode[1];
-    }else {
-        $explode = explode('.', $billingMonths);
-        $monthsExploded = $explode[1];
-    }
+    if ($billingMonths >= 1) {
+        if (is_float($billingMonths)) {
+            $billingMonths = number_format($billingMonths, 2, '.', '');
+            $explode = explode('.', $billingMonths);
+            $monthsExploded = $explode[1];
+        }else {
+            $explode = explode('.', $billingMonths);
+            $monthsExploded = $explode[1];
+        }
     
 
         $getDOC = $fetch['doc'];
@@ -82,6 +81,7 @@ $lastPaymentDate = $fetch['last_paid_date'];
 
 
     if ($monthsExploded < 80) {
+        
         $months = floor($billingMonths);
         // $dateObject = new DateTime($getDOC);
 
@@ -108,6 +108,7 @@ $lastPaymentDate = $fetch['last_paid_date'];
         $totalAmount = $amount + $old_dues;
     }else {
        $totalAmount = $old_dues;
+       $newFormatDate = "----/--/--";
    }
 
 

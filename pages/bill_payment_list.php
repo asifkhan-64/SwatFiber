@@ -105,7 +105,7 @@
 
                                            
                                             // Add Closing Message
-                                            $message .= "%0A%0AThank you for your business!";
+                                            $message .= ".%0A%0AThank you for your business!";
 
                                             // Company Info
                                             $message .= "%0A%0ARegards,%0A" . $rowCompanyDetails['shop_title']. ", ".$rowCompanyDetails['shop_name'];

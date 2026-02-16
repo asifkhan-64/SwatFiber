@@ -42,18 +42,17 @@ $lastPaymentDate = $fetch['last_paid_date'];
     $interval = date_create($currentDate)->diff(date_create($newBillingDate));
     $daysDifference = $interval->days;
     
+    $billingMonths = round($daysDifference / 30, 2);
     
-   $billingMonths = round($daysDifference / 30, 2);
-
-   if ($billingMonths >= 1) {
-       if (is_float($billingMonths)) {
-        $billingMonths = number_format($billingMonths, 2, '.', '');
-        $explode = explode('.', $billingMonths);
-        $monthsExploded = $explode[1];
-    }else {
-        $explode = explode('.', $billingMonths);
-        $monthsExploded = $explode[1];
-    }
+    if ($billingMonths >= 1) {
+        if (is_float($billingMonths)) {
+            $billingMonths = number_format($billingMonths, 2, '.', '');
+            $explode = explode('.', $billingMonths);
+            $monthsExploded = $explode[1];
+        }else {
+            $explode = explode('.', $billingMonths);
+            $monthsExploded = $explode[1];
+        }
     
 
         $getDOC = $fetch['doc'];
@@ -82,6 +81,7 @@ $lastPaymentDate = $fetch['last_paid_date'];
 
 
     if ($monthsExploded < 80) {
+        
         $months = floor($billingMonths);
         // $dateObject = new DateTime($getDOC);
 
@@ -108,6 +108,7 @@ $lastPaymentDate = $fetch['last_paid_date'];
         $totalAmount = $amount + $old_dues;
     }else {
        $totalAmount = $old_dues;
+       $newFormatDate = "----/--/--";
    }
 
 
@@ -187,13 +188,26 @@ $lastPaymentDate = $fetch['last_paid_date'];
         <div class="row noPrint" id="printElement">
             <div class="col-12">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="invoice-title">
                             <img src="../assets/logo.png" alt="logo" height="150">
                         </div>
                     </div>
 
-                    <div class="col-6" >
+                    <div class="col-4" >
+                        <?php
+                        
+                        if ($totalAmount > 0) {
+                            echo '<img src="../assets/unpaid.png" alt="Un-Paid" height="150">';
+                        }else {
+                            echo '<img src="../assets/paid.png" alt="Paid" height="150">';
+                        }
+                        
+                        ?>
+                        <img src="" alt="">
+                    </div>
+                    
+                    <div class="col-4" >
                         <div class="invoice-title">
                             <h3 class="m-t-0 text-right">
                                 <h3 align="right" style="font-size: 150%; font-family: Lucida Handwriting "><u><?php echo $fet['shop_title'] ?></u></h3>
