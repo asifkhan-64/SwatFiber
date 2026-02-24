@@ -160,6 +160,12 @@ $fet = mysqli_fetch_assoc($get);
                     <ul>
                         <li class="menu-title">Main</li>
 
+                        <?php
+                        
+                        $getUserRole = mysqli_query($connect, "SELECT user_role FROM login_user WHERE email = '$sesssionEmail' ");
+                        $fetchUserRole = mysqli_fetch_assoc($getUserRole);
+                        if ($fetchUserRole['user_role'] == '1'){                        
+                        ?>
                         <li>
                             <a href="dashboard.php" class="waves-effect">
                                 <i class="dripicons-meter"></i>
@@ -316,7 +322,108 @@ $fet = mysqli_fetch_assoc($get);
                                 <li><a href="backup_page.php">DB Backup</a></li>
                             </ul>
                         </li>
+                        <?php
+                        }elseif ($fetchUserRole['user_role'] == '2') {
+                        ?>
 
+                        <li>
+                            <a href="dashboard.php" class="waves-effect">
+                                <i class="dripicons-meter"></i>
+                                <span> Dashboard </span>
+                            </a>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-user-id"></i> <span> Clients</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="client_add.php">Add Client</a></li>
+                                <li><a href="client_list.php">Active Client List</a></li>
+                                <li><a href="deactive_client_list.php">Deactive Client List</a></li>
+                                <!-- <li><a href="client_search.php">Search Client</a></li> -->
+                                <li><a href="client_payment_list.php">Payment List</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-alarm"></i>
+                                <span> Complaints</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="complaint_new.php">Add Complaint</a></li>
+                                <li><a href="complaint_list.php">Complaint List</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-user"></i> <span> Profile</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="profile.php">Profile</a></li>
+                            </ul>
+                        </li>
+                        
+                        
+                        <?php
+                        }elseif ($fetchUserRole['user_role'] == '3') {
+                        ?>
+
+                        <li>
+                            <a href="dashboard.php" class="waves-effect">
+                                <i class="dripicons-meter"></i>
+                                <span> Dashboard </span>
+                            </a>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-user-group"></i> <span> System Users</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="user_new.php">Add User</a></li>
+                                <li><a href="users_list.php">User List</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-document"></i> <span> Bill Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="bill_payment.php">Add Bill Payment</a></li>
+                                <li><a href="bill_payment_list.php">Bill Payment List</a></li>
+                                <!-- <li><a href="bill_dues_list.php">Bill Dues List</a></li> -->
+                                <li><a href="generate_bill.php">Generate Bill</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-document"></i> <span> Dues</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="receive_dues_payment.php">Receive Dues</a></li>
+                                <li><a href="dues_payment_list.php">Dues Payment List</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-checklist"></i> <span> Inventory</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="inventory_add.php">Add Inventory</a></li>
+                                <li><a href="inventory_list.php">Inventory List</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-ticket"></i> <span> Store/Line Item</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="storeline_items_list.php">Add Items List</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-user"></i> <span> Profile</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="profile.php">Profile</a></li>
+                            </ul>
+                        </li>
+                        
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
