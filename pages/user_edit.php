@@ -135,40 +135,40 @@
                                                                     <option value="2">Technician</option>
                                                                     <option value="3" selected>Accounts</option>';
                                                             }
-                                                            ?>
+                                                        ?>
                                                         
                                                     </select>
                                                 </div>
 
                                                 <label class="col-sm-2 col-form-label">User Status</label>
                                                 <div class="col-sm-4">
-                                                            <?php
-                                                            if ($fetch_selectUser['status'] == 1) {
-                                                                echo '
-                                                            <div class="form-check-inline">
-                                                                <label class="form-check-label">
-                                                                    <input type="radio" class="form-check-input" checked="" value="1" name="userStatus">Active
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check-inline">
-                                                                <label class="form-check-label">
-                                                                    <input type="radio" class="form-check-input" value="0" name="userStatus">Inactive
-                                                                </label>
-                                                            </div>';
-                                                            }elseif ($fetch_selectUser['status'] == 0) {
+                                                        <?php
+                                                        if ($fetch_selectUser['status'] == 1) {
                                                             echo '
-                                                            <div class="form-check-inline">
-                                                                <label class="form-check-label">
-                                                                    <input type="radio" class="form-check-input" value="1" name="userStatus">Active
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check-inline">
-                                                                <label class="form-check-label">
-                                                                    <input type="radio" class="form-check-input" checked="" value="0" name="userStatus">Inactive
-                                                                </label>
-                                                            </div>';
-                                                            }
-                                                            ?>
+                                                        <div class="form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" checked="" value="1" name="userStatus">Active
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" value="0" name="userStatus">Inactive
+                                                            </label>
+                                                        </div>';
+                                                        }elseif ($fetch_selectUser['status'] == 0) {
+                                                        echo '
+                                                        <div class="form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" value="1" name="userStatus">Active
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" checked="" value="0" name="userStatus">Inactive
+                                                            </label>
+                                                        </div>';
+                                                        }
+                                                        ?>
                                                 </div>
                                             </div>
 

@@ -25,6 +25,9 @@
         $addUser_contact = $_POST['addUser_contact'];
         $addUser_cnic = $_POST['addUser_cnic'];
         $line_st_id = $_POST['line_st_id'];
+
+        $userStatus = $_POST['userStatus'];
+        $user_dues = $_POST['user_dues'];
         
 
         $getUser = $_SESSION["user"];
@@ -73,7 +76,7 @@
         }
 
 
-        $updateClient = mysqli_query($connect, "UPDATE `client_tbl` SET `name` = '$name', `father_name` = '$fatherName', `user_id` = '$userName', `area_id` = '$area', `address` = '$addUser_address', `package_id` = '$package_id', `wire_length` = '$addUser_WireLength', `ins_id` = '$ins_id', `contact` = '$addUser_contact', `cnic_no` = '$addUser_cnic', `added_by` = '$addedBy' WHERE client_id = '$id'");
+        $updateClient = mysqli_query($connect, "UPDATE `client_tbl` SET `name` = '$name', `father_name` = '$fatherName', `user_id` = '$userName', `area_id` = '$area', `address` = '$addUser_address', `package_id` = '$package_id', `wire_length` = '$addUser_WireLength', `ins_id` = '$ins_id', `contact` = '$addUser_contact', `cnic_no` = '$addUser_cnic', `added_by` = '$addedBy', `client_status` = '$userStatus', `old_remaining` = '$user_dues' WHERE client_id = '$id'");
 
         if (!$updateClient) {
             $userNotAdded = "Client not Updated! Try Again.";
@@ -83,18 +86,78 @@
         
     }
 
-    include('../_partials/header.php') 
+    include('../_partials/header.php');
+
+    date_default_timezone_set('Asia/Karachi');
+    $currentDate = date('Y-m-d');
+
+    $client_id = $_GET["id"];
+    // $client_id = $_GET["customer"];
+    $getClientData= mysqli_query($connect, "SELECT * FROM client_tbl WHERE client_id = '$client_id'");
+    $fetch = mysqli_fetch_assoc($getClientData);
+    $newBillingDate = $fetch['new_billing_date'];
+    $lastPaymentDate = $fetch['last_paid_date'];
+
+    $old_dues = $fetch['old_remaining'];
+
+    $interval = date_create($currentDate)->diff(date_create($newBillingDate));
+    $daysDifference = $interval->days;
+    
+    
+   $billingMonths = round($daysDifference / 30, 2);
+
+   if ($billingMonths >= 1) {
+       if (is_float($billingMonths)) {
+        $billingMonths = number_format($billingMonths, 2, '.', '');
+        $explode = explode('.', $billingMonths);
+        $monthsExploded = $explode[1];
+    }else {
+        $explode = explode('.', $billingMonths);
+        $monthsExploded = $explode[1];
+    }
+    
+
+    $getDOC = $fetch['doc'];
+
+    if ($monthsExploded < 80) {
+        $months = floor($billingMonths);
+        // $dateObject = new DateTime($getDOC);
+
+        // $dateObject->modify('+1 month');
+
+        // $dateObject->format('Y-m-d');
+    }else {
+        $months = ceil($billingMonths);
+        
+        // $dateObject = new DateTime($getDOC);
+
+        // $dateObject->modify('+2 month');
+
+        // $dateObject->format('Y-m-d');
+
+    }
+    
+    $getPackageDataClient = mysqli_query($connect, "SELECT * FROM client_payments WHERE client_id = '$client_id'");
+    $packageData = mysqli_fetch_assoc($getPackageDataClient);
+
+
+
+    $amount = $packageData['package_amount'] * $months;
+    $netAmount = $amount + $old_dues;
+    }else {
+       $netAmount =$old_dues;
+   }
 ?>
 <!-- Top Bar End -->
 <div class="page-content-wrapper ">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
-                
                 <h5 class="page-title">Edit Client</h5>
             </div>
         </div>
         <!-- end row -->
+         
         <div class="row">
             <div class="col-12">
                 <div class="card m-b-30">
@@ -208,6 +271,44 @@
                                         $optionsCategory.= "</select>";
                                     echo $optionsCategory;
                                     ?>
+                                </div>
+
+                                <label class="col-sm-2 col-form-label">User Status</label>
+                                    <div class="col-sm-4">
+                                            <?php
+                                            if ($fetch_getClientData['client_status'] == 1) {
+                                                echo '
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" checked="" value="1" name="userStatus">Active
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="0" name="userStatus">De-Active
+                                                </label>
+                                            </div>';
+                                            }elseif ($fetch_getClientData['client_status'] == 0) {
+                                            echo '
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" value="1" name="userStatus">Active
+                                                </label>
+                                            </div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" checked="" value="0" name="userStatus">De-Active
+                                                </label>
+                                            </div>';
+                                            }
+                                            ?>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-sm-2 col-form-label">Dues</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control contact"  name="user_dues" value="<?php echo $netAmount; ?>" readonly required>
                                 </div>
                             </div>
 

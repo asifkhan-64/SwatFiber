@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-sm-12">
                 
-                <h5 class="page-title">Active Clients</h5>
+                <h5 class="page-title">De-Active Clients</h5>
             </div>
         </div>
         <!-- end row -->
@@ -28,7 +28,7 @@
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <h4 class="mt-0 header-title">Active Clients List</h4>
+                        <h4 class="mt-0 header-title">De-Active Clients List</h4>
                         <table id="datatable" class="table  dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
@@ -50,7 +50,7 @@
                                 INNER JOIN area ON area.id = client_tbl.area_id
                                 INNER JOIN package_list ON package_list.p_id = client_tbl.package_id
                                 INNER JOIN installation_type ON installation_type.ins_id = client_tbl.ins_id
-                                WHERE client_tbl.added_by = '$addedBy' AND client_tbl.client_status = '1' ORDER BY client_tbl.doc DESC");
+                                WHERE client_tbl.added_by = '$addedBy' AND client_tbl.client_status = '0' ORDER BY client_tbl.doc DESC");
 
                                 $iterationUser = 1;
                                 $admin = 'Admininistration';

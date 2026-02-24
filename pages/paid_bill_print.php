@@ -7,23 +7,22 @@ if (empty($_SESSION["user"])) {
 }
 
 $client_id = $_GET['client_id'];
+$p_id = $_GET['invoice'];
 
-$getClientData = mysqli_query($connect, "SELECT client_tbl.*, area.*, package_list.*, installation_type.* FROM client_tbl 
-    INNER JOIN area ON area.id = client_tbl.area_id
-    INNER JOIN package_list ON package_list.p_id = client_tbl.package_id
-    INNER JOIN installation_type ON installation_type.ins_id = client_tbl.ins_id
-    WHERE client_tbl.client_id = '$client_id'");
+$getClientData = mysqli_query($connect, "SELECT pay_done.*, client_tbl.name, client_tbl.address, client_tbl.contact, client_tbl.cnic_no, client_tbl.user_id, package_list.package_name, package_list.package_price FROM `pay_done`
+INNER JOIN client_tbl ON client_tbl.client_id = pay_done.client_id
+INNER JOIN package_list ON package_list.p_id = client_tbl.package_id
+WHERE pay_done.p_id = '$p_id' AND pay_done.client_id='$client_id'");
     $rowClientData = mysqli_fetch_assoc($getClientData);
 
-    $getClientPaymentDetails = mysqli_query($connect, "SELECT * FROM client_payments WHERE client_id = '$client_id'");
-    $rowClientPaymentDetails = mysqli_fetch_assoc($getClientPaymentDetails);
+    
 
-    date_default_timezone_set('Asia/Karachi');
-    $currentDate = date('Ymd');
-    $currentDateNew = date('d M, Y');
-    $currentDateNewNoDay = date('M, Y');
+date_default_timezone_set('Asia/Karachi');
+$currentDate = date('Ymd');
+$currentDateNew = date('d M, Y');
+$currentDateNewNoDay = date('M, Y');
 
-    $newClient = $client_id;
+$newClient = $client_id;
 // $datefrom = $_GET['datefrom'];
 // $dateto = $_GET['dateto'];
 
@@ -115,51 +114,90 @@ $lastPaymentDate = $fetch['last_paid_date'];
     $get = mysqli_query($connect, "SELECT * FROM `shop_info`");
     $fet = mysqli_fetch_assoc($get);
 
-    include '../_partials/header.php'
+    // include '../_partials/header.php'
 ?>
-<style type="text/css">
-    body {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title><?php echo $fet['shop_title']; ?></title>
+    <meta content="Admin Dashboard" name="description" />
+    <meta content="ThemeDesign" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- <link rel="shortcut icon" href="../assets/LogoFinal.png"> -->
+    <link rel="shortcut icon" href="../assets/logo.png">
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="../assets/plugins/morris/morris.css">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/style.css" rel="stylesheet" type="text/css">
+
+    <link href="../assets/package/dist/sweetalert2.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables -->
+    <link href="../assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link href="../assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/customStyles.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../assets/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="../assets/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" type="text/css" href="../assets/bootstrap-datepicker.min.css">
+
+    <script src='../assets/kit.js' crossorigin='anonymous'></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<style>
+
+    body, td {
         color: black;
     }
+    
+    table {
+        font-size: 14px !important;
+    }
 
+    table { page-break-inside:auto }
+    tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display:table-header-group }
+    tfoot { display:table-footer-group }
+    
     .custom {
         font-size: 14px;
-    }
-
-    .customP {
-        margin-bottom: 0 !important;
+        color: black;
     }
 </style>
+<!-- Top Bar End -->
+
+<br>
 <div class="page-content-wrapper ">
     <div class="container-fluid"><br>
-        <div class="row">
-            <div class="col-sm-12">
-                <h5 class="page-title d-inline">Generate Bill</h5>
-
-                <?php
-                        
-                if ($totalAmount > 0) {
-                    echo '<a href="generate_bill_confirm.php?client_id='.$client_id.'" rel="noopener" target="_blank" class="btn btn-success float-right btn-lg mb-3"><i class="fas fa-print"></i> Print</a>';
-                }else {
-                    echo '<a class="btn btn-secondary text-white float-right btn-lg mb-3"><i class="fas fa-print"></i> No Bill Print</a>';
-                }
-                
-                ?>
-                
-            </div>
-        </div>
+        
         <!-- end row -->
         <!-- <div class="row noPrint" id="printElement"> -->
         <div class="row noPrint" id="printElement">
             <div class="col-12">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="invoice-title">
                             <img src="../assets/logo.png" alt="logo" height="150">
                         </div>
                     </div>
 
-                    <div class="col-6" >
+                    <div class="col-4" >
+                        <img src="../assets/paid.png" alt="Paid" height="150">
+                    </div>
+                    
+                    <div class="col-4" >
                         <div class="invoice-title">
                             <h3 class="m-t-0 text-right">
                                 <h3 align="right" style="font-size: 150%; font-family: Lucida Handwriting "><u><?php echo $fet['shop_title'] ?></u></h3>
@@ -179,11 +217,8 @@ $lastPaymentDate = $fetch['last_paid_date'];
                     </div>
                 </div>
 
-
-
-
-                <div class="row">
-                    <div class="col-md-6 " style="border: 1px solid black;">
+                <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="col-6 " style="border: 1px solid black;">
                         <table class="table">
                             <thead style="border: none !important">
                                 <tr style="border: none !important">
@@ -192,13 +227,8 @@ $lastPaymentDate = $fetch['last_paid_date'];
                                 </tr>
 
                                 <tr style="border: none !important">
-                                    <th style="border: none !important">Date</th>
-                                    <th style="border: none !important"><?php echo $currentDate ?></th>
-                                </tr>
-
-                                <tr style="border: none !important">
-                                    <th style="border: none !important">Date Due</th>
-                                    <th style="border: none !important"><?php echo $newFormatDate ?></th>
+                                    <th style="border: none !important">Payment Date</th>
+                                    <th style="border: none !important"><?php echo $rowClientData['pay_date'] ?></th>
                                 </tr>
 
                                 <tr style="border: none !important">
@@ -209,18 +239,23 @@ $lastPaymentDate = $fetch['last_paid_date'];
 
                                 <tr style="border: none !important">
                                     <th style="border: none !important">Total Amount</th>
-                                    <th style="border: none !important"><?php echo $totalAmount ?></th>
+                                    <th style="border: none !important"><?php echo $rowClientData['amount'] + $rowClientData['rem_amount'] ?></th>
                                 </tr>
 
                                 <tr style="border: none !important">
-                                    <th style="border: none !important; color: red">Payable amount after due Date: </th>
-                                    <th style="border: none !important"><?php echo $totalAmount ?></th>
+                                    <th style="border: none !important">Paid Amount</th>
+                                    <th style="border: none !important"><?php echo $rowClientData['amount'] ?></th>
+                                </tr>
+
+                                <tr style="border: none !important">
+                                    <th style="border: none !important">Remaining Amount</th>
+                                    <th style="border: none !important"><?php echo $rowClientData['rem_amount'] ?></th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
 
-                    <div class="col-md-5 offset-1" style="border: 1px solid black;">
+                    <div class="col-5" style="border: 1px solid black;">
                         <table class="table">
                             <thead style="border: none !important">
                                 <tr style="border: none !important">
@@ -251,7 +286,9 @@ $lastPaymentDate = $fetch['last_paid_date'];
                             </thead>
                         </table>
                     </div>
-                </div><br><br>
+                </div>
+
+                <div class="col-1"></div>
 
 
 
@@ -260,21 +297,22 @@ $lastPaymentDate = $fetch['last_paid_date'];
         </div><!-- container fluid -->
     </div> <!-- Page content Wrapper -->
 </div> <!-- content -->
-<?php include '../_partials/footer.php' ?>
+<?php // include '../_partials/footer.php'?>
 </div>
 <!-- End Right content here -->
 </div>
 <!-- END wrapper -->
 <!-- jQuery  -->
-<?php include '../_partials/jquery.php' ?>
+<?php include '../_partials/jquery.php'?>
 <!-- App js -->
-<?php include '../_partials/app.php' ?>
-<?php include '../_partials/datetimepicker.php' ?>
-<script type="text/javascript" src="../assets/js/select2.min.js"></script>
-
 <script type="text/javascript" src="../assets/print.js"></script>
 
 
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+  window.addEventListener("load", window.print());
+</script>
 </body>
 
 </html>

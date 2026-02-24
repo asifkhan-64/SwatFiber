@@ -186,7 +186,8 @@ $fet = mysqli_fetch_assoc($get);
                             <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-user-id"></i> <span> Clients</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="client_add.php">Add Client</a></li>
-                                <li><a href="client_list.php">Client List</a></li>
+                                <li><a href="client_list.php">Active Client List</a></li>
+                                <li><a href="deactive_client_list.php">Deactive Client List</a></li>
                                 <!-- <li><a href="client_search.php">Search Client</a></li> -->
                                 <li><a href="client_payment_list.php">Payment List</a></li>
 
@@ -217,6 +218,14 @@ $fet = mysqli_fetch_assoc($get);
                                 <li><a href="bill_payment_list.php">Bill Payment List</a></li>
                                 <!-- <li><a href="bill_dues_list.php">Bill Dues List</a></li> -->
                                 <li><a href="generate_bill.php">Generate Bill</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-document"></i> <span> Dues</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="receive_dues_payment.php">Receive Dues</a></li>
+                                <li><a href="dues_payment_list.php">Dues Payment List</a></li>
                             </ul>
                         </li>
 

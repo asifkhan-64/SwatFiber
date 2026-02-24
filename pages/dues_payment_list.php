@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-sm-12">
                 
-                <h5 class="page-title">Bill Payment</h5>
+                <h5 class="page-title">Dues Payment</h5>
             </div>
         </div>
         <!-- end row -->
@@ -28,7 +28,7 @@
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <h4 class="mt-0 header-title">Bill Payment List</h4>
+                        <h4 class="mt-0 header-title">Dues Payment List</h4>
                         <table id="datatable" class="table  dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
@@ -40,15 +40,15 @@
                                     <th>All Dues</th>
                                     <th>Rem</th>
                                     <th>Date</th>
-                                    <th class="text-center">  <i class="fa fa-file-invoice"></i></th>
-                                    <th class="text-center">  <i class="fab fa-whatsapp"></i></th>
+                                    <th class="text-center"><i class="fa fa-file-invoice"> </i></th>
+                                    <th class="text-center"><i class="fab fa-whatsapp">    </i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $retrieveUsers = mysqli_query($connect, "SELECT pay_done.*, client_tbl.name, client_tbl.user_id, client_tbl.contact FROM `pay_done`
                                         INNER JOIN client_tbl ON client_tbl.client_id = pay_done.client_id
-                                        WHERE pay_done.added_by = '$addedBy' AND pay_done.pay_status = '1' ORDER BY pay_done.pay_date DESC");
+                                        WHERE pay_done.added_by = '$addedBy' AND pay_done.pay_status = '0' ORDER BY pay_done.pay_date DESC");
 
                                 $iterationUser = 1;
                                 $admin = 'Admininistration';
