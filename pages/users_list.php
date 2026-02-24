@@ -41,9 +41,10 @@
                                 $retrieveUsers = mysqli_query($connect, "SELECT * FROM login_user");
 
                                 $iterationUser = 1;
-                                $admin = 'Admininistration';
-                                $Technician = 'Technician';
-                                $Accounts = 'Accounts';
+                                $admin = 'Admin';
+                                $Technician = 'Field Staff';
+                                $Accounts = 'Accountant';
+                                $Partner = 'Partner';
                                 
 
                                 $active = 'Active';

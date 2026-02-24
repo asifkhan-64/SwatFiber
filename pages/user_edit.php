@@ -122,18 +122,31 @@
                                                             if ($fetch_selectUser['user_role'] == 1) {
                                                                 echo '
                                                                 <option value="1" selected>Admin</option>
-                                                                <option value="2">Technician</option>
-                                                                <option value="3">Accounts</option>';
+                                                                <option value="2">Field Staff</option>
+                                                                <option value="3">Accountant</option>
+                                                                <option value="4">Partner</option>
+                                                                ';
                                                             }elseif ($fetch_selectUser['user_role'] == 2) {
                                                                 echo '
                                                                     <option value="1" >Admin</option>
-                                                                    <option value="2" selected>Technician</option>
-                                                                    <option value="3">Accounts</option>';
+                                                                    <option value="2" selected>Field Staff</option>
+                                                                    <option value="3">Accountant</option>
+                                                                    <option value="4">Partner</option>
+                                                                    ';
                                                             }elseif ($fetch_selectUser['user_role'] == 3) {
                                                                 echo '
                                                                     <option value="1" >Admin</option>
-                                                                    <option value="2">Technician</option>
-                                                                    <option value="3" selected>Accounts</option>';
+                                                                    <option value="2">Field Staff</option>
+                                                                    <option value="3" selected>Accountant</option>
+                                                                    <option value="4">Partner</option>
+                                                                    ';
+                                                            }elseif ($fetch_selectUser['user_role'] == 4) {
+                                                                echo '
+                                                                    <option value="1" >Admin</option>
+                                                                    <option value="2">Field Staff</option>
+                                                                    <option value="3">Accountant</option>
+                                                                    <option value="4" selected>Partner</option>
+                                                                    ';
                                                             }
                                                         ?>
                                                         

@@ -28,6 +28,17 @@
 
         $userStatus = $_POST['userStatus'];
         $user_dues = $_POST['user_dues'];
+
+        date_default_timezone_set('Asia/Karachi');
+        $currentDate = date('Y-m-d');
+
+        $getOldStatus = mysqli_query($connect, "SELECT client_status FROM client_tbl WHERE client_id = '$id'");
+        $fetch_getOldStatus = mysqli_fetch_assoc($getOldStatus);
+        $oldStatus = $fetch_getOldStatus['client_status'];
+
+        if ($oldStatus == 0 && $userStatus == 1) {
+            $updateClientStatus = mysqli_query($connect, "UPDATE client_tbl SET last_paid_date = '$currentDate', new_billing_date = '$currentDate' WHERE client_id = '$id'");
+        }
         
 
         $getUser = $_SESSION["user"];

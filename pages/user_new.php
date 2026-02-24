@@ -171,8 +171,9 @@
                                     <select class="form-control select2" name="addUser_role" required>
                                         <option></option>
                                         <option value="1">Admin</option>
-                                        <option value="2">Technician</option>
-                                        <option value="3">Accounts</option>
+                                        <option value="2">Field Staff</option>
+                                        <option value="3">Accountant</option>
+                                        <option value="4">Partner</option>
                                     </select>
                                 </div>
 
