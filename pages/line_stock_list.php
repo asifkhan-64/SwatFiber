@@ -33,7 +33,7 @@
                                     <th>Price</th>
                                     <th>Date of Purchase</th>
                                     <th>Description</th>
-                                    <th class="text-center"> <i class="fa fa-edit"></i></th>
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> <i class="fa fa-edit"></i></th><?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,12 +55,13 @@
                                             <td>'.$rowStock['item_description'] .'</td>
                                             ';
 
-                                           
+                                           if($fetchUserRole['user_role'] == 4){}else {
                                             echo '
                                             <td class="text-center">
                                                 <a href="line_stock_edit.php?id='.$rowStock['line_st_id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light btn-sm">Edit</a>
                                             </td>
                                             ';
+                                           }
                                             
 
                                             echo '

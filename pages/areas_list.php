@@ -46,6 +46,9 @@
         </div>
         <!-- end row -->
         <div class="row">
+            <?php
+            if($fetchUserRole['user_role'] == 4){}else {
+            ?>
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
@@ -70,6 +73,8 @@
                     </div>
                 </div>
             </div>
+            <?php }?>
+
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
@@ -80,8 +85,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th class="text-center"> <i class="fa fa-edit"></i>
-                                    </th>
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> <i class="fa fa-edit"></i></th><?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,8 +97,12 @@
                                     echo '
                                     <tr>
                                         <td>'.$iteration++.'</td>
-                                        <td>'.$rowArea['area_name'].'</td>
-                                        <td class="text-center"><a href="area_edit.php?id='.$rowArea['id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>
+                                        <td>'.$rowArea['area_name'].'</td>';
+                                         if($fetchUserRole['user_role'] == 4){}else {
+                                         echo '<td class="text-center"><a href="area_edit.php?id='.$rowArea['id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>';
+                                         }
+                                         echo '
+                                        
                                     </tr>
                                     ';
                                 }

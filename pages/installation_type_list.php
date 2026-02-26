@@ -58,8 +58,7 @@
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Updated By</th>
-                                    <th class="text-center"> <i class="fa fa-edit"></i>
-                                    </th>
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> <i class="fa fa-edit"></i></th> <?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,8 +73,11 @@
                                         <td>'.$iteration++.'</td>
                                         <td>'.$rowIns['ins_type'].'</td>
                                         <td>'.$rowIns['ins_price'].'</td>
-                                        <td>'.$rowIns['name'].'</td>
-                                        <td class="text-center"><a href="installation_type_edit.php?id='.$rowIns['ins_id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>
+                                        <td>'.$rowIns['name'].'</td>';
+                                        if($fetchUserRole['user_role'] == 4){}else {
+                                        echo '<td class="text-center"><a href="installation_type_edit.php?id='.$rowIns['ins_id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>';
+                                        }
+                                        echo '
                                     </tr>
                                     ';
                                 }

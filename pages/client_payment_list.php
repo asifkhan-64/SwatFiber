@@ -41,7 +41,7 @@
                                     <th>Discount</th>
                                     <th>Total</th>
                                     <th>DOP</th>
-                                    <th class="text-center"> Edit <i class="fa fa-edit"></i></th>
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> Edit <i class="fa fa-edit"></i></th><?php } ?>
                                     <th class="text-center"> View <i class="fa fa-eye"></i></th>
                                 </tr>
                             </thead>
@@ -74,11 +74,14 @@
                                             <td>Pkr. '.$userRow['other_charges'].'</td>
                                             <td>Pkr. '.$userRow['discount_charges'].'</td>
                                             <td>Pkr. '.$userRow['total_charges'].'</td>
-                                            <td>'.$userRow['dop'].'</td>
-                                            
+                                            <td>'.$userRow['dop'].'</td>';
+                                            if($fetchUserRole['user_role'] == 4){}else {
+                                            echo '
                                             <td>
                                                 <a href="./client_payment_edit.php?client_id='.$userRow['client_id'].'" type="button" class="btn text-white btn-success waves-effect waves-light">Edit</a>
-                                            </td>      
+                                            </td>';
+                                            }
+                                            echo '      
 
                                             <td>
                                                 <a href="./client_payment_view.php?client_id='.$userRow['client_id'].'" type="button" class="btn text-white btn-primary waves-effect waves-light">View</a>

@@ -44,6 +44,10 @@
                             </div>
                         </div>
 
+                        <?php
+                        if($fetchUserRole['user_role'] == 4){
+                        ?>
+
                         <div class="form-group row"> 
                             <?php
                             if (empty($fetUserData['modem_image'])) {
@@ -95,6 +99,65 @@
                             }
                             ?>
                         </div>
+                            
+                            
+                        <?php
+                        }else {
+                        ?>
+
+                        <div class="form-group row"> 
+                            <?php
+                            if (empty($fetUserData['modem_image'])) {
+                                echo '
+                                <div class="col-sm-4 text-center animate__animated animate__bounce" align="center">
+                                    <img src="../assets/sample.png" width="100%" height="auto" > 
+                                </div>
+                                ';
+                            }else {
+                                echo '
+                                <div class="col-sm-4 text-center animate__animated animate__bounce" align="center">
+                                    <img src="../__images/'.$fetUserData['modem_image'].' "width="100%" style="border-radius: 10px; box-shadow: 3px 3px 3px 3px #ccc" height="auto" >
+                                    
+                                </div>
+                                ';
+                            }
+                            ?>
+
+                            <?php
+                            if (empty($fetUserData['cnic_front'])) {
+                                echo '
+                                <div class="col-sm-4 text-center animate__animated animate__bounce" align="center">
+                                    <img src="../assets/sample.png" width="100%" height="auto" > 
+                                </div>
+                                ';
+                            }else {
+                                echo '
+                                <div class="col-sm-4 text-center animate__animated animate__bounce" align="center">
+                                    <img src="../__images/'.$fetUserData['cnic_front'].' "width="100%" style="border-radius: 10px; box-shadow: 3px 3px 3px 3px #ccc" height="auto" >
+                                    
+                                </div>
+                                ';
+                            }
+                            ?>
+
+                            <?php
+                            if (empty($fetUserData['cnic_back'])) {
+                                echo '
+                                <div class="col-sm-4 text-center animate__animated animate__bounce" align="center">
+                                    <img src="../assets/sample.png" width="100%" height="auto" > 
+                                </div>
+                                ';
+                            }else {
+                                echo '
+                                <div class="col-sm-4 text-center animate__animated animate__bounce grow" align="center">
+                                    <img src="../__images/'.$fetUserData['cnic_back'].' "width="100%" style="border-radius: 10px; box-shadow: 3px 3px 3px 3px #ccc" height="auto" >
+                                </div>
+                                ';
+                            }
+                            ?>
+                        </div>
+
+                        
 
                         <hr>
 
@@ -148,6 +211,8 @@
                             }
                             ?>
                         </div>
+
+                        <?php } ?>
 
 
 

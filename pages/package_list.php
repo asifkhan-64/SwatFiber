@@ -53,6 +53,9 @@ include('../_partials/header.php');
         </div>
         <!-- end row -->
         <div class="row">
+            <?php
+            if($fetchUserRole['user_role'] == 4){}else {
+            ?>
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
@@ -83,6 +86,8 @@ include('../_partials/header.php');
                     </div>
                 </div>
             </div>
+            <?php }?>
+
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body"> 
@@ -94,8 +99,8 @@ include('../_partials/header.php');
                                     <th>#</th>
                                     <th>Package Name</th>
                                     <th>Package Price</th>
-                                    <th class="text-center"> <i class="fa fa-edit"></i>
-                                    </th>
+                                    
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> <i class="fa fa-edit"></i></th><?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,8 +113,11 @@ include('../_partials/header.php');
                                     <tr>
                                          <td>' . $iteration++ . '.</td>
                                          <td>' . $rowSuppliers['package_name'] . '</td>
-                                         <td>' . $rowSuppliers['package_price'] . '</td>
-                                         <td class="text-center"><a href="package_edit.php?id=' . $rowSuppliers['p_id'] . '" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>
+                                         <td>' . $rowSuppliers['package_price'] . '</td>';
+                                         if($fetchUserRole['user_role'] == 4){}else {
+                                         echo '<td class="text-center"><a href="package_edit.php?id=' . $rowSuppliers['p_id'] . '" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>';
+                                         }
+                                         echo '
                                     </tr>
                                     ';
                                 }

@@ -39,17 +39,19 @@
                                     <th>Package</th>
                                     <th>Contact</th>
                                     <th>Date</th>
-                                    <th class="text-center"> Edit </th>
+                                    <?php if($fetchUserRole['user_role'] == 1 || $fetchUserRole['user_role'] == 4){?><th class="text-center"> Added By </th><?php } ?>
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> Edit </th><?php } ?>
                                     <th class="text-center"> Images </th>
-                                    <th class="text-center"> Payments </th>
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> Payments </th><?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $retrieveUsers = mysqli_query($connect, "SELECT client_tbl.*, area.area_name, package_list.package_name, package_list.package_price, installation_type.ins_type, installation_type.ins_price FROM `client_tbl`
+                                $retrieveUsers = mysqli_query($connect, "SELECT client_tbl.*, area.area_name, package_list.package_name, package_list.package_price, installation_type.ins_type, installation_type.ins_price, login_user.name AS staffName FROM `client_tbl`
                                 INNER JOIN area ON area.id = client_tbl.area_id
                                 INNER JOIN package_list ON package_list.p_id = client_tbl.package_id
                                 INNER JOIN installation_type ON installation_type.ins_id = client_tbl.ins_id
+                                INNER JOIN login_user ON login_user.id = client_tbl.added_by
                                 WHERE client_tbl.added_by = '$addedBy' AND client_tbl.client_status = '1' ORDER BY client_tbl.doc DESC");
 
                                 $iterationUser = 1;
@@ -73,24 +75,40 @@
                                             <td>'.$userRow['father_name'].'</td>
                                             <td>'.$userRow['package_name'].'- Rs. '.$userRow['package_price'].'</td>
                                             <td><a href="tel:'.$allContact[0].$allContact[1].'" style="decoration: none !important; color: black" class="Blondie"><strong>'.$userRow['contact'].'</strong></a></td>
-                                            <td>'.$userRow['doc'].'</td>
+                                            <td>'.$userRow['doc'].'</td>';
+                                            if($fetchUserRole['user_role'] == 1 || $fetchUserRole['user_role'] == 4){
+                                                echo '<td>'.$userRow['staffName'].'</td>';
+                                            }
+
+                                            if($fetchUserRole['user_role'] == 4){}else {
+                                            echo '
+                                                    
+                                                    <td>
+                                                        <a href="./client_edit.php?id='.$userRow['client_id'].'" type="button" class="btn text-white btn-success waves-effect waves-light">Edit</a>
+                                                    </td> ';
+                                            }
+
                                             
-                                            <td>
-                                                <a href="./client_edit.php?id='.$userRow['client_id'].'" type="button" class="btn text-white btn-success waves-effect waves-light">Edit</a>
-                                            </td>      
+                                         echo '
+                                            
+                                                 
 
                                             <td>
                                                 <a href="./client_view.php?id='.$userRow['client_id'].'" type="button" class="btn text-white btn-primary waves-effect waves-light">View</a>
                                             </td>';
 
-                                            if ($userRow['payment_status'] === '0') {
-                                                echo '
-                                                <td>
-                                                    <a href="./add_payment.php?client_id='.$userRow['client_id'].'" type="button" class="btn text-white btn-secondary waves-effect waves-light">Pay</a>
-                                                </td>';
-                                            }else {
-                                                echo '<td>Pay <i class="fa fa-check"></i></td>';
+                                            if($fetchUserRole['user_role'] == 4){}else {
+                                                if ($userRow['payment_status'] === '0') {
+                                                    echo '
+                                                    <td>
+                                                        <a href="./add_payment.php?client_id='.$userRow['client_id'].'" type="button" class="btn text-white btn-secondary waves-effect waves-light">Pay</a>
+                                                    </td>';
+                                                }else {
+                                                    echo '<td>Pay <i class="fa fa-check"></i></td>';
+                                                }
                                             }
+
+                                            
 
                                             echo '
                                             

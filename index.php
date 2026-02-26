@@ -105,31 +105,9 @@
             session_start();
             $_SESSION["user"] = $user_email;
             $_SESSION["id"] = $id;
-            if ($user_role == '1') {
-                header("LOCATION:pages/dashboard.php");
-            } elseif ($user_role == '2') {
-                header("LOCATION:pages/dashboard.php");
-            } elseif ($user_role == '3') {
-                header("LOCATION:pages/patient_active_view.php");
-            } elseif ($user_role == '4') {
-                header("LOCATION:pages/lab_test_list_view.php");
-            } elseif ($user_role == '5') {
-                header("LOCATION:pages/pharmacy_list.php");
-            } elseif ($user_role == '6') {
-                header("LOCATION:pages/dashboardCustom.php");
-            } elseif ($user_role == '7') {
-                header("LOCATION:pages/groundFloorDBoard.php");
-            } elseif ($user_role == '8') {
-                header("LOCATION:pages/doctorDashboard.php");
-            } elseif ($user_role == '9') {
-                header("LOCATION:pages/anestheticDashboard.php");
-            } elseif ($user_role == '10') {
-                header("LOCATION:pages/moDashboard.php");
-            } elseif ($user_role == '11') {
-                header("LOCATION:__lab/dashboard.php");
-            } elseif ($user_role == '12') {
-                header("LOCATION:__lab/dashboard.php");
-            }
+            
+            header("LOCATION:pages/dashboard.php");
+            
         } else {
             $valid_login = ' <div class="alert alert-danger animate__animated animate__bounce" style="background:#D52520; color:white" role="alert">
             <h4 class="animate__animated animate__bounce">Access Denied. You have been restricted. </h4></div>';

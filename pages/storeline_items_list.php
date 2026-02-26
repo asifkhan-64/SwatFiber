@@ -52,6 +52,7 @@
         </div>
         <!-- end row -->
         <div class="row">
+            <?php if($fetchUserRole['user_role'] == 4){}else { ?>
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
@@ -88,6 +89,8 @@
                     </div>
                 </div>
             </div>
+            <?php } ?>
+
             <div class="col-12">
                 <div class="card m-b-30">
                     <div class="card-body">
@@ -99,8 +102,7 @@
                                     <th>#</th>
                                     <th>Item Name</th>
                                     <th>Item Type</th>
-                                    <th class="text-center"> <i class="fa fa-edit"></i>
-                                    </th>
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> <i class="fa fa-edit"></i></th> <?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,8 +125,11 @@
                                             <td>Store Item</td>
                                             ';
                                         }
+                                        if($fetchUserRole['user_role'] == 4){}else {
                                         echo '
-                                        <td class="text-center"><a href="sl_item_edit.php?id='.$rowItems['sl_id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>
+                                        <td class="text-center"><a href="sl_item_edit.php?id='.$rowItems['sl_id'].'" type="button" class="btn text-white btn-warning waves-effect waves-light">Edit</a></td>';
+                                        }
+                                        echo '
                                     </tr>
                                     ';
                                 }

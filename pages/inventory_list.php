@@ -31,7 +31,7 @@
                                     <th>Qty</th>
                                     <th>Price</th>
                                     <th>Date of Purchase</th>
-                                    <th class="text-center"> Edit <i class="fa fa-edit"></i></th>
+                                    <?php if($fetchUserRole['user_role'] == 4){}else { ?><th class="text-center"> Edit <i class="fa fa-edit"></i></th><?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,11 +55,15 @@
                                             <td>'.$inventoryRow['item_qty'].'</td>
     
                                             <td>'.$inventoryRow['price'].'</td>
-                                            <td>'.$inventoryRow['date_of_purchase'].'</td>
-                                            
-                                            <td>
-                                                <a href="./inventory_edit.php?id='.$inventoryRow['inventory_id'].'" type="button" class="btn text-white btn-primary waves-effect waves-light">View</a>
-                                            </td>                                        
+                                            <td>'.$inventoryRow['date_of_purchase'].'</td>';
+
+                                            if($fetchUserRole['user_role'] == 4){}else {
+                                                echo '
+                                                <td>
+                                                    <a href="./inventory_edit.php?id='.$inventoryRow['inventory_id'].'" type="button" class="btn text-white btn-primary waves-effect waves-light">View</a>
+                                                </td>';
+                                            }
+                                            echo '                                       
                                         </tr>';
                                     
                                 }
