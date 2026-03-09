@@ -39,10 +39,6 @@ include('../_partials/header.php');
 
 <link rel="stylesheet" type="text/css" href="./timeline.css">
 
-
-
-
-
 <div class="page-content-wrapper ">
     <div class="container-fluid">
         <div class="row">
@@ -56,7 +52,7 @@ include('../_partials/header.php');
                 <div class="main-timeline2" id="addUserForm">
                     <div class="timeline animate__animated animate__bounce" id="timeline">
                         <span class="icon fa fa-globe"></span>
-                        <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
+                        <a class="timeline-content">
                             <h3 class="title" align="center"><?php echo $fet['shop_title'] ?></h3>
                             <h3 class="title" align="center"><?php echo $fet['shop_name'] ?></h3>
                             <hr>
@@ -67,7 +63,7 @@ include('../_partials/header.php');
                     </div>
                     <div class="timeline animate__animated animate__bounce">
                         <span class="icon fa fa-calendar"></span>
-                        <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
+                        <a class="timeline-content">
                             <h3 class="title" align="center">Daily Expense</h3>
                             <hr>
                             <p class="description" align="center">
@@ -85,7 +81,7 @@ include('../_partials/header.php');
 
                     <div class="timeline animate__animated animate__bounce">
                         <span class="icon fa fa-window-close"></span>
-                        <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
+                        <a class="timeline-content">
                             <h3 class="title" align="center">Users</h3>
                             <hr>
                             <p class="description" align="center">
@@ -102,7 +98,7 @@ include('../_partials/header.php');
 
                     <div class="timeline animate__animated animate__bounce">
                         <span class="icon fa fa-calendar"></span>
-                        <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
+                        <a class="timeline-content">
                             <h3 class="title" align="center">Clients</h3>
                             <hr>
                             <p class="description" align="center">
@@ -120,7 +116,7 @@ include('../_partials/header.php');
 
                     <div class="timeline animate__animated animate__bounce">
                         <span class="icon fa fa-window-close"></span>
-                        <a class="timeline-content" style="box-shadow: 3px 3px 3px 3px #ccc">
+                        <a class="timeline-content" >
                             <h3 class="title" align="center">Complaints</h3>
                             <hr>
                             <p class="description" align="center">

@@ -190,7 +190,8 @@ $lastPaymentDate = $fetch['last_paid_date'];
                 <div class="row">
                     <div class="col-4">
                         <div class="invoice-title">
-                            <img src="../assets/logo.png" alt="logo" height="150">
+                            <!-- <img src="../assets/logo.png" alt="logo" height="150"> -->
+                             <img src="../assets/invoice_logo.jpeg" alt="logo" height="200" style="border-radius: 5%">
                         </div>
                     </div>
 

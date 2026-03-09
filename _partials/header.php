@@ -15,9 +15,7 @@ $fet = mysqli_fetch_assoc($get);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -25,19 +23,15 @@ $fet = mysqli_fetch_assoc($get);
     <meta content="<?php echo $fet['shop_title']; ?>" name="description" />
     <meta content="ThemeDesign" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- <link rel="shortcut icon" href="../assets/LogoFinal.png"> -->
     <link rel="shortcut icon" href="../assets/logo.png">
-    <!--Morris Chart CSS -->
     <link rel="stylesheet" href="../assets/plugins/morris/morris.css">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/icons.css" rel="stylesheet" type="text/css">
     <link href="../assets/css/style.css" rel="stylesheet" type="text/css">
 
     <link href="../assets/package/dist/sweetalert2.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables -->
     <link href="../assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <!-- Responsive datatable examples -->
     <link href="../assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -52,12 +46,12 @@ $fet = mysqli_fetch_assoc($get);
     <link rel="stylesheet" type="text/css" href="../assets/animat.css">
 
     <script src='../assets/kit.js' crossorigin='anonymous'></script>
-    <link rel="stylesheet" type="text/css" href="../assets/all.css">
+
+    
 
 
     <style>
 
-    /* 1. Define the Keyframes for the Animation */
         @keyframes float {
         0% {
             transform: translateY(0); /* Start position */
@@ -70,9 +64,7 @@ $fet = mysqli_fetch_assoc($get);
         }
         }
 
-        /* 2. Apply the Animation to the Cards */
         .timeline-content {
-        /* ... existing styles like box-shadow ... */
         animation: float 4s ease-in-out infinite !important; /* Apply the animation */
         zoon: 0.5 !important;
         }
@@ -97,55 +89,223 @@ $fet = mysqli_fetch_assoc($get);
             display: inline-block;
             margin: 0 0.5rem;
 
-            animation: Fade; /* referring directly to the animation's @keyframe declaration */
-            animation-duration: 2s; /* don't forget to set a duration! */
+            animation: Fade;
+            animation-duration: 2s;
         }
 
-            /* This only changes this particular animation duration */
         .animate__animated.animate__bounce {
             --animate-duration: 2s;
         }
 
-            /* This changes all the animations globally */
         :root {
             --animate-duration: 800ms;
             --animate-delay: 1s;
         }
 
-
-
-
-        /* For image */
-
-
         img {
-            transition: transform 0.5s ease; /* Adjust duration and timing as needed */
+            transition: transform 0.5s ease;
             
         }
 
         img:hover {
-            transform: scale(1.2); /* Grows by 20% */
+            transform: scale(1.2);
             z-index: 999;
-            /* background-color: rgba(255, 255, 255, 0.5); */
-            /* rotate: -10deg; */
-            backdrop-filter: blur(100px); /* Apply a blur of 10 pixels */
-            -webkit-backdrop-filter: blur(10px); /* For Webkit-based browsers */
+            backdrop-filter: blur(100px);
+            -webkit-backdrop-filter: blur(10px);
         }
-    </style>
 
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+        /* Update Topbar and Navbar background */
+        .topbar, 
+        .topbar-left, 
+        .navbar-custom {
+            background-color: #26166a !important;
+        }
+
+        /* Ensure the hamburger menu icon and other links remain visible */
+        .button-menu-mobile, 
+        .nav-link {
+            color: #ffffff !important;
+        }
+
+        /* Optional: Add a slight border or shadow if it blends too much with the sidebar */
+        .topbar {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Change the toggle button background and hover state */
+        .button-menu-mobile {
+            background-color: #26166a !important; /* Matches the deep purple in your image */
+            color: #ffffff !important; /* Keeps the hamburger icon white */
+            border: none !important;
+        }
+
+        /* Ensure the background stays purple even when the sidebar is open/closed */
+        .button-menu-mobile-topbar,
+        .open-left {
+            background-color: #26166a !important;
+        }
+
+        /* Optional: Slight hover effect for better UX */
+        .button-menu-mobile:hover {
+            background-color: #1a0f4a !important; 
+            color: #ffffff !important;
+        }
+
+        /* --- New Sidebar Styles --- */
+
+    /* 1. Main Sidebar Container & Background Gradient */
+    .side-menu.left {
+        background-color: #ffffff; /* Fallback */
+        /* Light blue to white gradient (simulating the image) */
+        background: linear-gradient(135deg, #1ea3ea 5%, #1ea3ea 70%, #ffffff 100%, #ffffff 100%) !important;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        border-right: 1px solid #ddd;
+    }
+
+    /* 2. Style the Menu Title (e.g., "Main") */
+    #sidebar-menu ul li.menu-title {
+        color: #1a0f4a !important; /* Dark purple/blue for title */
+        background-color: transparent !important;
+        border-bottom: 2px solid #1ea3ea !important;
+        margin-bottom: 10px;
+    }
+
+    /* 3. General Menu Item Styling (White Background / Stripes) */
+    #sidebar-menu ul li a {
+        color: #1a0f4a !important; /* Dark text for readability */
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #1ea3ea !important; /* Blue border creates stripe effect */
+        transition: all 0.3s ease;
+        padding: 12px 20px !important;
+        display: flex;
+        align-items: center;
+        
+    }
+
+    /* 4. Active & Hover State for Menu Items */
+    #sidebar-menu ul li a.active,
+    #sidebar-menu ul li a:hover {
+        padding: 15px !important;
+        zoom: 1.1 !important
+        color: #000000 !important; /* White text when active */
+        background-color: #1ea3ea !important;
+        background: linear-gradient(135deg, #1ea3ea 40%, #1ea3ea 40%, #c7c7c7 70%, #ffffff 100%) !important;
+
+        box-shadow: inset 0 -3px 0 rgba(0,0,0,0.1);
+    }
+
+    /* 5. Icon & Text Alignment */
+    #sidebar-menu ul li a i {
+        color: #1ea3ea !important; /* Icon matches blue */
+        margin-right: 10px;
+        font-size: 1.1rem;
+    }
+
+    #sidebar-menu ul li a.active i,
+    #sidebar-menu ul li a:hover i {
+        color: #000000 !important; /* Icon goes white when active */
+    }
+
+    /* 6. Submenu Styling (if any are expanded) */
+    #sidebar-menu ul li.has_sub ul.list-unstyled {
+        background-color: #f8f9fa !important; /* Slightly off-white for submenu */
+        border-left: 3px solid #1ea3ea;
+    }
+
+    #sidebar-menu ul li.has_sub ul.list-unstyled li a {
+        background-color: transparent !important;
+        border-bottom: none !important;
+        color: #1a0f4a !important;
+        padding-left: 45px !important;
+    }
+
+    /* 7. Ensure Logo Area at Top looks good */
+    .left-side-logo {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #ddd;
+        color: #1a0f4a !important;
+    }
+    .left-side-logo a {
+        color: #1a0f4a !important;
+    }
+
+    /* --- Keep existing Topbar / Fixes --- */
+    .timeline-content {
+        animation: float 4s ease-in-out infinite !important;
+        zoom: 0.5 !important; /* Fixes 'zoon' typo */
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    img:hover {
+        transform: scale(1.2);
+        z-index: 999;
+    }
+
+    /* --- Fix Chevron/Arrow Alignment --- */
+
+    #sidebar-menu ul li.has_sub > a .menu-arrow {
+        float: right !important; /* Forces the arrow to the right */
+        margin-right: 0;
+        margin-left: auto; /* Works if the parent is display: flex */
+        position: absolute;
+        right: 5px; /* Adjust this to match your sidebar padding */
+        top: 15px; /* Adjust based on your item height */
+    }
+
+    /* If your template uses the 'mdi' icon class for arrows */
+    #sidebar-menu ul li.has_sub > a i.mdi-chevron-right,
+    #sidebar-menu ul li.has_sub > a i.mdi-chevron-down {
+        position: absolute;
+        right: 15px;
+        line-height: inherit;
+    }
+
+    /* Ensure the parent link has relative positioning so the absolute arrow stays inside it */
+    #sidebar-menu ul li a {
+        position: relative !important;
+        display: block !important;
+        width: 100%;
+    }
+
+    .content {
+        background-color: rgb(118 197 240);
+        /* background: linear-gradient(135deg, #1ea3ea 40%, #1ea3ea 50%, #c7c7c7 50%, #ffffff 100%) !important; */
+    }
+
+    .card {
+        background-color: rgb(186 227 247);
+    }
+
+    .footer {
+        border-top: 1px solid #26166a;
+        background-color: rgb(118 197 240);
+    }
+
+    .body {
+        color: black
+    }
+
+    
+
+    </style>
+    
+
+    <link rel="stylesheet" type="text/css" href="../assets/all.css">
+
+
 </head>
 
 <body class="fixed-left">
-    <!-- Loader -->
     <div id="preloader">
         <div id="status">
             <div class="spinner"></div>
         </div>
     </div>
-    <!-- Begin page -->
     <div id="wrapper">
-        <!-- ========== Left Sidebar Start ========== -->
         <div class="left side-menu">
             <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
                 <i class="ion-close"></i>
@@ -194,7 +354,6 @@ $fet = mysqli_fetch_assoc($get);
                                 <li><a href="client_add.php">Add Client</a></li>
                                 <li><a href="client_list.php">Active Client List</a></li>
                                 <li><a href="deactive_client_list.php">Deactive Client List</a></li>
-                                <!-- <li><a href="client_search.php">Search Client</a></li> -->
                                 <li><a href="client_payment_list.php">Payment List</a></li>
 
                             </ul>
@@ -209,20 +368,11 @@ $fet = mysqli_fetch_assoc($get);
                             </ul>
                         </li>
 
-                        <!-- <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-shopping-bag"></i> <span> Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="client_select.php">Add Payment</a></li>
-                                <li><a href="client_payment_list.php">Payment List</a></li>
-                            </ul>
-                        </li> -->
-
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-document"></i> <span> Bill Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="bill_payment.php">Add Bill Payment</a></li>
                                 <li><a href="bill_payment_list.php">Bill Payment List</a></li>
-                                <!-- <li><a href="bill_dues_list.php">Bill Dues List</a></li> -->
                                 <li><a href="generate_bill.php">Generate Bill</a></li>
                             </ul>
                         </li>
@@ -288,20 +438,6 @@ $fet = mysqli_fetch_assoc($get);
                             </ul>
                         </li>
 
-                        <!-- <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-book"></i> <span> Reports</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="wages_report.php">Wages Report</a></li>
-                                <li><a href="utility_report.php">Utility Bills Report</a></li>
-                                <li><a href="expense_report.php">Expenses Report</a></li>
-                                <li><a href="tillone_report.php">Till 1 Report</a></li>
-                                <li><a href="tilltwo_report.php">Till 2 Report</a></li>
-                                <li><a href="weekly_summary_report.php">Weekly Summary</a></li>
-                                <li><a href="grocery_report.php">Grocery Report</a></li>
-                                <li><a href="report_daily_expense.php">Daily Expense Report</a></li>
-                            </ul>
-                        </li> -->
-                        
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-to-do"></i> <span> Company Details </span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
@@ -339,7 +475,6 @@ $fet = mysqli_fetch_assoc($get);
                                 <li><a href="client_add.php">Add Client</a></li>
                                 <li><a href="client_list.php">Active Client List</a></li>
                                 <li><a href="deactive_client_list.php">Deactive Client List</a></li>
-                                <!-- <li><a href="client_search.php">Search Client</a></li> -->
                                 <li><a href="client_payment_list.php">Payment List</a></li>
 
                             </ul>
@@ -387,7 +522,6 @@ $fet = mysqli_fetch_assoc($get);
                             <ul class="list-unstyled">
                                 <li><a href="bill_payment.php">Add Bill Payment</a></li>
                                 <li><a href="bill_payment_list.php">Bill Payment List</a></li>
-                                <!-- <li><a href="bill_dues_list.php">Bill Dues List</a></li> -->
                                 <li><a href="generate_bill.php">Generate Bill</a></li>
                             </ul>
                         </li>
@@ -452,27 +586,15 @@ $fet = mysqli_fetch_assoc($get);
                             <ul class="list-unstyled">
                                 <li><a href="client_list.php">Active Client List</a></li>
                                 <li><a href="deactive_client_list.php">Deactive Client List</a></li>
-                                <!-- <li><a href="client_search.php">Search Client</a></li> -->
                                 <li><a href="client_payment_list.php">Payment List</a></li>
 
                             </ul>
                         </li>
 
-
-
-                        <!-- <li class="has_sub">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-shopping-bag"></i> <span> Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-                            <ul class="list-unstyled">
-                                <li><a href="client_select.php">Add Payment</a></li>
-                                <li><a href="client_payment_list.php">Payment List</a></li>
-                            </ul>
-                        </li> -->
-
                         <li class="has_sub">
                             <a href="javascript:void(0);" class="waves-effect"><i class="dripicons-document"></i> <span> Bill Payments</span> <span class="menu-arrow float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                             <ul class="list-unstyled">
                                 <li><a href="bill_payment_list.php">Bill Payment List</a></li>
-                                <!-- <li><a href="bill_dues_list.php">Bill Dues List</a></li> -->
                                 <li><a href="generate_bill.php">Generate Bill</a></li>
                             </ul>
                         </li>
@@ -543,12 +665,8 @@ $fet = mysqli_fetch_assoc($get);
                 <div class="clearfix"></div>
             </div> <!-- end sidebarinner -->
         </div>
-        <!-- Left Sidebar End -->
-        <!-- Start right Content here -->
         <div class="content-page">
-            <!-- Start content -->
             <div class="content">
-                <!-- Top Bar Start -->
                 <div class="topbar">
                     <div class="topbar-left d-none d-lg-block">
                         <div class="text-center pt-2">

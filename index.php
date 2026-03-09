@@ -10,7 +10,7 @@
         <meta content="ThemeDesign" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-        <link rel="shortcut icon" href="assets/logo.png">
+        <link rel="shortcut icon" href="assets/invoice_logo.jpeg">
 
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
@@ -114,6 +114,9 @@
         }
     }
 }
+
+$getData = mysqli_query($connect, "SELECT * FROM shop_info");
+$fetchData = mysqli_fetch_assoc($getData);
 ?>
 
 
@@ -135,7 +138,8 @@
                                 <div class="card " style="box-shadow: 3px 3px 15px 3px #E7EAED; opacity: 0.95 !important;">
                                     <div class="card-body">
                                         <h3 class="text-center mt-0 m-b-15 animate__animated animate__bounce">
-                                            <a  class="logo logo-admin"><img src="assets/logo.png" width="40%" height="40%"> </a>
+                                            <?php echo $fetchData['shop_title']; ?>
+                                            <!-- <a  class="logo logo-admin"><img class="img img-thumbnail" src="./assets/invoice_logo.jpeg" style="width: 50% !important; height: 10% !important"> </a> -->
                                         </h3>
                 
                                         <!-- <h4 class="text-muted text-center font-18"><b>Sign In</b></h4> -->

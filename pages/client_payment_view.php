@@ -110,7 +110,7 @@
 
                     // Company Info
                     $message .= "%0A%0ARegards,%0A" . $rowCompanyDetails['shop_title']. ", ".$rowCompanyDetails['shop_name'];
-                    $message .= "%0AAddress: " . $rowCompanyDetails['shop_address'];
+                    $message .= ".%0A Address: " . $rowCompanyDetails['shop_address'];
                     $message .= "%0AContact: 0" . $rowCompanyDetails['shop_contact'];
                     
                     // NOTE: The message is already URL-encoded enough using %0A for new lines. 
