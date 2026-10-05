@@ -1,11 +1,47 @@
+<?php
+  include("_stream/config.php");
+  
+  $valid_login = "";
+  if (isset($_POST["log_in_session"])) {
+    $user_email = $_POST["user_email"];
+    $user_password = $_POST["user_password"];
 
+    $result_query = mysqli_query($connect, "SELECT * FROM login_user WHERE email='$user_email' AND password='$user_password'");
+    //  = mysqli_query($connect, $select_user_query);
+    
+    $fetch_userQuery = mysqli_fetch_assoc($result_query);
+
+    if (empty($fetch_userQuery)) {
+        $valid_login = '<div class="alert alert-danger" style="background:#D52520; color:white" role="alert">Enter a valid Login</div>';
+    } else {
+        $user_status = $fetch_userQuery['status'];
+        $user_role = $fetch_userQuery['user_role'];
+        $id = $fetch_userQuery['id'];
+
+        if ($user_status == 1) {
+            session_start();
+            $_SESSION["user"] = $user_email;
+            $_SESSION["id"] = $id;
+            
+            header("LOCATION:pages/dashboard.php");
+            
+        } else {
+            $valid_login = ' <div class="alert alert-danger animate__animated animate__bounce" style="background:#D52520; color:white" role="alert">
+            <h4 class="animate__animated animate__bounce">Access Denied. You have been restricted. </h4></div>';
+        }
+    }
+}
+
+$getData = mysqli_query($connect, "SELECT * FROM shop_info");
+$fetchData = mysqli_fetch_assoc($getData);
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-        <title>Swat Fiber</title>
+        <title><?php echo $fetchData['shop_title'] ?></title>
         <meta content="Swat Fiber" name="description" />
         <meta content="ThemeDesign" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -39,6 +75,7 @@
             /* 2. Apply the Animation to the Cards */
             .timeline-content {
             /* ... existing styles like box-shadow ... */
+            
             animation: float 4s ease-in-out infinite !important; /* Apply the animation */
             zoon: 0.5 !important;
             }
@@ -81,43 +118,6 @@
 
     </head>
 
-<?php
-  include("_stream/config.php");
-  
-  $valid_login = "";
-  if (isset($_POST["log_in_session"])) {
-    $user_email = $_POST["user_email"];
-    $user_password = $_POST["user_password"];
-
-    $result_query = mysqli_query($connect, "SELECT * FROM login_user WHERE email='$user_email' AND password='$user_password'");
-    //  = mysqli_query($connect, $select_user_query);
-    
-    $fetch_userQuery = mysqli_fetch_assoc($result_query);
-
-    if (empty($fetch_userQuery)) {
-        $valid_login = '<div class="alert alert-danger" style="background:#D52520; color:white" role="alert">Enter a valid Login</div>';
-    } else {
-        $user_status = $fetch_userQuery['status'];
-        $user_role = $fetch_userQuery['user_role'];
-        $id = $fetch_userQuery['id'];
-
-        if ($user_status == 1) {
-            session_start();
-            $_SESSION["user"] = $user_email;
-            $_SESSION["id"] = $id;
-            
-            header("LOCATION:pages/dashboard.php");
-            
-        } else {
-            $valid_login = ' <div class="alert alert-danger animate__animated animate__bounce" style="background:#D52520; color:white" role="alert">
-            <h4 class="animate__animated animate__bounce">Access Denied. You have been restricted. </h4></div>';
-        }
-    }
-}
-
-$getData = mysqli_query($connect, "SELECT * FROM shop_info");
-$fetchData = mysqli_fetch_assoc($getData);
-?>
 
 
 
@@ -138,8 +138,8 @@ $fetchData = mysqli_fetch_assoc($getData);
                                 <div class="card " style="box-shadow: 3px 3px 15px 3px #E7EAED; opacity: 0.95 !important;">
                                     <div class="card-body">
                                         <h3 class="text-center mt-0 m-b-15 animate__animated animate__bounce">
+                                            <a  class="logo logo-admin"><img class="img img-thumbnail rounded-circle" src="./assets/invoice_logo.jpeg" style="width: 30% !important; height: 10% !important"> </a><br>
                                             <?php echo $fetchData['shop_title']; ?>
-                                            <!-- <a  class="logo logo-admin"><img class="img img-thumbnail" src="./assets/invoice_logo.jpeg" style="width: 50% !important; height: 10% !important"> </a> -->
                                         </h3>
                 
                                         <!-- <h4 class="text-muted text-center font-18"><b>Sign In</b></h4> -->

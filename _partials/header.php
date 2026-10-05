@@ -65,6 +65,7 @@ $fet = mysqli_fetch_assoc($get);
         }
 
         .timeline-content {
+        box-shadow: 4px 6px 15px 0px rgba(0, 0, 0, 0.15) !important;
         animation: float 4s ease-in-out infinite !important; /* Apply the animation */
         zoon: 0.5 !important;
         }
@@ -232,7 +233,7 @@ $fet = mysqli_fetch_assoc($get);
     /* --- Keep existing Topbar / Fixes --- */
     .timeline-content {
         animation: float 4s ease-in-out infinite !important;
-        zoom: 0.5 !important; /* Fixes 'zoon' typo */
+        /* zoom: 0.5 !important;  */
     }
 
     @keyframes float {
